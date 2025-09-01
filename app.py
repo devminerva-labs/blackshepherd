@@ -1,3 +1,4 @@
+import os 
 from flask import Flask, render_template, request, redirect, url_for, flash, current_app, get_flashed_messages
 from datetime import datetime, timezone
 from models import db, Campaign, Transaction
@@ -263,8 +264,16 @@ if __name__ == '__main__':
         db.create_all()
         print("🗄️  Database tables created successfully!")
         print("💳 Paystack integration ready (Direct HTTP)!")
-        print("🌍 Supports NGN + international cards!")
+        print("🌐 Supports NGN + international cards!")
         print("🎨 Modern responsive templates loaded!")
-        print("🚀 Starting Flask development server...")
+        print("🚀 Starting server...")
     
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    # Production settings for Render
+    port = int(os.environ.get('PORT', 5000))  # ← This needs 'os'
+    debug_mode = os.environ.get('FLASK_ENV') != 'production'  # ← This too
+    app.run(debug=debug_mode, host='0.0.0.0', port=port)    
+
+
+
+
+rg&gp#h6(eog(@aw*@%)ve^+@%y=ov5!^bb*p-pq!h!r1q01%e

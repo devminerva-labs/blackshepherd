@@ -9,6 +9,7 @@ flask-sqlalchemy = "*"
 python-dotenv = "*"
 requests = "*"
 pypaystack2 = "*"
+flask-mail = "*"
 
 [dev-packages]
 gunicorn = "*"
