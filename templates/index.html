@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ config.SITE_NAME }} - Empowering Women & Communities Across Africa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Black Shepherd Foundation" class="logo">
+                <span class="brand-text">Black Shepherd</span>
+            </div>
+            
+            <div class="nav-links">
+                <a href="/" class="nav-link active">Home</a>
+                <a href="/about" class="nav-link">About</a>
+                <a href="/campaigns" class="nav-link">Campaigns</a>
+                <a href="/contact" class="nav-link">Contact</a>
+                <a href="/campaigns" class="btn btn-primary">Donate Now</a>
+            </div>
+            
+            <div class="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <a href="/" class="mobile-nav-link">Home</a>
+        <a href="/about" class="mobile-nav-link">About</a>
+        <a href="/campaigns" class="mobile-nav-link">Campaigns</a>
+        <a href="/contact" class="mobile-nav-link">Contact</a>
+        <a href="/campaigns" class="btn btn-primary">Donate Now</a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-background">
+            <div class="hero-overlay"></div>
+        </div>
+        
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <span class="hero-subtitle">Give them a chance.</span>
+                    <h1 class="hero-title">
+                        Empowering Women &<br>
+                        <span class="highlight">Communities Across Africa</span>
+                    </h1>
+                    <p class="hero-description">
+                        Every donation creates ripples of change that transform lives, 
+                        build stronger communities, and create lasting impact across Africa.
+                    </p>
+                    <div class="hero-actions">
+                        <a href="/campaigns" class="btn btn-primary btn-large">
+                            Start Donating
+                        </a>
+                        <a href="/about" class="btn btn-secondary btn-large">
+                            Our Story
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="hero-image">
+                    <div class="hero-image-container">
+                        <img src="{{ url_for('static', filename='images/hero-main.jpg') }}" alt="Empowering communities" class="main-image">
+                        <div class="floating-card">
+                            <div class="card-icon">🎓</div>
+                            <div class="card-content">
+                                <div class="card-number">2,847</div>
+                                <div class="card-label">Lives Changed</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">0</div>
+                    <div class="stat-label">Projects Funded</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">0M</div>
+                    <div class="stat-label">Funds Raised</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">0</div>
+                    <div class="stat-label">Communities Reached</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">0</div>
+                    <div class="stat-label">Active Volunteers</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Preview -->
+    <section class="about-preview">
+        <div class="container">
+            <div class="section-content">
+                <div class="section-text">
+                    <span class="section-subtitle">Welcome to Black Shepherd</span>
+                    <h2 class="section-title">You're the Hope of Others.</h2>
+                    <p class="section-description">
+                        We believe in the power of community and the strength of women to create 
+                        lasting change. Our mission is to empower women across Africa through 
+                        education, healthcare, clean water access, and economic opportunities.
+                    </p>
+                    <p class="section-description">
+                        Every donation, no matter the size, contributes to building stronger, 
+                        more resilient communities. Together, we can break cycles of poverty 
+                        and create opportunities for future generations.
+                    </p>
+                    <div class="section-actions">
+                        <a href="/about" class="btn btn-primary">Learn More</a>
+                        <div class="contact-info">
+                            <span class="contact-label">Call Us Now</span>
+                            <span class="contact-number">+234 9124211336</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section-image">
+                    <div class="image-wrapper">
+                        <img src="{{ url_for('static', filename='images/about-preview.jpg') }}" alt="Our mission" class="main-img">
+                        <div class="floating-elements">
+                            <div class="floating-circle circle-1"></div>
+                            <div class="floating-circle circle-2"></div>
+                            <div class="floating-circle circle-3"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Campaigns -->
+    <section class="campaigns">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle">Our Impact</span>
+                <h2 class="section-title">Find the Popular Cause</h2>
+                <p class="section-description">
+                    Discover the campaigns that are making the biggest difference in communities across Africa.
+                </p>
+            </div>
+            
+            <div class="campaigns-grid">
+                {% for campaign in campaigns %}
+                <div class="campaign-card">
+                    <div class="campaign-image">
+                        <img src="{{ campaign.image_url }}" alt="{{ campaign.title }}">
+                        <div class="campaign-category">Education</div>
+                    </div>
+                    
+                    <div class="campaign-content">
+                        <h3 class="campaign-title">{{ campaign.title }}</h3>
+                        <p class="campaign-description">{{ campaign.description[:120] }}...</p>
+                        
+                        <div class="campaign-progress">
+                            <div class="progress-info">
+                                <span class="progress-raised">₦{{ "{:,.0f}".format(campaign.raised_amount) }}</span>
+                                <span class="progress-goal">₦{{ "{:,.0f}".format(campaign.goal_amount) }}</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: {{ campaign.progress_percentage }}%"></div>
+                            </div>
+                            <div class="progress-percentage">{{ "%.1f"|format(campaign.progress_percentage) }}% Complete</div>
+                        </div>
+                        
+                        <div class="campaign-actions">
+                            <a href="{{ url_for('campaign', id=campaign.id) }}" class="btn btn-primary btn-full">
+                                Donate Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                
+                {% if not campaigns %}
+                <div class="no-campaigns">
+                    <div class="no-campaigns-icon">📋</div>
+                    <h3>No Active Campaigns</h3>
+                    <p>We're preparing new campaigns to make an impact. Check back soon!</p>
+                    <a href="/add-test-campaign" class="btn btn-primary">Add Test Campaign</a>
+                </div>
+                {% endif %}
+            </div>
+            
+            {% if campaigns %}
+            <div class="section-footer">
+                <a href="/campaigns" class="btn btn-secondary">View All Campaigns</a>
+            </div>
+            {% endif %}
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <div class="cta-text">
+                    <h2 class="cta-title">Ready to Make a Difference?</h2>
+                    <p class="cta-description">
+                        Join thousands of donors who are creating positive change across Africa. 
+                        Your contribution, no matter the size, helps build stronger communities.
+                    </p>
+                </div>
+                <div class="cta-actions">
+                    <a href="/campaigns" class="btn btn-primary btn-large">
+                        Start Donating
+                    </a>
+                    <a href="/about" class="btn btn-outline btn-large">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-brand">
+                        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Black Shepherd Foundation" class="footer-logo">
+                        <span class="footer-brand-text">Black Shepherd Foundation</span>
+                    </div>
+                    <p class="footer-description">
+                        Empowering women and communities across Africa through 
+                        education, healthcare, and sustainable development.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">📘</a>
+                        <a href="#" class="social-link">🐦</a>
+                        <a href="#" class="social-link">📸</a>
+                        <a href="#" class="social-link">💼</a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4 class="footer-title">Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="/about">About Us</a></li>
+                        <li><a href="/campaigns">Campaigns</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4 class="footer-title">Our Programs</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Education</a></li>
+                        <li><a href="#">Healthcare</a></li>
+                        <li><a href="#">Clean Water</a></li>
+                        <li><a href="#">Women Empowerment</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4 class="footer-title">Contact Info</h4>
+                    <div class="contact-item">
+                        <span class="contact-label">Phone:</span>
+                        <span class="contact-value">+234 9124211336</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-label">Email:</span>
+                        <span class="contact-value">info@blackshepherd.org</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-label">Address:</span>
+                        <span class="contact-value">Abuja, FCT, Nigeria</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Black Shepherd Foundation. All rights reserved.</p>
+                <p>Built with ❤️ for African communities</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

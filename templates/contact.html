@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - {{ config.SITE_NAME }}</title>
+    <meta name="description" content="Get in touch with Black Shepherd Foundation. Find our contact information, office location, and social media channels.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Black Shepherd Foundation" class="logo">
+                <span class="brand-text">Black Shepherd</span>
+            </div>
+            
+            <div class="nav-links">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/about" class="nav-link">About</a>
+                <a href="/campaigns" class="nav-link">Campaigns</a>
+                <a href="/contact" class="nav-link active">Contact</a>
+                <a href="/campaigns" class="btn btn-primary">Donate Now</a>
+            </div>
+            
+            <div class="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <a href="/" class="mobile-nav-link">Home</a>
+        <a href="/about" class="mobile-nav-link">About</a>
+        <a href="/campaigns" class="mobile-nav-link">Campaigns</a>
+        <a href="/contact" class="mobile-nav-link active">Contact</a>
+        <a href="/campaigns" class="btn btn-primary">Donate Now</a>
+    </div>
+
+    <!-- Page Header -->
+    <section class="contact-header">
+        <div class="container">
+            <div class="header-content">
+                <h1 class="page-title">Get in Touch</h1>
+                <p class="page-subtitle">
+                    Ready to join our mission? Have questions about our work? We're here to connect with you. 
+                    Reach out through any of the channels below and let's create lasting change together.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Content -->
+    <section class="contact-content">
+        <div class="container">
+            <div class="contact-grid">
+                <!-- Contact Form -->
+                <div class="contact-form-section">
+                    <h2 class="form-title">Send Us a Message</h2>
+                    <p class="form-description">
+                        Have a question, want to volunteer, or interested in partnering with us? 
+                        We'd love to hear from you. Fill out the form below and we'll get back to you within 24 hours.
+                    </p>
+                    
+                    <form class="contact-form" action="#" method="POST">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="first_name" class="form-label">First Name</label>
+                                <input type="text" id="first_name" name="first_name" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="last_name" class="form-label">Last Name</label>
+                                <input type="text" id="last_name" name="last_name" class="form-input" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email" class="form-label">Email Address</label>
+                                <input type="email" id="email" name="email" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone" class="form-label">Phone Number</label>
+                                <input type="tel" id="phone" name="phone" class="form-input">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject" class="form-label">Subject</label>
+                            <select id="subject" name="subject" class="form-select" required>
+                                <option value="">Select a topic</option>
+                                <option value="general">General Inquiry</option>
+                                <option value="volunteer">Volunteer Opportunities</option>
+                                <option value="partnership">Partnership/Collaboration</option>
+                                <option value="donation">Donation Support</option>
+                                <option value="media">Media Inquiry</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message" class="form-label">Message</label>
+                            <textarea id="message" name="message" class="form-textarea" rows="6" 
+                                placeholder="Tell us how we can help or how you'd like to get involved..." required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="contact-submit-btn">
+                            <i class="fas fa-paper-plane"></i>
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Contact Information -->
+                <div class="contact-info-section">
+                    <!-- Contact Details Card -->
+                    <div class="contact-info-card">
+                        <h3 class="card-title">
+                            <i class="fas fa-map-marker-alt card-icon"></i>
+                            Contact Information
+                        </h3>
+                        
+                        <div class="contact-items">
+                            <div class="contact-item">
+                                <div class="contact-item-icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div class="contact-item-content">
+                                    <h4>Visit Our Office</h4>
+                                    <p>123 Foundation Street<br>Garki, Abuja FCT<br>Nigeria</p>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-item">
+                                <div class="contact-item-icon">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div class="contact-item-content">
+                                    <h4>Call Us</h4>
+                                    <p><a href="tel:+2341234567890">+234 123 456 7890</a></p>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-item">
+                                <div class="contact-item-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="contact-item-content">
+                                    <h4>Email Us</h4>
+                                    <p><a href="mailto:hello@blackshepherdfoundation.org">hello@blackshepherdfoundation.org</a></p>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-item">
+                                <div class="contact-item-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="contact-item-content">
+                                    <h4>Office Hours</h4>
+                                    <p>Monday - Friday: 9:00 AM - 5:00 PM<br>
+                                    Saturday: 10:00 AM - 2:00 PM<br>
+                                    Sunday: Closed</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Social Media Card -->
+                    <div class="social-media-card">
+                        <h3 class="card-title">
+                            <i class="fab fa-instagram card-icon"></i>
+                            Follow Our Journey
+                        </h3>
+                        <p class="social-description">
+                            Stay updated with our latest campaigns, impact stories, and community events. 
+                            Follow us on Instagram for behind-the-scenes moments and real-time updates.
+                        </p>
+                        <a href="https://instagram.com/blakshepardwef" target="_blank" class="instagram-link">
+                            <i class="fab fa-instagram"></i>
+                            @blakshepardwef
+                        </a>
+                        
+                        <div class="social-stats">
+                            <div class="social-stat">
+                                <strong>5.2K</strong>
+                                <span>Followers</span>
+                            </div>
+                            <div class="social-stat">
+                                <strong>150+</strong>
+                                <span>Posts</span>
+                            </div>
+                            <div class="social-stat">
+                                <strong>25+</strong>
+                                <span>Stories Weekly</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions Card -->
+                    <div class="quick-actions-card">
+                        <h3 class="card-title">
+                            <i class="fas fa-rocket card-icon"></i>
+                            Take Action Now
+                        </h3>
+                        
+                        <div class="quick-action-items">
+                            <a href="/campaigns" class="quick-action-item">
+                                <div class="action-icon">
+                                    <i class="fas fa-heart"></i>
+                                </div>
+                                <div class="action-content">
+                                    <h4>Make a Donation</h4>
+                                    <p>Support our campaigns and create lasting impact</p>
+                                </div>
+                                <i class="fas fa-arrow-right action-arrow"></i>
+                            </a>
+                            
+                            <a href="#volunteer" class="quick-action-item">
+                                <div class="action-icon">
+                                    <i class="fas fa-hands-helping"></i>
+                                </div>
+                                <div class="action-content">
+                                    <h4>Volunteer with Us</h4>
+                                    <p>Join our community of change-makers</p>
+                                </div>
+                                <i class="fas fa-arrow-right action-arrow"></i>
+                            </a>
+                            
+                            <a href="#partnership" class="quick-action-item">
+                                <div class="action-icon">
+                                    <i class="fas fa-handshake"></i>
+                                </div>
+                                <div class="action-content">
+                                    <h4>Partner with Us</h4>
+                                    <p>Explore collaboration opportunities</p>
+                                </div>
+                                <i class="fas fa-arrow-right action-arrow"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Section -->
+    <section class="map-section">
+        <div class="container">
+            <div class="map-header">
+                <h2 class="section-title">Find Us</h2>
+                <p class="section-description">
+                    Located in the heart of Abuja, our office is easily accessible and we welcome visitors. 
+                    Feel free to drop by during our office hours or schedule an appointment.
+                </p>
+            </div>
+            
+            <div class="map-container">
+                <div class="map-placeholder">
+                    <div class="map-content">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <h3>Interactive Map</h3>
+                        <p>123 Foundation Street, Garki, Abuja FCT, Nigeria</p>
+                        <a href="https://maps.google.com/?q=Garki,Abuja,Nigeria" target="_blank" class="map-link">
+                            <i class="fas fa-external-link-alt"></i>
+                            Open in Google Maps
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-brand">
+                        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Black Shepherd Foundation" class="footer-logo">
+                        <h3>Black Shepherd</h3>
+                    </div>
+                    <p class="footer-description">
+                        Empowering women and girls across Africa through education, advocacy, and community support.
+                    </p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/about">About Us</a></li>
+                        <li><a href="/campaigns">Campaigns</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Get Involved</h4>
+                    <ul class="footer-links">
+                        <li><a href="/campaigns">Donate</a></li>
+                        <li><a href="#volunteer">Volunteer</a></li>
+                        <li><a href="#partnership">Partner with Us</a></li>
+                        <li><a href="#media">Media Inquiries</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <div class="footer-contact">
+                        <p><strong>Address:</strong><br>123 Foundation Street, Abuja, Nigeria</p>
+                        <p><strong>Email:</strong><br>hello@blackshepherdfoundation.org</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Black Shepherd Foundation. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

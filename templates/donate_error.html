@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donation Error - Black Shepherd Foundation</title>
+    <meta name="description" content="We encountered an issue processing your donation. Please try again or contact us for assistance.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <style>
+        .error-page {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            padding-top: 5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .error-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .error-card {
+            background: white;
+            border-radius: 1.5rem;
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            overflow: hidden;
+            text-align: center;
+        }
+        
+        .error-header {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            padding: 3rem 2rem;
+            position: relative;
+        }
+        
+        .error-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2.5rem;
+        }
+        
+        .error-title {
+            font-size: 2.25rem;
+            font-weight: 800;
+            margin-bottom: 0.75rem;
+            color: white;
+        }
+        
+        .error-subtitle {
+            font-size: 1.125rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 0;
+        }
+        
+        .error-content {
+            padding: 3rem 2rem;
+        }
+        
+        .error-message {
+            background: #fef2f2;
+            border-left: 4px solid #ef4444;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+        
+        .error-message h3 {
+            color: #b91c1c;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .error-message p {
+            color: #7f1d1d;
+            line-height: 1.6;
+            margin: 0.5rem 0;
+        }
+        
+        .error-details {
+            background: #f8fafc;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+        
+        .error-details h4 {
+            color: #1e293b;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .error-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .error-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e2e8f0;
+            color: #64748b;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+        
+        .error-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .error-list li::before {
+            content: "•";
+            color: #ef4444;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .retry-section {
+            background: #f0f9ff;
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .retry-title {
+            color: #0369a1;
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .retry-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .retry-option {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s ease;
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .retry-option:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .retry-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #0369a1;
+        }
+        
+        .retry-option-title {
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 0.75rem;
+            font-size: 1.125rem;
+        }
+        
+        .retry-description {
+            color: #64748b;
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+        
+        .alternative-methods {
+            background: #f1f5f9;
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .alternative-title {
+            color: #1e293b;
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .alternative-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .alternative-method {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+        
+        .method-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .method-icon {
+            font-size: 1.5rem;
+            color: #0f766e;
+        }
+        
+        .method-title {
+            font-weight: 700;
+            color: #1e293b;
+            margin: 0;
+        }
+        
+        .method-description {
+            color: #64748b;
+            font-size: 0.875rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+        
+        .method-contact {
+            font-weight: 600;
+            color: #0f766e;
+        }
+        
+        .contact-section {
+            background: #fefce8;
+            border-left: 4px solid #eab308;
+            border-radius: 0.75rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .contact-title {
+            color: #a16207;
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+        
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: #78350f;
+        }
+        
+        .contact-item a {
+            color: #a16207;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .contact-item a:hover {
+            text-decoration: underline;
+        }
+        
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #FF6B35, #E55A2B);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: #4b5563;
+            border: 2px solid #e5e7eb;
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.3);
+        }
+        
+        .btn-secondary:hover {
+            border-color: #FF6B35;
+            color: #FF6B35;
+        }
+        
+        .troubleshooting {
+            background: #f8fafc;
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+        
+        .troubleshooting-title {
+            color: #1e293b;
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .troubleshooting-steps {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .troubleshooting-steps li {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: white;
+            border-radius: 0.5rem;
+            border-left: 4px solid #3b82f6;
+            position: relative;
+        }
+        
+        .step-number {
+            position: absolute;
+            left: -12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 24px;
+            height: 24px;
+            background: #3b82f6;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+        
+        .step-title {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+            margin-left: 1rem;
+        }
+        
+        .step-description {
+            color: #64748b;
+            font-size: 0.875rem;
+            line-height: 1.5;
+            margin-left: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .error-container {
+                padding: 1rem;
+            }
+            
+            .error-header {
+                padding: 2rem 1.5rem;
+            }
+            
+            .error-content {
+                padding: 2rem 1.5rem;
+            }
+            
+            .error-title {
+                font-size: 1.875rem;
+            }
+            
+            .retry-options,
+            .alternative-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .contact-info {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Black Shepherd Foundation" class="logo">
+                <span class="brand-text">Black Shepherd</span>
+            </div>
+            
+            <div class="nav-links">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/about" class="nav-link">About</a>
+                <a href="/campaigns" class="nav-link">Campaigns</a>
+                <a href="/contact" class="nav-link">Contact</a>
+                <a href="/campaigns" class="btn btn-primary">Donate Now</a>
+            </div>
+            
+            <div class="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <a href="/" class="mobile-nav-link">Home</a>
+        <a href="/about" class="mobile-nav-link">About</a>
+        <a href="/campaigns" class="mobile-nav-link">Campaigns</a>
+        <a href="/contact" class="mobile-nav-link">Contact</a>
+        <a href="/campaigns" class="btn btn-primary">Donate Now</a>
+    </div>
+
+    <!-- Error Page Content -->
+    <div class="error-page">
+        <div class="error-container">
+            <div class="error-card">
+                <!-- Error Header -->
+                <div class="error-header">
+                    <div class="error-icon">⚠️</div>
+                    <h1 class="error-title">Payment Error</h1>
+                    <p class="error-subtitle">We encountered an issue processing your donation</p>
+                </div>
+                
+                <!-- Error Content -->
+                <div class="error-content">
+                    <!-- Error Message -->
+                    <div class="error-message">
+                        <h3>What happened?</h3>
+                        <p>Your payment could not be processed at this time. This could be due to various reasons, and we're here to help you complete your donation.</p>
+                        <p>Don't worry - no money has been charged to your account.</p>
+                    </div>
+                    
+                    <!-- Common Causes -->
+                    <div class="error-details">
+                        <h4>Common causes include:</h4>
+                        <ul class="error-list">
+                            <li>Insufficient funds or daily spending limit reached</li>
+                            <li>Card information entered incorrectly</li>
+                            <li>Bank security measures blocking the transaction</li>
+                            <li>Temporary network or system issues</li>
+                            <li>Card expired or blocked</li>
+                            <li>International transaction restrictions</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Troubleshooting Steps -->
+                    <div class="troubleshooting">
+                        <h3 class="troubleshooting-title">Try These Steps</h3>
+                        <ol class="troubleshooting-steps">
+                            <li>
+                                <span class="step-number">1</span>
+                                <div class="step-title">Check your card details</div>
+                                <div class="step-description">Verify card number, expiry date, CVV, and billing address are correct</div>
+                            </li>
+                            <li>
+                                <span class="step-number">2</span>
+                                <div class="step-title">Try a different card</div>
+                                <div class="step-description">Use another debit/credit card or payment method</div>
+                            </li>
+                            <li>
+                                <span class="step-number">3</span>
+                                <div class="step-title">Contact your bank</div>
+                                <div class="step-description">Your bank may have blocked the transaction for security reasons</div>
+                            </li>
+                            <li>
+                                <span class="step-number">4</span>
+                                <div class="step-title">Try again later</div>
+                                <div class="step-description">Wait a few minutes and retry your donation</div>
+                            </li>
+                        </ol>
+                    </div>
+                    
+                    <!-- Retry Options -->
+                    <div class="retry-section">
+                        <h3 class="retry-title">Try Again</h3>
+                        <div class="retry-options">
+                            <a href="{{ url_for('campaigns') }}" class="retry-option">
+                                <div class="retry-icon">🔄</div>
+                                <h4 class="retry-option-title">Retry Payment</h4>
+                                <p class="retry-description">Go back and try your donation again with the same or different payment method</p>
+                            </a>
+                            
+                            <a href="{{ url_for('campaigns') }}" class="retry-option">
+                                <div class="retry-icon">💳</div>
+                                <h4 class="retry-option-title">Different Amount</h4>
+                                <p class="retry-description">Try donating a different amount that might be within your card limits</p>
+                            </a>
+                            
+                            <a href="javascript:location.reload()" class="retry-option">
+                                <div class="retry-icon">🔃</div>
+                                <h4 class="retry-option-title">Refresh Page</h4>
+                                <p class="retry-description">Refresh this page and try the donation process again</p>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Alternative Methods -->
+                    <div class="alternative-methods">
+                        <h3 class="alternative-title">Alternative Ways to Donate</h3>
+                        <div class="alternative-grid">
+                            <div class="alternative-method">
+                                <div class="method-header">
+                                    <div class="method-icon">🏦</div>
+                                    <h4 class="method-title">Bank Transfer</h4>
+                                </div>
+                                <p class="method-description">Transfer directly to our bank account for larger donations</p>
+                                <div class="method-contact">Account: Black Shepherd Foundation<br>Bank: Access Bank Nigeria<br>Account No: 1234567890</div>
+                            </div>
+                            
+                            <div class="alternative-method">
+                                <div class="method-header">
+                                    <div class="method-icon">📱</div>
+                                    <h4 class="method-title">Mobile Money</h4>
+                                </div>
+                                <p class="method-description">Use your mobile money wallet for quick donations</p>
+                                <div class="method-contact">Send to: 09123456789<br>Account Name: Black Shepherd Foundation</div>
+                            </div>
+                            
+                            <div class="alternative-method">
+                                <div class="method-header">
+                                    <div class="method-icon">📞</div>
+                                    <h4 class="method-title">Phone Donation</h4>
+                                </div>
+                                <p class="method-description">Call us to process your donation over the phone</p>
+                                <div class="method-contact">Call: <a href="tel:+234 9124211336">+234 9124211336</a><br>Available: Mon-Fri 9AM-5PM</div>
+                            </div>
+                            
+                            <div class="alternative-method">
+                                <div class="method-header">
+                                    <div class="method-icon">✉️</div>
+                                    <h4 class="method-title">Check/Money Order</h4>
+                                </div>
+                                <p class="method-description">Mail your donation via check or money order</p>
+                                <div class="method-contact">Mail to:<br>Black Shepherd Foundation<br>P.O. Box 12345<br>Abuja, FCT, Nigeria</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Contact Section -->
+                    <div class="contact-section">
+                        <h3 class="contact-title">Need Help? We're Here for You</h3>
+                        <p style="color: #78350f; margin-bottom: 1.5rem;">
+                            Our team is ready to help you complete your donation. Don't hesitate to reach out!
+                        </p>
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <span>📞</span>
+                                <div>
+                                    <strong>Phone:</strong><br>
+                                    <a href="tel:+2341234567890">+234 9124211336</a>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <span>📧</span>
+                                <div>
+                                    <strong>Email:</strong><br>
+                                    <a href="mailto:donations@blackshepherd.org">donations@blackshepherd.org</a>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <span>💬</span>
+                                <div>
+                                    <strong>WhatsApp:</strong><br>
+                                    <a href="https://wa.me/2341234567890">+234 123 456 7890</a>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <span>⏰</span>
+                                <div>
+                                    <strong>Hours:</strong><br>
+                                    Mon-Fri: 9AM-5PM WAT
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Action Buttons -->
+                    <div class="action-buttons">
+                        <a href="{{ url_for('campaigns') }}" class="btn-primary">Try Again</a>
+                        <a href="{{ url_for('contact') }}" class="btn-secondary">Contact Support</a>
+                        <a href="/" class="btn-secondary">Return Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script>
+        // Auto-retry mechanism
+        let retryCount = 0;
+        const maxRetries = 3;
+        
+        function enableAutoRetry() {
+            if (retryCount < maxRetries) {
+                setTimeout(() => {
+                    const retryNotice = document.createElement('div');
+                    retryNotice.style.cssText = `
+                        position: fixed;
+                        bottom: 20px;
+                        right: 20px;
+                        background: #3b82f6;
+                        color: white;
+                        padding: 1rem;
+                        border-radius: 0.5rem;
+                        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+                        z-index: 1000;
+                    `;
+                    retryNotice.innerHTML = `
+                        <p style="margin: 0; margin-bottom: 0.5rem;">Want to try again?</p>
+                        <button onclick="window.location.href='{{ url_for('campaigns') }}'" 
+                                style="background: white; color: #3b82f6; border: none; padding: 0.5rem 1rem; border-radius: 0.25rem; cursor: pointer;">
+                            Retry Donation
+                        </button>
+                    `;
+                    document.body.appendChild(retryNotice);
+                    
+                    setTimeout(() => {
+                        if (retryNotice.parentNode) {
+                            retryNotice.parentNode.removeChild(retryNotice);
+                        }
+                    }, 10000);
+                }, 5000);
+                
+                retryCount++;
+            }
+        }
+        
+        // Check if user came from a payment attempt
+        if (document.referrer.includes('/campaign/') || document.referrer.includes('/process-donation')) {
+            enableAutoRetry();
+        }
+        
+        // Track error for analytics
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'donation_error', {
+                'error_type': 'payment_processing',
+                'page_path': window.location.pathname
+            });
+        }
+    </script>
+</body>
+</html>

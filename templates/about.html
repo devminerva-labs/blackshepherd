@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - {{ config.SITE_NAME }}</title>
+    <meta name="description" content="Learn about Black Shepherd Foundation's mission to empower women and girls across Africa through education, advocacy, and community support.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Black Shepherd Foundation" class="logo">
+                <span class="brand-text">Black Shepherd</span>
+            </div>
+            
+            <div class="nav-links">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/about" class="nav-link active">About</a>
+                <a href="/campaigns" class="nav-link">Campaigns</a>
+                <a href="/contact" class="nav-link">Contact</a>
+                <a href="/campaigns" class="btn btn-primary">Donate Now</a>
+            </div>
+            
+            <div class="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <a href="/" class="mobile-nav-link">Home</a>
+        <a href="/about" class="mobile-nav-link">About</a>
+        <a href="/campaigns" class="mobile-nav-link">Campaigns</a>
+        <a href="/contact" class="mobile-nav-link">Contact</a>
+        <a href="/campaigns" class="btn btn-primary">Donate Now</a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="about-hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="hero-title">Bringing a Little Light</h1>
+                    <p class="hero-subtitle">Empowering women and girls across Africa through education, advocacy, and community support</p>
+                    <div class="hero-tagline">
+                        <span class="tagline-text">"Together, we can ignite the change we wish to see in the world"</span>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="{{ url_for('static', filename='images/about-hero.jpg') }}" alt="Women empowerment in Africa" class="hero-img">
+                    <div class="hero-overlay"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="mission-section">
+        <div class="container">
+            <div class="section-content">
+                <div class="section-text">
+                    <h2 class="section-title">Our Mission</h2>
+                    <p class="mission-text">
+                        We are on a mission to transform the lives of women and girls across Africa, championing their rights, 
+                        amplifying their voices, and igniting their potential. In a world where women often face insurmountable 
+                        challenges, we believe that empowerment is not just a goal but a necessity.
+                    </p>
+                    <p class="mission-text">
+                        Our work is not just about addressing immediate needs; it's about fostering long-lasting change. 
+                        We are dedicated to breaking down the systemic barriers that perpetuate inequality—whether through 
+                        education, advocacy, or direct support services.
+                    </p>
+                </div>
+                <div class="mission-visual">
+                    <div class="mission-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">2,500+</div>
+                            <div class="stat-label">Lives Impacted</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">15</div>
+                            <div class="stat-label">Communities Served</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">150+</div>
+                            <div class="stat-label">Women Empowered</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Founder Section -->
+    <section class="founder-section">
+        <div class="container">
+            <h2 class="section-title">Meet Our Founder</h2>
+            <div class="founder-content">
+                <div class="founder-image">
+                    <img src="{{ url_for('static', filename='images/team/ami.jpg') }}" alt="Ami Ubeh - Founder" class="founder-img">
+                    <div class="founder-badge">
+                        <span class="badge-text">Founder</span>
+                    </div>
+                </div>
+                <div class="founder-info">
+                    <h3 class="founder-name">Ami Ubeh</h3>
+                    <p class="founder-title">Founder, Black Shepherd Foundation</p>
+                    <div class="founder-message">
+                        <p>
+                            "As the founder of this NGO, I am filled with immense pride and gratitude to share our journey with you. 
+                            Our team is driven by a shared vision of a future where every woman can thrive, unencumbered by fear or discrimination."
+                        </p>
+                        <p>
+                            "We know that the road ahead is challenging, but we are inspired daily by the women we meet—those who 
+                            overcome adversity with grace and tenacity. Their stories fuel our passion and remind us of the impact 
+                            we can make together."
+                        </p>
+                    </div>
+                    <div class="founder-contact">
+                        <a href="/contact" class="btn btn-primary">Get In Touch</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="values-section">
+        <div class="container">
+            <h2 class="section-title">Our Values & Approach</h2>
+            <div class="values-grid">
+                <div class="value-item">
+                    <div class="value-icon">🤝</div>
+                    <h3 class="value-title">Community Collaboration</h3>
+                    <p class="value-description">
+                        Every initiative we undertake is rooted in collaboration and respect for the communities we serve, 
+                        ensuring that the voices of women guide our actions.
+                    </p>
+                </div>
+                <div class="value-item">
+                    <div class="value-icon">⚖️</div>
+                    <h3 class="value-title">Social Justice</h3>
+                    <p class="value-description">
+                        We come from diverse backgrounds, each of us united by a commitment to social justice and a deep 
+                        respect for the resilience and strength of women.
+                    </p>
+                </div>
+                <div class="value-item">
+                    <div class="value-icon">🌱</div>
+                    <h3 class="value-title">Sustainable Change</h3>
+                    <p class="value-description">
+                        We focus on breaking down systemic barriers that perpetuate inequality through education, advocacy, 
+                        and direct support services for lasting impact.
+                    </p>
+                </div>
+                <div class="value-item">
+                    <div class="value-icon">💪</div>
+                    <h3 class="value-title">Empowerment</h3>
+                    <p class="value-description">
+                        We cultivate a world where women are empowered to take charge of their destinies, challenge societal norms, 
+                        and build a future filled with hope and opportunity.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact Areas -->
+    <section class="impact-areas">
+        <div class="container">
+            <h2 class="section-title">Where We Make Impact</h2>
+            <div class="impact-grid">
+                <div class="impact-area">
+                    <div class="area-image">
+                        <img src="{{ url_for('static', filename='images/impact/education.jpg') }}" alt="Education programs">
+                    </div>
+                    <div class="area-content">
+                        <h3>Education & Literacy</h3>
+                        <p>Providing educational opportunities and resources to empower women and girls with knowledge and skills for a better future.</p>
+                    </div>
+                </div>
+                <div class="impact-area">
+                    <div class="area-image">
+                        <img src="{{ url_for('static', filename='images/impact/advocacy.jpg') }}" alt="Advocacy work">
+                    </div>
+                    <div class="area-content">
+                        <h3>Advocacy & Rights</h3>
+                        <p>Championing women's rights and amplifying their voices to create policy changes and social awareness.</p>
+                    </div>
+                </div>
+                <div class="impact-area">
+                    <div class="area-image">
+                        <img src="{{ url_for('static', filename='images/impact/support.jpg') }}" alt="Direct support services">
+                    </div>
+                    <div class="area-content">
+                        <h3>Direct Support Services</h3>
+                        <p>Offering immediate assistance and resources to women facing challenges, providing safety nets and pathways to independence.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Message -->
+    <section class="team-message">
+        <div class="container">
+            <div class="message-content">
+                <h2>A Message from Our Team</h2>
+                <div class="message-text">
+                    <p>
+                        "We invite you to join us on this meaningful journey. Your support—whether through time, resources, 
+                        or spreading the word—helps us create a ripple effect of change. Together, we can cultivate a world 
+                        where women are empowered to take charge of their destinies, challenge societal norms, and build a 
+                        future filled with hope and opportunity."
+                    </p>
+                    <p>
+                        "Together, we are committed to fostering a community of empowerment, love, and resilience. 
+                        Let's continue to uplift and inspire each other on this journey toward equality and justice."
+                    </p>
+                </div>
+                <div class="team-signature">
+                    <p class="signature-text">With heartfelt appreciation,</p>
+                    <p class="signature-name">The Black Shepherd Foundation Team</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="about-cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Join Our Mission</h2>
+                <p>Together, we can ignite the change we wish to see in the world. Every contribution creates a ripple effect of empowerment across Africa.</p>
+                <div class="cta-actions">
+                    <a href="/campaigns" class="btn btn-primary btn-large">Support Our Campaigns</a>
+                    <a href="/contact" class="btn btn-outline btn-large">Get Involved</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-brand">
+                        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Black Shepherd Foundation" class="footer-logo">
+                        <span class="footer-brand-text">Black Shepherd Foundation</span>
+                    </div>
+                    <p class="footer-description">
+                        Empowering women and communities across Africa through 
+                        education, healthcare, and sustainable development.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">📘</a>
+                        <a href="#" class="social-link">🐦</a>
+                        <a href="#" class="social-link">📸</a>
+                        <a href="#" class="social-link">💼</a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4 class="footer-title">Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="/about">About Us</a></li>
+                        <li><a href="/campaigns">Campaigns</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4 class="footer-title">Our Programs</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Education</a></li>
+                        <li><a href="#">Advocacy</a></li>
+                        <li><a href="#">Direct Support</a></li>
+                        <li><a href="#">Women Empowerment</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4 class="footer-title">Contact Info</h4>
+                    <div class="contact-item">
+                        <span class="contact-label">Phone:</span>
+                        <span class="contact-value">+234 9124211336</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-label">Email:</span>
+                        <span class="contact-value">info@blackshepherd.org</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-label">Address:</span>
+                        <span class="contact-value">Abuja, FCT, Nigeria</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Black Shepherd Foundation. All rights reserved.</p>
+                <p>Built with ❤️ for African communities</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

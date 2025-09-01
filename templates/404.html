@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found - Black Shepherd Foundation</title>
+    <meta name="description" content="The page you're looking for doesn't exist. Find what you need or return to Black Shepherd Foundation homepage.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <style>
+        .error-404-page {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            padding-top: 5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .error-404-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .error-404-card {
+            background: white;
+            border-radius: 1.5rem;
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            overflow: hidden;
+        }
+        
+        .error-404-header {
+            background: linear-gradient(135deg, #FF6B35, #E55A2B);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            position: relative;
+        }
+        
+        .error-404-number {
+            font-size: 8rem;
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .error-404-title {
+            font-size: 2.25rem;
+            font-weight: 800;
+            margin-bottom: 0.75rem;
+            color: white;
+        }
+        
+        .error-404-subtitle {
+            font-size: 1.125rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 0;
+        }
+        
+        .error-404-content {
+            padding: 3rem 2rem;
+        }
+        
+        .search-section {
+            background: #f0f9ff;
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .search-title {
+            color: #0369a1;
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .search-form {
+            display: flex;
+            gap: 1rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .search-input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            transition: border-color 0.2s ease;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: #FF6B35;
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+        }
+        
+        .search-btn {
+            background: linear-gradient(135deg, #FF6B35, #E55A2B);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .search-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.3);
+        }
+        
+        .popular-pages {
+            margin-bottom: 2rem;
+        }
+        
+        .popular-title {
+            color: #1e293b;
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .popular-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .popular-item {
+            background: white;
+            border: 2px solid #f1f5f9;
+            border-radius: 1rem;
+            padding: 2rem;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .popular-item:hover {
+            transform: translateY(-4px);
+            border-color: #FF6B35;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .popular-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .popular-item-title {
+            font-weight: 700;
+            color: #1e293b;
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .popular-description {
+            color: #64748b;
+            font-size: 0.875rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+        
+        .popular-link {
+            color: #FF6B35;
+            font-weight: 600;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .quick-actions {
+            background: #fef3c7;
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .quick-actions-title {
+            color: #92400e;
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .quick-actions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        .quick-action {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.2s ease;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .quick-action:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .action-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #92400e;
+        }
+        
+        .action-title {
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+        
+        .action-description {
+            color: #64748b;
+            font-size: 0.875rem;
+        }
+        
+        .help-section {
+            background: #f1f5f9;
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .help-title {
+            color: #1e293b;
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+        
+        .help-text {
+            color: #64748b;
+            margin-bottom: 2rem;
+        }
+        
+        .help-contacts {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .help-contact {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .help-contact:hover {
+            text-decoration: none;
+            color: #FF6B35;
+        }
+        
+        .contact-icon {
+            font-size: 1.5rem;
+            color: #FF6B35;
+        }
+        
+        .contact-label {
+            font-weight: 600;
+            color: #1e293b;
+        }
+        
+        .contact-value {
+            font-size: 0.875rem;
+            color: #64748b;
+        }
+        
+        .back-home {
+            text-align: center;
+        }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: linear-gradient(135deg, #FF6B35, #E55A2B);
+            color: white;
+            padding: 1.25rem 2.5rem;
+            border-radius: 0.75rem;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.125rem;
+            transition: all 0.3s ease;
+        }
+        
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.3);
+            text-decoration: none;
+            color: white;
+        }
+        
+        .breadcrumb-suggestion {
+            background: #ecfdf5;
+            border-left: 4px solid #10b981;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .breadcrumb-suggestion p {
+            color: #047857;
+            margin: 0;
+            font-size: 0.875rem;
+        }
+        
+        @media (max-width: 768px) {
+            .error-404-container {
+                padding: 1rem;
+            }
+            
+            .error-404-header {
+                padding: 2rem 1.5rem;
+            }
+            
+            .error-404-content {
+                padding: 2rem 1.5rem;
+            }
+            
+            .error-404-number {
+                font-size: 6rem;
+            }
+            
+            .error-404-title {
+                font-size: 1.875rem;
+            }
+            
+            .search-form {
+                flex-direction: column;
+            }
+            
+            .popular-grid,
+            .quick-actions-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .help-contacts {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Black Shepherd Foundation" class="logo">
+                <span class="brand-text">Black Shepherd</span>
+            </div>
+            
+            <div class="nav-links">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/about" class="nav-link">About</a>
+                <a href="/campaigns" class="nav-link">Campaigns</a>
+                <a href="/contact" class="nav-link">Contact</a>
+                <a href="/campaigns" class="btn btn-primary">Donate Now</a>
+            </div>
+            
+            <div class="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <a href="/" class="mobile-nav-link">Home</a>
+        <a href="/about" class="mobile-nav-link">About</a>
+        <a href="/campaigns" class="mobile-nav-link">Campaigns</a>
+        <a href="/contact" class="mobile-nav-link">Contact</a>
+        <a href="/campaigns" class="btn btn-primary">Donate Now</a>
+    </div>
+
+    <!-- 404 Error Page Content -->
+    <div class="error-404-page">
+        <div class="error-404-container">
+            <div class="error-404-card">
+                <!-- 404 Header -->
+                <div class="error-404-header">
+                    <div class="error-404-number">404</div>
+                    <h1 class="error-404-title">Page Not Found</h1>
+                    <p class="error-404-subtitle">The page you're looking for doesn't exist or has been moved</p>
+                </div>
+                
+                <!-- 404 Content -->
+                <div class="error-404-content">
+                    <!-- Breadcrumb Suggestion -->
+                    <div class="breadcrumb-suggestion">
+                        <p>
+                            <strong>Tip:</strong> Check the URL for typos, or use the search below to find what you need.
+                        </p>
+                    </div>
+                    
+                    <!-- Search Section -->
+                    <div class="search-section">
+                        <h3 class="search-title">Search Our Site</h3>
+                        <form class="search-form" action="/search" method="get">
+                            <input type="text" name="q" class="search-input" placeholder="Search for campaigns, pages, or information..." required>
+                            <button type="submit" class="search-btn">Search</button>
+                        </form>
+                    </div>
+                    
+                    <!-- Popular Pages -->
+                    <div class="popular-pages">
+                        <h3 class="popular-title">Popular Pages</h3>
+                        <div class="popular-grid">
+                            <a href="/campaigns" class="popular-item">
+                                <span class="popular-icon">🎯</span>
+                                <h4 class="popular-item-title">Our Campaigns</h4>
+                                <p class="popular-description">Discover active campaigns making a difference across Africa</p>
+                                <span class="popular-link">View Campaigns →</span>
+                            </a>
+                            
+                            <a href="/about" class="popular-item">
+                                <span class="popular-icon">🏢</span>
+                                <h4 class="popular-item-title">About Us</h4>
+                                <p class="popular-description">Learn about our mission and the team behind Black Shepherd</p>
+                                <span class="popular-link">About Us →</span>
+                            </a>
+                            
+                            <a href="/contact" class="popular-item">
+                                <span class="popular-icon">📞</span>
+                                <h4 class="popular-item-title">Contact</h4>
+                                <p class="popular-description">Get in touch for partnerships, volunteering, or support</p>
+                                <span class="popular-link">Contact Us →</span>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Quick Actions -->
+                    <div class="quick-actions">
+                        <h3 class="quick-actions-title">Quick Actions</h3>
+                        <div class="quick-actions-grid">
+                            <a href="/campaigns" class="quick-action">
+                                <div class="action-icon">💝</div>
+                                <h4 class="action-title">Make a Donation</h4>
+                                <p class="action-description">Support our active campaigns</p>
+                            </a>
+                            
+                            <a href="/contact" class="quick-action">
+                                <div class="action-icon">🤝</div>
+                                <h4 class="action-title">Volunteer</h4>
+                                <p class="action-description">Join our mission</p>
+                            </a>
+                            
+                            <a href="/about" class="quick-action">
+                                <div class="action-icon">📚</div>
+                                <h4 class="action-title">Learn More</h4>
+                                <p class="action-description">Discover our impact</p>
+                            </a>
+                            
+                            <a href="/contact" class="quick-action">
+                                <div class="action-icon">🏢</div>
+                                <h4 class="action-title">Partner</h4>
+                                <p class="action-description">Collaborate with us</p>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Help Section -->
+                    <div class="help-section">
+                        <h3 class="help-title">Still Need Help?</h3>
+                        <p class="help-text">
+                            Can't find what you're looking for? Our team is here to help you navigate our site and find the information you need.
+                        </p>
+                        <div class="help-contacts">
+                            <a href="mailto:info@blackshepherd.org" class="help-contact">
+                                <div class="contact-icon">📧</div>
+                                <div class="contact-label">Email Us</div>
+                                <div class="contact-value">info@blackshepherd.org</div>
+                            </a>
+                            
+                            <a href="tel:+2341234567890" class="help-contact">
+                                <div class="contact-icon">📞</div>
+                                <div class="contact-label">Call Us</div>
+                                <div class="contact-value">+234 9124211336</div>
+                            </a>
+                            
+                            <a href="https://wa.me/2341234567890" class="help-contact">
+                                <div class="contact-icon">💬</div>
+                                <div class="contact-label">WhatsApp</div>
+                                <div class="contact-value">Message Us</div>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Back to Home -->
+                    <div class="back-home">
+                        <a href="/" class="back-btn">
+                            <span>🏠</span> Return to Homepage
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script>
+        // Enhanced search functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchForm = document.querySelector('.search-form');
+            const searchInput = document.querySelector('.search-input');
+            
+            // Auto-focus on search input
+            searchInput.focus();
+            
+            // Search suggestions (you can customize these based on your content)
+            const searchSuggestions = [
+                'donate',
+                'campaigns',
+                'volunteer',
+                'about us',
+                'contact',
+                'clean water',
+                'education',
+                'women empowerment',
+                'partnership',
+                'impact'
+            ];
+            
+            // Simple search suggestion functionality
+            searchInput.addEventListener('input', function() {
+                const query = this.value.toLowerCase();
+                if (query.length > 2) {
+                    const suggestions = searchSuggestions.filter(suggestion => 
+                        suggestion.includes(query)
+                    );
+                    
+                    if (suggestions.length > 0) {
+                        showSearchSuggestions(suggestions);
+                    } else {
+                        hideSearchSuggestions();
+                    }
+                } else {
+                    hideSearchSuggestions();
+                }
+            });
+            
+            function showSearchSuggestions(suggestions) {
+                hideSearchSuggestions(); // Remove any existing suggestions
+                
+                const suggestionContainer = document.createElement('div');
+                suggestionContainer.className = 'search-suggestions';
+                suggestionContainer.style.cssText = `
+                    position: absolute;
+                    top: 100%;
+                    left: 0;
+                    right: 0;
+                    background: white;
+                    border: 1px solid #e2e8f0;
+                    border-radius: 0.5rem;
+                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                    z-index: 10;
+                    margin-top: 0.25rem;
+                `;
+                
+                suggestions.slice(0, 5).forEach(suggestion => {
+                    const suggestionItem = document.createElement('div');
+                    suggestionItem.textContent = suggestion;
+                    suggestionItem.style.cssText = `
+                        padding: 0.75rem 1rem;
+                        cursor: pointer;
+                        border-bottom: 1px solid #f1f5f9;
+                        transition: background 0.2s ease;
+                    `;
+                    
+                    suggestionItem.addEventListener('mouseenter', () => {
+                        suggestionItem.style.background = '#f8fafc';
+                    });
+                    
+                    suggestionItem.addEventListener('mouseleave', () => {
+                        suggestionItem.style.background = '';
+                    });
+                    
+                    suggestionItem.addEventListener('click', () => {
+                        searchInput.value = suggestion;
+                        hideSearchSuggestions();
+                        performSearch(suggestion);
+                    });
+                    
+                    suggestionContainer.appendChild(suggestionItem);
+                });
+                
+                // Position relative to search form
+                const searchFormRect = searchForm.getBoundingClientRect();
+                searchForm.style.position = 'relative';
+                searchForm.appendChild(suggestionContainer);
+            }
+            
+            function hideSearchSuggestions() {
+                const existing = document.querySelector('.search-suggestions');
+                if (existing) {
+                    existing.remove();
+                }
+            }
+            
+            // Handle search form submission
+            searchForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const query = searchInput.value.trim();
+                if (query) {
+                    performSearch(query);
+                }
+            });
+            
+            function performSearch(query) {
+                // Simple search logic - redirect to appropriate pages based on keywords
+                const lowercaseQuery = query.toLowerCase();
+                
+                if (lowercaseQuery.includes('donate') || lowercaseQuery.includes('campaign')) {
+                    window.location.href = '/campaigns';
+                } else if (lowercaseQuery.includes('about') || lowercaseQuery.includes('mission') || lowercaseQuery.includes('team')) {
+                    window.location.href = '/about';
+                } else if (lowercaseQuery.includes('contact') || lowercaseQuery.includes('volunteer') || lowercaseQuery.includes('partner')) {
+                    window.location.href = '/contact';
+                } else {
+                    // Default to campaigns page with search parameter
+                    window.location.href = '/campaigns?search=' + encodeURIComponent(query);
+                }
+            }
+            
+            // Hide suggestions when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!searchForm.contains(e.target)) {
+                    hideSearchSuggestions();
+                }
+            });
+        });
+        
+        // Track 404 errors for analytics
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'page_not_found', {
+                'page_path': window.location.pathname,
+                'referrer': document.referrer
+            });
+        }
+        
+        // Check if user came from internal link and suggest alternatives
+        if (document.referrer && document.referrer.includes(window.location.hostname)) {
+            setTimeout(() => {
+                const suggestion = document.createElement('div');
+                suggestion.style.cssText = `
+                    position: fixed;
+                    bottom: 20px;
+                    right: 20px;
+                    background: #3b82f6;
+                    color: white;
+                    padding: 1rem;
+                    border-radius: 0.5rem;
+                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                    z-index: 1000;
+                    max-width: 300px;
+                `;
+                suggestion.innerHTML = `
+                    <p style="margin: 0; margin-bottom: 0.5rem; font-size: 0.875rem;">
+                        It looks like you followed a broken link. Would you like to go back?
+                    </p>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button onclick="history.back()" style="background: white; color: #3b82f6; border: none; padding: 0.5rem 1rem; border-radius: 0.25rem; cursor: pointer; font-size: 0.75rem;">
+                            Go Back
+                        </button>
+                        <button onclick="this.parentElement.parentElement.remove()" style="background: transparent; color: white; border: 1px solid white; padding: 0.5rem 1rem; border-radius: 0.25rem; cursor: pointer; font-size: 0.75rem;">
+                            Close
+                        </button>
+                    </div>
+                `;
+                document.body.appendChild(suggestion);
+                
+                // Auto-remove after 10 seconds
+                setTimeout(() => {
+                    if (suggestion.parentNode) {
+                        suggestion.parentNode.removeChild(suggestion);
+                    }
+                }, 10000);
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
