@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 </head>
 <body>
@@ -235,81 +236,46 @@
         </div>
     </section>
 
-    <!-- Call to Action -->
-    <section class="about-cta">
-        <div class="container">
-            <div class="cta-content">
-                <h2>Join Our Mission</h2>
-                <p>Together, we can ignite the change we wish to see in the world. Every contribution creates a ripple effect of empowerment across Africa.</p>
-                <div class="cta-actions">
-                    <a href="/campaigns" class="btn btn-primary btn-large">Support Our Campaigns</a>
-                    <a href="/contact" class="btn btn-outline btn-large">Get Involved</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
+   
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-section">
+                
+                <!-- Brand Section - Simple -->
+                <div class="footer-brand-section">
                     <div class="footer-brand">
                         <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Black Shepherd Foundation" class="footer-logo">
-                        <span class="footer-brand-text">Black Shepherd Foundation</span>
+                        <div class="brand-text">
+                            <h3 class="footer-brand-name">Black Shepherd</h3>
+                            <p class="footer-tagline">"Bringing a Little Light"</p>
+                        </div>
                     </div>
-                    <p class="footer-description">
-                        Empowering women and communities across Africa through 
-                        education, healthcare, and sustainable development.
-                    </p>
-                    <div class="social-links">
-                        <a href="#" class="social-link">📘</a>
-                        <a href="#" class="social-link">🐦</a>
-                        <a href="#" class="social-link">📸</a>
-                        <a href="#" class="social-link">💼</a>
-                    </div>
+                    
                 </div>
                 
-                <div class="footer-section">
-                    <h4 class="footer-title">Quick Links</h4>
-                    <ul class="footer-links">
-                        <li><a href="/about">About Us</a></li>
-                        <li><a href="/campaigns">Campaigns</a></li>
-                        <li><a href="/contact">Contact</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h4 class="footer-title">Our Programs</h4>
-                    <ul class="footer-links">
-                        <li><a href="#">Education</a></li>
-                        <li><a href="#">Advocacy</a></li>
-                        <li><a href="#">Direct Support</a></li>
-                        <li><a href="#">Women Empowerment</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h4 class="footer-title">Contact Info</h4>
+                <!-- Single Line: Phone + Email + Instagram -->
+                <div class="footer-contact-section">
                     <div class="contact-item">
-                        <span class="contact-label">Phone:</span>
-                        <span class="contact-value">+234 9124211336</span>
+                        <i class="fas fa-phone"></i>
+                        <a href="tel:+2349124211336">+234 912 421 1336</a>
                     </div>
                     <div class="contact-item">
-                        <span class="contact-label">Email:</span>
-                        <span class="contact-value">info@blackshepherd.org</span>
+                        <i class="fas fa-envelope"></i>
+                        <a href="mailto:hello@blackshepherd.org">hello@blackshepherd.org</a>
                     </div>
-                    <div class="contact-item">
-                        <span class="contact-label">Address:</span>
-                        <span class="contact-value">Abuja, FCT, Nigeria</span>
-                    </div>
+                    <a href="#" class="social-link" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                        <span>@blackshepherd</span>
+                    </a>
                 </div>
             </div>
             
+            <!-- Footer Bottom -->
             <div class="footer-bottom">
-                <p>&copy; 2025 Black Shepherd Foundation. All rights reserved.</p>
-                <p>Built with ❤️ for African communities</p>
+                <p class="footer-copyright">
+                    © 2025 Black Shepherd Foundation. All rights reserved.
+                </p>
             </div>
         </div>
     </footer>

@@ -236,70 +236,47 @@
     </section>
 
     <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <div class="footer-brand">
-                        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Black Shepherd Foundation" class="footer-logo">
-                        <span class="footer-brand-text">Black Shepherd Foundation</span>
-                    </div>
-                    <p class="footer-description">
-                        Empowering women and communities across Africa through 
-                        education, healthcare, and sustainable development.
-                    </p>
-                    <div class="social-links">
-                        <a href="#" class="social-link">📘</a>
-                        <a href="#" class="social-link">🐦</a>
-                        <a href="#" class="social-link">📸</a>
-                        <a href="#" class="social-link">💼</a>
+   <footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            
+            <!-- Brand Section - Simple -->
+            <div class="footer-brand-section">
+                <div class="footer-brand">
+                    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Black Shepherd Foundation" class="footer-logo">
+                    <div class="brand-text">
+                        <h3 class="footer-brand-name">Black Shepherd</h3>
+                        <p class="footer-tagline">"Bringing a Little Light"</p>
                     </div>
                 </div>
                 
-                <div class="footer-section">
-                    <h4 class="footer-title">Quick Links</h4>
-                    <ul class="footer-links">
-                        <li><a href="/about">About Us</a></li>
-                        <li><a href="/campaigns">Campaigns</a></li>
-                        <li><a href="/contact">Contact</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h4 class="footer-title">Our Programs</h4>
-                    <ul class="footer-links">
-                        <li><a href="#">Education</a></li>
-                        <li><a href="#">Healthcare</a></li>
-                        <li><a href="#">Clean Water</a></li>
-                        <li><a href="#">Women Empowerment</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h4 class="footer-title">Contact Info</h4>
-                    <div class="contact-item">
-                        <span class="contact-label">Phone:</span>
-                        <span class="contact-value">+234 9124211336</span>
-                    </div>
-                    <div class="contact-item">
-                        <span class="contact-label">Email:</span>
-                        <span class="contact-value">info@blackshepherd.org</span>
-                    </div>
-                    <div class="contact-item">
-                        <span class="contact-label">Address:</span>
-                        <span class="contact-value">Abuja, FCT, Nigeria</span>
-                    </div>
-                </div>
             </div>
             
-            <div class="footer-bottom">
-                <p>&copy; 2025 Black Shepherd Foundation. All rights reserved.</p>
-                <p>Built with ❤️ for African communities</p>
+            <!-- Single Line: Phone + Email + Instagram -->
+            <div class="footer-contact-section">
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <a href="tel:+2349124211336">+234 912 421 1336</a>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <a href="mailto:hello@blackshepherd.org">hello@blackshepherd.org</a>
+                </div>
+                <a href="#" class="social-link" aria-label="Instagram">
+                    <i class="fab fa-instagram"></i>
+                    <span>@blackshepherd</span>
+                </a>
             </div>
         </div>
-    </footer>
-
+        
+        <!-- Footer Bottom -->
+        <div class="footer-bottom">
+            <p class="footer-copyright">
+                © 2025 Black Shepherd Foundation. All rights reserved.
+            </p>
+        </div>
+    </div>
+</footer>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 </html>
