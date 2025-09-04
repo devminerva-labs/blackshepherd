@@ -1,48 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ config.SITE_NAME }} - Empowering Women & Communities Across Africa</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-</head>
-<body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="nav-brand">
-                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Black Shepherd Foundation" class="logo">
-                <span class="brand-text">Black Shepherd</span>
-            </div>
-            
-            <div class="nav-links">
-                <a href="/" class="nav-link active">Home</a>
-                <a href="/about" class="nav-link">About</a>
-                <a href="/campaigns" class="nav-link">Campaigns</a>
-                <a href="/contact" class="nav-link">Contact</a>
-                <a href="/campaigns" class="btn btn-primary">Donate Now</a>
-            </div>
-            
-            <div class="mobile-menu-toggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </nav>
+{% extends "base.html" %}
 
-    <!-- Mobile Menu -->
-    <div class="mobile-menu">
-        <a href="/" class="mobile-nav-link">Home</a>
-        <a href="/about" class="mobile-nav-link">About</a>
-        <a href="/campaigns" class="mobile-nav-link">Campaigns</a>
-        <a href="/contact" class="mobile-nav-link">Contact</a>
-        <a href="/campaigns" class="btn btn-primary">Donate Now</a>
-    </div>
+{% block title %}Blak Shepherd Foundation - Empowering Women & Communities Across Africa{% endblock %}
 
+{% block description %}Blak Shepherd Women Empowerment Foundation - Empowering women and communities across Africa through education, healthcare, and sustainable development programs.{% endblock %}
+
+{% block content %}
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-background">
@@ -62,10 +24,10 @@
                         build stronger communities, and create lasting impact across Africa.
                     </p>
                     <div class="hero-actions">
-                        <a href="/campaigns" class="btn btn-primary btn-large">
+                        <a href="{{ url_for('campaigns') }}" class="btn btn-primary btn-large">
                             Start Donating
                         </a>
-                        <a href="/about" class="btn btn-secondary btn-large">
+                        <a href="{{ url_for('about') }}" class="btn btn-secondary btn-large">
                             Our Story
                         </a>
                     </div>
@@ -77,7 +39,7 @@
                         <div class="floating-card">
                             <div class="card-icon">🎓</div>
                             <div class="card-content">
-                                <div class="card-number">2,847</div>
+                                <div class="card-number">{{ stats.lives_impacted }}</div>
                                 <div class="card-label">Lives Changed</div>
                             </div>
                         </div>
@@ -92,19 +54,19 @@
         <div class="container">
             <div class="stats-grid">
                 <div class="stat-item">
-                    <div class="stat-number">0</div>
-                    <div class="stat-label">Projects Funded</div>
+                    <div class="stat-number">{{ stats.total_campaigns }}</div>
+                    <div class="stat-label">Active Campaigns</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-number">0M</div>
-                    <div class="stat-label">Funds Raised</div>
+                    <div class="stat-number">{{ (stats.total_raised / 1000000) | round(0) | int }}M</div>
+                    <div class="stat-label">Naira Raised</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-number">0</div>
+                    <div class="stat-number">{{ stats.communities_served }}</div>
                     <div class="stat-label">Communities Reached</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-number">0</div>
+                    <div class="stat-number">{{ stats.active_volunteers }}</div>
                     <div class="stat-label">Active Volunteers</div>
                 </div>
             </div>
@@ -116,7 +78,7 @@
         <div class="container">
             <div class="section-content">
                 <div class="section-text">
-                    <span class="section-subtitle">Welcome to Black Shepherd</span>
+                    <span class="section-subtitle">Welcome to Blak Shepherd</span>
                     <h2 class="section-title">You're the Hope of Others.</h2>
                     <p class="section-description">
                         We believe in the power of community and the strength of women to create 
@@ -124,15 +86,15 @@
                         education, healthcare, clean water access, and economic opportunities.
                     </p>
                     <p class="section-description">
-                        Every donation, no matter the size, contributes to building stronger, 
-                        more resilient communities. Together, we can break cycles of poverty 
-                        and create opportunities for future generations.
+                        From our compassionate hospital outreach at Kubwa Hospital to our Christmas 
+                        food drives in Utako community, and our scholarship programs for SS3 students, 
+                        we're committed to fostering a community of empowerment, love, and resilience.
                     </p>
                     <div class="section-actions">
-                        <a href="/about" class="btn btn-primary">Learn More</a>
+                        <a href="{{ url_for('about') }}" class="btn btn-primary">Learn More</a>
                         <div class="contact-info">
                             <span class="contact-label">Call Us Now</span>
-                            <span class="contact-number">+234 9124211336</span>
+                            <a href="tel:+2349124211336" class="contact-number">+234 912 421 1336</a>
                         </div>
                     </div>
                 </div>
@@ -156,9 +118,10 @@
         <div class="container">
             <div class="section-header">
                 <span class="section-subtitle">Our Impact</span>
-                <h2 class="section-title">Find the Popular Cause</h2>
+                <h2 class="section-title">Active Campaigns Making a Difference</h2>
                 <p class="section-description">
-                    Discover the campaigns that are making the biggest difference in communities across Africa.
+                    Discover the campaigns that are creating real change in communities across Nigeria. 
+                    From healthcare support to educational empowerment, every donation makes a lasting impact.
                 </p>
             </div>
             
@@ -166,49 +129,135 @@
                 {% for campaign in campaigns %}
                 <div class="campaign-card">
                     <div class="campaign-image">
-                        <img src="{{ campaign.image_url }}" alt="{{ campaign.title }}">
-                        <div class="campaign-category">Education</div>
+                        <img src="{{ url_for('static', filename=campaign.main_image) }}" alt="{{ campaign.title }}">
+                        <div class="campaign-category">{{ campaign.currency }}</div>
                     </div>
                     
                     <div class="campaign-content">
-                        <h3 class="campaign-title">{{ campaign.title }}</h3>
-                        <p class="campaign-description">{{ campaign.description[:120] }}...</p>
+                        <h3 class="campaign-title">
+                            <a href="{{ url_for('campaign', campaign_id=campaign.id) }}">{{ campaign.title }}</a>
+                        </h3>
+                        <p class="campaign-description">{{ campaign.description[:150] }}{% if campaign.description|length > 150 %}...{% endif %}</p>
                         
                         <div class="campaign-progress">
                             <div class="progress-info">
-                                <span class="progress-raised">₦{{ "{:,.0f}".format(campaign.raised_amount) }}</span>
-                                <span class="progress-goal">₦{{ "{:,.0f}".format(campaign.goal_amount) }}</span>
+                                <span class="progress-raised">{{ campaign.raised_amount | currency(campaign.currency) }}</span>
+                                <span class="progress-goal">of {{ campaign.goal_amount | currency(campaign.currency) }}</span>
                             </div>
                             <div class="progress-bar">
                                 <div class="progress-fill" style="width: {{ campaign.progress_percentage }}%"></div>
                             </div>
-                            <div class="progress-percentage">{{ "%.1f"|format(campaign.progress_percentage) }}% Complete</div>
+                            <div class="progress-percentage">{{ campaign.progress_percentage | percentage(1) }} Complete</div>
                         </div>
                         
                         <div class="campaign-actions">
-                            <a href="{{ url_for('campaign', id=campaign.id) }}" class="btn btn-primary btn-full">
-                                Donate Now
+                            <a href="{{ url_for('campaign', campaign_id=campaign.id) }}" class="btn btn-primary btn-full">
+                                Support This Campaign
                             </a>
                         </div>
                     </div>
                 </div>
                 {% endfor %}
-                
-                {% if not campaigns %}
-                <div class="no-campaigns">
-                    <div class="no-campaigns-icon">📋</div>
-                    <h3>No Active Campaigns</h3>
-                    <p>We're preparing new campaigns to make an impact. Check back soon!</p>
-                    <a href="/add-test-campaign" class="btn btn-primary">Add Test Campaign</a>
-                </div>
-                {% endif %}
             </div>
             
-            {% if campaigns %}
             <div class="section-footer">
-                <a href="/campaigns" class="btn btn-secondary">View All Campaigns</a>
+                <a href="{{ url_for('campaigns') }}" class="btn btn-secondary">View All Campaigns</a>
             </div>
-            {% endif %}
+        </div>
+    </section>
+
+    <!-- Partner Organizations -->
+    <section class="partners">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle">Our Partners</span>
+                <h2 class="section-title">Working Together for Change</h2>
+                <p class="section-description">
+                    In collaboration with strategic partners, we're amplifying our impact across Africa 
+                    and beyond through shared vision and coordinated efforts.
+                </p>
+            </div>
+            
+            <div class="partners-grid">
+                <div class="partner-card">
+                    <div class="partner-logo">
+                        <img src="{{ url_for('static', filename='images/partners/lvp-ventures.png') }}" alt="LVP Ventures">
+                    </div>
+                    <div class="partner-info">
+                        <h3 class="partner-name">LVP Ventures</h3>
+                        <p class="partner-location">United States</p>
+                        <p class="partner-description">
+                            Strategic partner supporting our educational initiatives and scholarship programs, 
+                            helping us expand our reach in empowering young women through education.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="partner-card">
+                    <div class="partner-logo">
+                        <img src="{{ url_for('static', filename='images/partners/voice-against-gun-violence.png') }}" alt="The Voice Against Gun Violence">
+                    </div>
+                    <div class="partner-info">
+                        <h3 class="partner-name">The Voice Against Gun Violence</h3>
+                        <p class="partner-location">United states</p>
+                        <p class="partner-description">
+                            Collaborative partner in our awareness and advocacy programs, working together 
+                            on sensitization initiatives including Sexual Assault Awareness and Prevention Month.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact Highlights -->
+    <section class="impact-highlights">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle">Real Impact</span>
+                <h2 class="section-title">Creating Lasting Change</h2>
+            </div>
+            
+            <div class="impact-grid">
+                <div class="impact-card">
+                    <div class="impact-icon">🏥</div>
+                    <div class="impact-content">
+                        <h3 class="impact-title">Healthcare Support</h3>
+                        <div class="impact-number">50+</div>
+                        <div class="impact-label">Families Assisted</div>
+                        <p class="impact-description">
+                            Through our Kubwa Hospital Outreach, we settled outstanding bills for over 20 mothers 
+                            and provided essential medical supplies to families facing financial hardships.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="impact-card">
+                    <div class="impact-icon">🍽️</div>
+                    <div class="impact-content">
+                        <h3 class="impact-title">Food Security</h3>
+                        <div class="impact-number">200+</div>
+                        <div class="impact-label">Food Packages Distributed</div>
+                        <p class="impact-description">
+                            Our Christmas Food Drive brought joy and sustenance to underprivileged families, 
+                            ensuring everyone could celebrate with dignity during the festive season.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="impact-card">
+                    <div class="impact-icon">🎓</div>
+                    <div class="impact-content">
+                        <h3 class="impact-title">Education Access</h3>
+                        <div class="impact-number">120+</div>
+                        <div class="impact-label">Students Supported</div>
+                        <p class="impact-description">
+                            Through our SS3 Scholarship Program, we're sponsoring WAEC and NECO fees while 
+                            providing sensitization on awareness and prevention strategies.
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -219,64 +268,189 @@
                 <div class="cta-text">
                     <h2 class="cta-title">Ready to Make a Difference?</h2>
                     <p class="cta-description">
-                        Join thousands of donors who are creating positive change across Africa. 
-                        Your contribution, no matter the size, helps build stronger communities.
+                        Join hundreds of donors who are creating positive change across Africa. 
+                        Your contribution, no matter the size, helps build stronger communities and empowers women to thrive.
                     </p>
                 </div>
                 <div class="cta-actions">
-                    <a href="/campaigns" class="btn btn-primary btn-large">
+                    <a href="{{ url_for('campaigns') }}" class="btn btn-primary btn-large">
                         Start Donating
                     </a>
-                    <a href="/about" class="btn btn-outline btn-large">
+                    <a href="{{ url_for('about') }}" class="btn btn-outline btn-large">
                         Learn More
                     </a>
                 </div>
             </div>
         </div>
     </section>
+{% endblock %}
 
-    <!-- Footer -->
-   <footer class="footer">
-    <div class="container">
-        <div class="footer-content">
-            
-            <!-- Brand Section - Simple -->
-            <div class="footer-brand-section">
-                <div class="footer-brand">
-                    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Black Shepherd Foundation" class="footer-logo">
-                    <div class="brand-text">
-                        <h3 class="footer-brand-name">Black Shepherd</h3>
-                        <p class="footer-tagline">"Bringing a Little Light"</p>
-                    </div>
-                </div>
-                
-            </div>
-            
-            <!-- Single Line: Phone + Email + Instagram -->
-            <div class="footer-contact-section">
-                <div class="contact-item">
-                    <i class="fas fa-phone"></i>
-                    <a href="tel:+2349124211336">+234 912 421 1336</a>
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-envelope"></i>
-                    <a href="mailto:hello@blackshepherd.org">hello@blackshepherd.org</a>
-                </div>
-                <a href="#" class="social-link" aria-label="Instagram">
-                    <i class="fab fa-instagram"></i>
-                    <span>@blackshepherd</span>
-                </a>
-            </div>
-        </div>
-        
-        <!-- Footer Bottom -->
-        <div class="footer-bottom">
-            <p class="footer-copyright">
-                © 2025 Black Shepherd Foundation. All rights reserved.
-            </p>
-        </div>
-    </div>
-</footer>
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-</body>
-</html>
+{% block extra_css %}
+<style>
+/* Additional styles for homepage specific elements */
+.floating-circle {
+    position: absolute;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #FF6B35, #E55A2B);
+    opacity: 0.1;
+}
+
+.circle-1 {
+    width: 100px;
+    height: 100px;
+    top: -20px;
+    right: -30px;
+}
+
+.circle-2 {
+    width: 60px;
+    height: 60px;
+    bottom: 20px;
+    left: -20px;
+}
+
+.circle-3 {
+    width: 80px;
+    height: 80px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.partners {
+    background: #f9fafb;
+    padding: 5rem 0;
+}
+
+.partners-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+}
+
+.partner-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.partner-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+
+.partner-logo {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f9fafb;
+    border-radius: 50%;
+}
+
+.partner-logo img {
+    max-width: 80px;
+    max-height: 80px;
+    object-fit: contain;
+}
+
+.partner-name {
+    color: #111827;
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.partner-location {
+    color: #FF6B35;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.partner-description {
+    color: #4b5563;
+    line-height: 1.6;
+}
+
+.impact-highlights {
+    padding: 5rem 0;
+    background: white;
+}
+
+.impact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.impact-card {
+    text-align: center;
+    padding: 2rem;
+    background: #f9fafb;
+    border-radius: 1rem;
+    transition: all 0.3s ease;
+}
+
+.impact-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+.impact-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.impact-title {
+    color: #111827;
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.impact-number {
+    font-size: 1.875rem;
+    font-weight: 800;
+    color: #FF6B35;
+    margin-bottom: 0.5rem;
+}
+
+.impact-label {
+    font-weight: 600;
+    color: #4b5563;
+    margin-bottom: 1rem;
+}
+
+.impact-description {
+    color: #4b5563;
+    line-height: 1.6;
+    font-size: 0.875rem;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+    .partners-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .partner-card {
+        padding: 1.5rem;
+    }
+    
+    .partner-logo {
+        width: 100px;
+        height: 100px;
+        margin-bottom: 1rem;
+    }
+    
+    .impact-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+{% endblock %}

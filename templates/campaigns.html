@@ -1,285 +1,1080 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All Campaigns - {{ config.SITE_NAME }}</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-</head>
-<body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="nav-brand">
-                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Black Shepherd Foundation" class="logo">
-                <span class="brand-text">Black Shepherd</span>
-            </div>
-            
-            <div class="nav-links">
-                <a href="/" class="nav-link">Home</a>
-                <a href="/about" class="nav-link">About</a>
-                <a href="/campaigns" class="nav-link active">Campaigns</a>
-                <a href="/contact" class="nav-link">Contact</a>
-                <a href="/campaigns" class="btn btn-primary">Donate Now</a>
-            </div>
-            
-            <div class="mobile-menu-toggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </nav>
+{% extends "base.html" %}
 
-    <!-- Mobile Menu -->
-    <div class="mobile-menu">
-        <a href="/" class="mobile-nav-link">Home</a>
-        <a href="/about" class="mobile-nav-link">About</a>
-        <a href="/campaigns" class="mobile-nav-link">Campaigns</a>
-        <a href="/contact" class="mobile-nav-link">Contact</a>
-        <a href="/campaigns" class="btn btn-primary">Donate Now</a>
-    </div>
+{% block title %}Our Campaigns - Blak Shepherd Foundation{% endblock %}
 
+{% block description %}Discover active campaigns making a real difference across Nigeria. Support our initiatives in healthcare, education, and community development.{% endblock %}
+
+{% block content %}
     <!-- Page Header -->
-    <section class="page-header">
+    <section class="campaigns-header">
         <div class="container">
-            <div class="page-header-content">
+            <div class="header-content">
                 <h1 class="page-title">Our Campaigns</h1>
                 <p class="page-description">
-                    Discover the campaigns that are making a real difference across Africa. 
+                    Discover the campaigns that are making a real difference across Nigeria. 
                     Every donation, no matter the size, creates lasting impact in communities.
                 </p>
-                <div class="page-stats">
-                    <div class="page-stat">
-                        <span class="stat-number">{{ campaigns|length }}</span>
-                        <span class="stat-label">Active Campaigns</span>
+                
+                <!-- Campaign Stats -->
+                <div class="campaigns-stats">
+                    <div class="stat-card">
+                        <div class="stat-number">{{ stats.total_campaigns }}</div>
+                        <div class="stat-label">Active Campaigns</div>
                     </div>
-                    <div class="page-stat">
-                        {% set total_raised = 0 %}
-                        {% for campaign in campaigns %}
-                            {% set total_raised = total_raised + campaign.raised_amount %}
-                        {% endfor %}
-                        <span class="stat-number">₦{{ "{:,.0f}".format(total_raised) }}</span>
-                        <span class="stat-label">Total Raised</span>
+                    <div class="stat-card">
+                        <div class="stat-number">₦{{ "{:,.0f}".format(stats.total_raised) }}</div>
+                        <div class="stat-label">Total Raised</div>
                     </div>
-                    <div class="page-stat">
-                        {% set total_donations = 0 %}
-                        {% for campaign in campaigns %}
-                            {% set total_donations = total_donations + campaign.transactions|length %}
-                        {% endfor %}
-                        <span class="stat-number">{{ total_donations }}</span>
-                        <span class="stat-label">Total Donations</span>
+                    <div class="stat-card">
+                        <div class="stat-number">{{ stats.total_supporters }}</div>
+                        <div class="stat-label">People Helped</div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Campaigns Grid -->
-    <section class="campaigns-grid-section">
+    <!-- Campaigns Grid Section -->
+    <section class="campaigns-section">
         <div class="container">
-            {% if campaigns %}
-                <!-- Filter/Sort Options -->
-                <div class="campaigns-filters">
-                    <div class="filter-group">
-                        <label for="sort-campaigns">Sort by:</label>
-                        <select id="sort-campaigns" class="filter-select">
-                            <option value="newest">Newest First</option>
-                            <option value="progress">Most Progress</option>
-                            <option value="amount">Highest Goal</option>
-                            <option value="popular">Most Popular</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <label for="filter-category">Category:</label>
-                        <select id="filter-category" class="filter-select">
-                            <option value="all">All Categories</option>
-                            <option value="education">Education</option>
-                            <option value="healthcare">Healthcare</option>
-                            <option value="water">Clean Water</option>
-                            <option value="empowerment">Women Empowerment</option>
-                        </select>
-                    </div>
-                </div>
+            
+            <!-- Section Header - Centered -->
+            <div class="campaigns-header-section">
+                <h2 class="section-subtitle">Making Impact Together</h2>
+                <p class="controls-description">Choose a campaign that speaks to your heart and join us in creating positive change.</p>
+            </div>
 
-                <!-- Campaigns Grid -->
-                <div class="campaigns-grid" id="campaigns-container">
-                    {% for campaign in campaigns %}
-                    <div class="campaign-card" data-category="water" data-progress="{{ campaign.progress_percentage }}" data-goal="{{ campaign.goal_amount }}">
-                        <div class="campaign-image">
-                            <img src="{{ campaign.image_url }}" alt="{{ campaign.title }}" loading="lazy">
-                            <div class="campaign-overlay">
-                                <a href="{{ url_for('campaign', id=campaign.id) }}" class="overlay-btn">View Campaign</a>
+            <!-- Campaigns Grid -->
+            <div class="campaigns-grid" id="campaigns-container">
+                {% for campaign in campaigns %}
+                <article class="campaign-card" 
+                         data-progress="{{ campaign.progress_percentage }}" 
+                         data-goal="{{ campaign.goal_amount }}"
+                         data-urgent="{{ (100 - campaign.progress_percentage) }}">
+                    
+                    <!-- Campaign Image -->
+                    <div class="campaign-image">
+                        <img src="{{ url_for('static', filename=campaign.main_image) }}" 
+                             alt="{{ campaign.title }}" 
+                             loading="lazy">
+                        <div class="campaign-overlay">
+                            <a href="{{ url_for('campaign', campaign_id=campaign.id) }}" 
+                               class="overlay-btn">View Details</a>
+                        </div>
+                        <div class="campaign-badge">
+                            <span class="badge-text">{{ campaign.currency }}</span>
+                        </div>
+                        <div class="progress-badge">
+                            {{ campaign.progress_percentage | round(0) | int }}%
+                        </div>
+                    </div>
+                    
+                    <!-- Campaign Content -->
+                    <div class="campaign-content">
+                        
+                        <!-- Title & Description -->
+                        <div class="campaign-header">
+                            <h3 class="campaign-title">
+                                <a href="{{ url_for('campaign', campaign_id=campaign.id) }}">
+                                    {{ campaign.title }}
+                                </a>
+                            </h3>
+                            <p class="campaign-description">
+                                {{ campaign.description[:180] }}{% if campaign.description|length > 180 %}...{% endif %}
+                            </p>
+                        </div>
+                        
+                        <!-- Progress Section -->
+                        <div class="campaign-progress">
+                            <div class="progress-header">
+                                <div class="progress-amounts">
+                                    <span class="amount-raised">{{ campaign.raised_amount | currency(campaign.currency) }}</span>
+                                    <span class="amount-goal">of {{ campaign.goal_amount | currency(campaign.currency) }}</span>
+                                </div>
+                                <div class="progress-percent">
+                                    {{ campaign.progress_percentage | round(1) }}%
+                                </div>
                             </div>
-                            <div class="campaign-badge">
-                                <span class="badge-icon">💧</span>
-                                <span class="badge-text">{{ campaign.currency }}</span>
+                            
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: {{ campaign.progress_percentage }}%"></div>
+                            </div>
+                            
+                            <div class="progress-footer">
+                                <span class="remaining-amount">
+                                    {{ (campaign.goal_amount - campaign.raised_amount) | currency(campaign.currency) }} remaining
+                                </span>
+                                <span class="supporters-count">
+                                    {{ campaign.impact_stats.get('families_helped', 0) + 
+                                       campaign.impact_stats.get('families_served', 0) + 
+                                       campaign.impact_stats.get('students_supported', 0) }} people helped
+                                </span>
                             </div>
                         </div>
                         
-                        <div class="campaign-content">
-                            <h3 class="campaign-title">
-                                <a href="{{ url_for('campaign', id=campaign.id) }}">{{ campaign.title }}</a>
-                            </h3>
-                            <p class="campaign-description">{{ campaign.description[:150] }}{% if campaign.description|length > 150 %}...{% endif %}</p>
-                            
-                            <div class="campaign-progress">
-                                <div class="progress-header">
-                                    <span class="progress-raised">{{ campaign.raised_amount | currency(campaign.currency) }}</span>
-                                    <span class="progress-goal">of {{ campaign.goal_amount | currency(campaign.currency) }}</span>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: {{ campaign.progress_percentage }}%"></div>
-                                </div>
-                                <div class="progress-stats">
-                                    <span class="progress-percentage">{{ campaign.progress_percentage | percentage(1) }} funded</span>
-                                    <span class="progress-supporters">{{ campaign.transactions|length }} supporters</span>
-                                </div>
+                        <!-- Impact Preview -->
+                        <div class="impact-preview">
+                            <h4 class="impact-title">Your Impact:</h4>
+                            <div class="impact-items">
+                                {% if campaign.id == 1 %}
+                                <span class="impact-item">🏥 Medical bills settled</span>
+                                <span class="impact-item">🍽️ Food supplies provided</span>
+                                {% elif campaign.id == 2 %}
+                                <span class="impact-item">🎄 Christmas joy delivered</span>
+                                <span class="impact-item">🧴 Hygiene care packages</span>
+                                {% elif campaign.id == 3 %}
+                                <span class="impact-item">🎓 Education fees sponsored</span>
+                                <span class="impact-item">📚 Student support materials</span>
+                                {% endif %}
                             </div>
-                            
-                            <div class="campaign-meta">
-                                <div class="campaign-urgency">
-                                    {% set remaining = campaign.goal_amount - campaign.raised_amount %}
-                                    <span class="remaining-amount">{{ remaining | currency(campaign.currency) }}</span>
-                                    <span class="remaining-text">still needed</span>
-                                </div>
-                                <div class="campaign-impact">
-                                    <span class="impact-icon">🏠</span>
-                                    <span class="impact-text">{{ (campaign.raised_amount / 5000) | int }} families helped</span>
-                                </div>
-                            </div>
-                            
-                            <div class="campaign-actions">
-                                <a href="{{ url_for('campaign', id=campaign.id) }}" class="btn btn-primary btn-full">
-                                    Donate Now
-                                </a>
-                                <div class="quick-actions">
-                                    <button class="quick-action-btn" onclick="shareCampaign('{{ campaign.title }}', '{{ url_for('campaign', id=campaign.id, _external=True) }}')">
-                                        <span class="action-icon">📤</span>
-                                        Share
-                                    </button>
-                                    <button class="quick-action-btn" onclick="toggleFavorite({{ campaign.id }})">
-                                        <span class="action-icon">❤️</span>
-                                        Save
-                                    </button>
-                                </div>
+                        </div>
+                        
+                        <!-- Campaign Actions -->
+                        <div class="campaign-actions">
+                            <a href="{{ url_for('campaign', campaign_id=campaign.id) }}" 
+                               class="btn btn-primary btn-donate">
+                                Support This Campaign
+                            </a>
+                            <div class="quick-actions">
+                                <button class="quick-btn share-btn" 
+                                        onclick="shareCampaign('{{ campaign.title }}', '{{ url_for('campaign', campaign_id=campaign.id, _external=True) }}')"
+                                        aria-label="Share campaign">
+                                    <span class="btn-icon">📤</span>
+                                    <span class="btn-text">Share</span>
+                                </button>
+                                <button class="quick-btn favorite-btn" 
+                                        onclick="toggleFavorite({{ campaign.id }})"
+                                        aria-label="Save campaign">
+                                    <span class="btn-icon">🤍</span>
+                                    <span class="btn-text">Save</span>
+                                </button>
                             </div>
                         </div>
                     </div>
-                    {% endfor %}
-                </div>
-
-                <!-- Load More Button -->
-                <div class="load-more-section">
-                    <button class="btn btn-secondary" id="load-more-btn">
-                        Load More Campaigns
-                    </button>
-                </div>
-
-            {% else %}
-                <!-- No Campaigns State -->
-                <div class="no-campaigns-state">
-                    <div class="no-campaigns-icon">📋</div>
-                    <h2>No Active Campaigns</h2>
-                    <p>We're currently preparing new campaigns to make an impact. Check back soon or contact us to learn about upcoming initiatives.</p>
-                    <div class="no-campaigns-actions">
-                        <a href="/contact" class="btn btn-primary">Contact Us</a>
-                        <a href="/about" class="btn btn-secondary">Learn More</a>
-                    </div>
-                </div>
-            {% endif %}
-        </div>
-    </section>
-
-    <!-- Impact Statistics -->
-    <section class="impact-stats">
-        <div class="container">
-            <h2 class="section-title">Our Collective Impact</h2>
-            <div class="impact-grid">
-                <div class="impact-item">
-                    <div class="impact-icon">🌍</div>
-                    <div class="impact-content">
-                        <div class="impact-number">15+</div>
-                        <div class="impact-label">Communities Served</div>
-                        <div class="impact-description">Across Nigeria and West Africa</div>
-                    </div>
-                </div>
-                <div class="impact-item">
-                    <div class="impact-icon">👥</div>
-                    <div class="impact-content">
-                        <div class="impact-number">2,500+</div>
-                        <div class="impact-label">Lives Changed</div>
-                        <div class="impact-description">Women and children empowered</div>
-                    </div>
-                </div>
-                <div class="impact-item">
-                    <div class="impact-icon">💧</div>
-                    <div class="impact-content">
-                        <div class="impact-number">8</div>
-                        <div class="impact-label">Water Systems Built</div>
-                        <div class="impact-description">Providing clean water access</div>
-                    </div>
-                </div>
-                <div class="impact-item">
-                    <div class="impact-icon">🎓</div>
-                    <div class="impact-content">
-                        <div class="impact-number">150+</div>
-                        <div class="impact-label">Girls Educated</div>
-                        <div class="impact-description">Scholarships and support provided</div>
-                    </div>
-                </div>
+                </article>
+                {% endfor %}
             </div>
         </div>
     </section>
 
-    <!-- Call to Action -->
-    
-    <!-- Footer -->
-    <footer class="footer">
-    <div class="container">
-        <div class="footer-content">
+    <!-- Impact Statistics Section -->
+    <section class="collective-impact">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Our Collective Impact</h2>
+                <p class="section-description">
+                    Together, we've created lasting change across communities in Nigeria. 
+                    Every donation contributes to these amazing results.
+                </p>
+            </div>
             
-            <!-- Brand Section - Simple -->
-            <div class="footer-brand-section">
-                <div class="footer-brand">
-                    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Black Shepherd Foundation" class="footer-logo">
-                    <div class="brand-text">
-                        <h3 class="footer-brand-name">Black Shepherd</h3>
-                        <p class="footer-tagline">"Bringing a Little Light"</p>
-                    </div>
+            <div class="impact-stats">
+                <div class="impact-stat">
+                    <div class="impact-icon">🏥</div>
+                    <div class="impact-number">50+</div>
+                    <div class="impact-label">Families Assisted</div>
+                    <div class="impact-description">Medical bills settled and healthcare support provided</div>
                 </div>
                 
-            </div>
-            
-            <!-- Single Line: Phone + Email + Instagram -->
-            <div class="footer-contact-section">
-                <div class="contact-item">
-                    <i class="fas fa-phone"></i>
-                    <a href="tel:+2349124211336">+234 912 421 1336</a>
+                <div class="impact-stat">
+                    <div class="impact-icon">🍽️</div>
+                    <div class="impact-number">200+</div>
+                    <div class="impact-label">Food Packages</div>
+                    <div class="impact-description">Distributed during our community outreach programs</div>
                 </div>
-                <div class="contact-item">
-                    <i class="fas fa-envelope"></i>
-                    <a href="mailto:hello@blackshepherd.org">hello@blackshepherd.org</a>
+                
+                <div class="impact-stat">
+                    <div class="impact-icon">🎓</div>
+                    <div class="impact-number">120+</div>
+                    <div class="impact-label">Students Supported</div>
+                    <div class="impact-description">Through scholarships and educational programs</div>
                 </div>
-                <a href="#" class="social-link" aria-label="Instagram">
-                    <i class="fab fa-instagram"></i>
-                    <span>@blackshepherd</span>
-                </a>
+                
+                <div class="impact-stat">
+                    <div class="impact-icon">💝</div>
+                    <div class="impact-number">300+</div>
+                    <div class="impact-label">Care Packages</div>
+                    <div class="impact-description">Hygiene supplies and essential items distributed</div>
+                </div>
             </div>
         </div>
-        
-        <!-- Footer Bottom -->
-        <div class="footer-bottom">
-            <p class="footer-copyright">
-                © 2025 Black Shepherd Foundation. All rights reserved.
-            </p>
+    </section>
+
+    <!-- Call to Action - ORANGE BACKGROUND -->
+    <section class="campaigns-cta">
+        <div class="container">
+            <div class="cta-content">
+                <div class="cta-text">
+                    <h2 class="cta-title">Ready to Create Change?</h2>
+                    <p class="cta-description">
+                        Your support can transform lives and strengthen communities across Nigeria. 
+                        Choose a campaign above or start with any amount that feels right for you.
+                    </p>
+                </div>
+                <div class="cta-actions">
+                    <a href="#campaigns-container" class="btn btn-primary btn-large scroll-to">
+                        Choose a Campaign
+                    </a>
+                    <a href="{{ url_for('about') }}" class="btn btn-outline btn-large">
+                        Learn Our Story
+                    </a>
+                </div>
+            </div>
         </div>
-    </div>
-</footer>
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/campaigns.js') }}"></script>
-</body>
-</html>
+    </section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+/* ==============================================
+   CAMPAIGNS PAGE STYLES - MOBILE FIRST
+   ============================================== */
+
+/* Base Mobile Styles (320px+) */
+.campaigns-header {
+    background: linear-gradient(135deg, #FF6B35 0%, #E55A2B 100%);
+    color: white;
+    padding: 6rem 0 3rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.campaigns-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="1" fill="white" opacity="0.1"/><circle cx="80" cy="40" r="1" fill="white" opacity="0.1"/><circle cx="40" cy="60" r="1" fill="white" opacity="0.1"/><circle cx="90" cy="90" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+    z-index: 1;
+}
+
+.header-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.page-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.page-description {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    color: rgba(255, 255, 255, 0.95);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+.campaigns-stats {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+}
+
+.stat-card {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 1rem;
+    border-radius: 0.75rem;
+    text-align: center;
+    min-width: 100px;
+    flex: 1;
+    max-width: 140px;
+}
+
+.stat-number {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 0.25rem;
+    display: block;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+.stat-label {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Campaigns Section */
+.campaigns-section {
+    padding: 3rem 0;
+    background: #f9fafb;
+}
+
+.campaigns-header-section {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding: 0 1rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.section-subtitle {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+}
+
+.controls-description {
+    color: #6b7280;
+    line-height: 1.6;
+    font-size: 1rem;
+    margin-bottom: 0;
+}
+
+/* Campaign Cards Grid */
+.campaigns-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 0 1rem;
+}
+
+.campaign-card {
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.campaign-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+
+/* Campaign Image */
+.campaign-image {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+}
+
+.campaign-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.campaign-card:hover .campaign-image img {
+    transform: scale(1.05);
+}
+
+.campaign-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.campaign-card:hover .campaign-overlay {
+    opacity: 1;
+}
+
+.overlay-btn {
+    background: white;
+    color: #1f2937;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    text-decoration: none;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+}
+
+.campaign-card:hover .overlay-btn {
+    transform: translateY(0);
+}
+
+.overlay-btn:hover {
+    background: #FF6B35;
+    color: white;
+}
+
+.campaign-badge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: #FF6B35;
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.progress-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+/* Campaign Content */
+.campaign-content {
+    padding: 1.5rem;
+}
+
+.campaign-header {
+    margin-bottom: 1.5rem;
+}
+
+.campaign-title {
+    margin-bottom: 0.75rem;
+}
+
+.campaign-title a {
+    color: #1f2937;
+    text-decoration: none;
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.3;
+    display: block;
+}
+
+.campaign-title a:hover {
+    color: #FF6B35;
+}
+
+.campaign-description {
+    color: #6b7280;
+    line-height: 1.6;
+    font-size: 0.925rem;
+}
+
+/* Progress Section */
+.campaign-progress {
+    margin-bottom: 1.5rem;
+}
+
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 0.5rem;
+}
+
+.progress-amounts {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+}
+
+.amount-raised {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #1f2937;
+}
+
+.amount-goal {
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+.progress-percent {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #10b981;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 0.5rem;
+    background: #e5e7eb;
+    border-radius: 0.25rem;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(135deg, #10b981, #059669);
+    border-radius: 0.25rem;
+    transition: width 0.6s ease;
+}
+
+.progress-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.75rem;
+    color: #6b7280;
+}
+
+/* Impact Preview */
+.impact-preview {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: #f9fafb;
+    border-radius: 0.5rem;
+    border-left: 3px solid #FF6B35;
+}
+
+.impact-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+}
+
+.impact-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.impact-item {
+    font-size: 0.75rem;
+    color: #6b7280;
+    background: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    white-space: nowrap;
+}
+
+/* Campaign Actions */
+.campaign-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.btn-donate {
+    width: 100%;
+    padding: 0.875rem 1.5rem;
+    background: linear-gradient(135deg, #FF6B35, #E55A2B);
+    color: white;
+    text-decoration: none;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    text-align: center;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 6px -1px rgb(255 107 53 / 0.2);
+}
+
+.btn-donate:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 15px -3px rgb(255 107 53 / 0.3);
+}
+
+.quick-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.quick-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    background: #f3f4f6;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    color: #6b7280;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.quick-btn:hover {
+    background: #e5e7eb;
+    color: #374151;
+}
+
+.btn-icon {
+    font-size: 1rem;
+}
+
+.btn-text {
+    font-weight: 500;
+}
+
+/* Impact Statistics */
+.collective-impact {
+    padding: 4rem 0;
+    background: white;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 0 1rem;
+}
+
+.section-title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: #1f2937;
+    margin-bottom: 1rem;
+}
+
+.section-description {
+    font-size: 1.125rem;
+    color: #6b7280;
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.impact-stats {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 0 1rem;
+}
+
+.impact-stat {
+    background: #f9fafb;
+    padding: 2rem 1.5rem;
+    border-radius: 1rem;
+    text-align: center;
+    border: 1px solid #e5e7eb;
+    transition: all 0.3s ease;
+}
+
+.impact-stat:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+}
+
+.impact-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.impact-number {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #FF6B35;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.impact-label {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+}
+
+.impact-description {
+    font-size: 0.875rem;
+    color: #6b7280;
+    line-height: 1.5;
+}
+
+/* CTA Section - ORANGE BACKGROUND */
+.campaigns-cta {
+    background: linear-gradient(135deg, #FF6B35 0%, #E55A2B 100%);
+    color: white;
+    padding: 4rem 0;
+    text-align: center;
+}
+
+.cta-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.cta-title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    color: white;
+}
+
+.cta-description {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.cta-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+}
+
+.btn-large {
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    width: 100%;
+    max-width: 280px;
+    text-align: center;
+}
+
+.btn-primary.btn-large {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+}
+
+.btn-outline.btn-large {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+}
+
+.btn-outline.btn-large:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: white;
+}
+
+/* ==============================================
+   TABLET RESPONSIVE (500px+)
+   ============================================== */
+@media (min-width: 500px) {
+    .campaigns-stats {
+        gap: 1.5rem;
+    }
+    
+    .stat-card {
+        min-width: 120px;
+        max-width: 160px;
+        padding: 1.25rem 1rem;
+    }
+    
+    .stat-number {
+        font-size: 1.5rem;
+    }
+    
+    .stat-label {
+        font-size: 0.875rem;
+    }
+    
+    .campaigns-grid {
+        grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+        gap: 2rem;
+        padding: 0 1.5rem;
+    }
+    
+    .impact-stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
+    
+    .cta-actions {
+        flex-direction: row;
+        justify-content: center;
+    }
+}
+
+/* ==============================================
+   LARGE TABLET RESPONSIVE (768px+)
+   ============================================== */
+@media (min-width: 768px) {
+    .page-title {
+        font-size: 3rem;
+    }
+    
+    .campaigns-header-section {
+        margin-bottom: 3rem;
+    }
+    
+    .section-subtitle {
+        font-size: 2.25rem;
+    }
+    
+    .campaigns-grid {
+        padding: 0 2rem;
+    }
+    
+    .campaign-content {
+        padding: 2rem;
+    }
+    
+    .campaign-actions {
+        flex-direction: row;
+        align-items: center;
+    }
+    
+    .btn-donate {
+        width: auto;
+        flex: 1;
+    }
+    
+    .quick-actions {
+        width: auto;
+        flex-shrink: 0;
+    }
+    
+    .impact-stats {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .section-header {
+        padding: 0 2rem;
+    }
+}
+
+/* ==============================================
+   DESKTOP RESPONSIVE (1024px+)
+   ============================================== */
+@media (min-width: 1024px) {
+    .campaigns-header {
+        padding: 8rem 0 4rem;
+    }
+    
+    .campaigns-stats {
+        gap: 2rem;
+    }
+    
+    .campaigns-section {
+        padding: 4rem 0;
+    }
+    
+    .campaigns-grid {
+        grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+        gap: 2.5rem;
+    }
+    
+    .campaign-image {
+        height: 240px;
+    }
+    
+    .collective-impact {
+        padding: 5rem 0;
+    }
+    
+    .campaigns-cta {
+        padding: 5rem 0;
+    }
+}
+
+/* ==============================================
+   LOADING & ANIMATION STATES
+   ============================================== */
+.campaign-card {
+    animation: fadeInUp 0.6s ease-out;
+    animation-fill-mode: both;
+}
+
+.campaign-card:nth-child(1) { animation-delay: 0.1s; }
+.campaign-card:nth-child(2) { animation-delay: 0.2s; }
+.campaign-card:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Focus states for accessibility */
+.btn:focus,
+.quick-btn:focus {
+    outline: 2px solid #FF6B35;
+    outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .campaign-card {
+        border: 2px solid #374151;
+    }
+    
+    .progress-bar {
+        border: 1px solid #374151;
+    }
+}
+
+/* Reduced motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .campaign-card {
+        animation: none;
+    }
+    
+    .campaign-card:hover {
+        transform: none;
+    }
+    
+    .progress-fill {
+        transition: none;
+    }
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Campaign functionality without sorting
+document.addEventListener('DOMContentLoaded', function() {
+    // Progress bar animations on scroll
+    const progressObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const progressBar = entry.target.querySelector('.progress-fill');
+                if (progressBar) {
+                    const width = progressBar.style.width;
+                    progressBar.style.width = '0%';
+                    setTimeout(() => {
+                        progressBar.style.width = width;
+                    }, 200);
+                }
+            }
+        });
+    }, { threshold: 0.3 });
+    
+    document.querySelectorAll('.campaign-progress').forEach(progress => {
+        progressObserver.observe(progress);
+    });
+    
+    // Smooth scroll for CTA button
+    document.querySelectorAll('.scroll-to').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start' 
+                });
+            }
+        });
+    });
+});
+
+// Share campaign functionality
+function shareCampaign(title, url) {
+    if (navigator.share) {
+        navigator.share({
+            title: `Support: ${title}`,
+            text: `Help support this important cause: ${title}`,
+            url: url
+        }).catch(err => {
+            console.log('Error sharing:', err);
+            fallbackShare(title, url);
+        });
+    } else {
+        fallbackShare(title, url);
+    }
+}
+
+function fallbackShare(title, url) {
+    // Create simple share options
+    const shareText = `Check out this campaign: ${title} - ${url}`;
+    
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(shareText).then(() => {
+            showNotification('Campaign link copied to clipboard!');
+        });
+    } else {
+        // Fallback
+        const textArea = document.createElement('textarea');
+        textArea.value = shareText;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        showNotification('Campaign link copied to clipboard!');
+    }
+}
+
+// Toggle favorite functionality
+function toggleFavorite(campaignId) {
+    const favorites = JSON.parse(localStorage.getItem('favoriteCampaigns') || '[]');
+    const index = favorites.indexOf(campaignId);
+    const button = document.querySelector(`[onclick="toggleFavorite(${campaignId})"]`);
+    const icon = button.querySelector('.btn-icon');
+    
+    if (index > -1) {
+        favorites.splice(index, 1);
+        icon.textContent = '🤍';
+        showNotification('Removed from favorites');
+    } else {
+        favorites.push(campaignId);
+        icon.textContent = '❤️';
+        showNotification('Added to favorites');
+    }
+    
+    localStorage.setItem('favoriteCampaigns', JSON.stringify(favorites));
+}
+
+// Show notification
+function showNotification(message) {
+    const notification = document.createElement('div');
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #10b981;
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 10000;
+        font-weight: 500;
+        animation: slideIn 0.3s ease;
+    `;
+    notification.textContent = message;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.style.animation = 'slideIn 0.3s ease reverse';
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 300);
+    }, 3000);
+}
+
+// Initialize favorites on page load
+document.addEventListener('DOMContentLoaded', function() {
+    const favorites = JSON.parse(localStorage.getItem('favoriteCampaigns') || '[]');
+    
+    favorites.forEach(campaignId => {
+        const button = document.querySelector(`[onclick="toggleFavorite(${campaignId})"]`);
+        if (button) {
+            const icon = button.querySelector('.btn-icon');
+            icon.textContent = '❤️';
+        }
+    });
+});
+</script>
+{% endblock %}

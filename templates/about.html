@@ -1,59 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us - {{ config.SITE_NAME }}</title>
-    <meta name="description" content="Learn about Black Shepherd Foundation's mission to empower women and girls across Africa through education, advocacy, and community support.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-</head>
-<body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="nav-brand">
-                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Black Shepherd Foundation" class="logo">
-                <span class="brand-text">Black Shepherd</span>
-            </div>
-            
-            <div class="nav-links">
-                <a href="/" class="nav-link">Home</a>
-                <a href="/about" class="nav-link active">About</a>
-                <a href="/campaigns" class="nav-link">Campaigns</a>
-                <a href="/contact" class="nav-link">Contact</a>
-                <a href="/campaigns" class="btn btn-primary">Donate Now</a>
-            </div>
-            
-            <div class="mobile-menu-toggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </nav>
+{% extends "base.html" %}
 
-    <!-- Mobile Menu -->
-    <div class="mobile-menu">
-        <a href="/" class="mobile-nav-link">Home</a>
-        <a href="/about" class="mobile-nav-link">About</a>
-        <a href="/campaigns" class="mobile-nav-link">Campaigns</a>
-        <a href="/contact" class="mobile-nav-link">Contact</a>
-        <a href="/campaigns" class="btn btn-primary">Donate Now</a>
-    </div>
+{% block title %}About Us - Blak Shepherd Foundation{% endblock %}
 
+{% block description %}Learn about Blak Shepherd Foundation's mission to empower women and girls across Africa through education, advocacy, and community support aligned with UN Sustainable Development Goals.{% endblock %}
+
+{% block content %}
     <!-- Hero Section -->
     <section class="about-hero">
         <div class="container">
             <div class="hero-content">
                 <div class="hero-text">
-                    <h1 class="hero-title">Bringing a Little Light</h1>
-                    <p class="hero-subtitle">Empowering women and girls across Africa through education, advocacy, and community support</p>
+                    <span class="hero-subtitle">Bringing a Little Light</span>
+                    <h1 class="hero-title">Empowering Women & Girls Across Africa</h1>
                     <div class="hero-tagline">
-                        <span class="tagline-text">"Together, we can ignite the change we wish to see in the world"</span>
+                        <p class="tagline-text">
+                            "Together, we can ignite the change we wish to see in the world"
+                        </p>
                     </div>
                 </div>
                 <div class="hero-image">
@@ -64,38 +26,78 @@
         </div>
     </section>
 
-    <!-- Mission Section -->
+    <!-- Mission Statement Section -->
     <section class="mission-section">
         <div class="container">
-            <div class="section-content">
-                <div class="section-text">
-                    <h2 class="section-title">Our Mission</h2>
-                    <p class="mission-text">
-                        We are on a mission to transform the lives of women and girls across Africa, championing their rights, 
-                        amplifying their voices, and igniting their potential. In a world where women often face insurmountable 
-                        challenges, we believe that empowerment is not just a goal but a necessity.
+            <div class="section-header">
+                <h2 class="section-title">Our Mission</h2>
+                <div class="sdg-badges">
+                    <div class="sdg-badge">
+                        <span class="sdg-number">4</span>
+                        <span class="sdg-text">Quality Education</span>
+                    </div>
+                    <div class="sdg-badge">
+                        <span class="sdg-number">5</span>
+                        <span class="sdg-text">Gender Equality</span>
+                    </div>
+                    <div class="sdg-badge">
+                        <span class="sdg-number">8</span>
+                        <span class="sdg-text">Decent Work</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mission-content">
+                <div class="mission-text">
+                    <p class="mission-statement">
+                        Aligned with the Sustainable Development Goals, our mission is to achieve <strong>gender equality (SDG 5)</strong> by ensuring inclusive and equitable quality education for every girl <strong>(SDG 4)</strong>, and promoting sustained, inclusive economic growth with full and productive employment for all women <strong>(SDG 8)</strong>.
                     </p>
-                    <p class="mission-text">
-                        Our work is not just about addressing immediate needs; it's about fostering long-lasting change. 
-                        We are dedicated to breaking down the systemic barriers that perpetuate inequality—whether through 
-                        education, advocacy, or direct support services.
+                    <p class="mission-execution">
+                        We execute this by funding education, building skills for decent work, creating business opportunities, and guaranteeing access to critical support services for health and safety, empowering women and girls to claim a future of autonomy and power.
                     </p>
                 </div>
                 <div class="mission-visual">
                     <div class="mission-stats">
                         <div class="stat-item">
-                            <div class="stat-number">2,500+</div>
+                            <div class="stat-number">{{ stats.lives_impacted }}+</div>
                             <div class="stat-label">Lives Impacted</div>
                         </div>
                         <div class="stat-item">
-                            <div class="stat-number">15</div>
+                            <div class="stat-number">{{ stats.communities_served }}+</div>
                             <div class="stat-label">Communities Served</div>
                         </div>
                         <div class="stat-item">
-                            <div class="stat-number">150+</div>
-                            <div class="stat-label">Women Empowered</div>
+                            <div class="stat-number">{{ stats.total_campaigns }}</div>
+                            <div class="stat-label">Active Programs</div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Foundation Story -->
+    <section class="foundation-story">
+        <div class="container">
+            <div class="story-content">
+                <div class="story-text">
+                    <span class="section-subtitle">Our Journey</span>
+                    <h2 class="section-title">Bringing a Little Light</h2>
+                    <p class="story-description">
+                        In a world where women often face insurmountable challenges, we believe that empowerment is not just a goal but a necessity. Our work is not just about addressing immediate needs; it's about fostering long-lasting change.
+                    </p>
+                    <p class="story-description">
+                        We are dedicated to breaking down the systemic barriers that perpetuate inequality—whether through education, advocacy, or direct support services. Every initiative we undertake is rooted in collaboration and respect for the communities we serve, ensuring that the voices of women guide our actions.
+                    </p>
+                    <div class="story-quote">
+                        <blockquote>
+                            <p>"We are inspired daily by the women we meet—those who overcome adversity with grace and tenacity. Their stories fuel our passion and remind us of the impact we can make together."</p>
+                            <cite>- Blak Shepherd Foundation Team</cite>
+                        </blockquote>
+                    </div>
+                </div>
+                <div class="story-image">
+                    <img src="{{ url_for('static', filename='images/story-image.jpg') }}" alt="Our foundation story" class="story-img">
                 </div>
             </div>
         </div>
@@ -104,30 +106,31 @@
     <!-- Founder Section -->
     <section class="founder-section">
         <div class="container">
-            <h2 class="section-title">Meet Our Founder</h2>
+            <div class="section-header">
+                <h2 class="section-title">Meet Our Founder</h2>
+                <p class="section-description">Leading with vision, passion, and unwavering commitment to women's empowerment</p>
+            </div>
+            
             <div class="founder-content">
                 <div class="founder-image">
-                    <img src="{{ url_for('static', filename='images/team/ami.jpg') }}" alt="Ami Ubeh - Founder" class="founder-img">
+                    <img src="{{ url_for('static', filename='images/team/ami-ubeh.jpg') }}" alt="Ami Ubeh - Founder" class="founder-img">
                     <div class="founder-badge">
                         <span class="badge-text">Founder</span>
                     </div>
                 </div>
                 <div class="founder-info">
                     <h3 class="founder-name">Ami Ubeh</h3>
-                    <p class="founder-title">Founder, Black Shepherd Foundation</p>
+                    <p class="founder-title">Founder, Blak Shepherd Foundation</p>
                     <div class="founder-message">
                         <p>
-                            "As the founder of this NGO, I am filled with immense pride and gratitude to share our journey with you. 
-                            Our team is driven by a shared vision of a future where every woman can thrive, unencumbered by fear or discrimination."
+                            "As the founder of this NGO, I am filled with immense pride and gratitude to share our journey with you. Together, we are on a mission to transform the lives of women and girls across Africa, championing their rights, amplifying their voices, and igniting their potential."
                         </p>
                         <p>
-                            "We know that the road ahead is challenging, but we are inspired daily by the women we meet—those who 
-                            overcome adversity with grace and tenacity. Their stories fuel our passion and remind us of the impact 
-                            we can make together."
+                            "Our team is driven by a shared vision of a future where every woman can thrive, unencumbered by fear or discrimination. We come from diverse backgrounds, each of us united by a commitment to social justice and a deep respect for the resilience and strength of women."
                         </p>
-                    </div>
-                    <div class="founder-contact">
-                        <a href="/contact" class="btn btn-primary">Get In Touch</a>
+                        <p>
+                            "We know that the road ahead is challenging, but we are inspired daily by the women we meet—those who overcome adversity with grace and tenacity. Their stories fuel our passion and remind us of the impact we can make together."
+                        </p>
                     </div>
                 </div>
             </div>
@@ -137,38 +140,38 @@
     <!-- Values Section -->
     <section class="values-section">
         <div class="container">
-            <h2 class="section-title">Our Values & Approach</h2>
+            <div class="section-header">
+                <h2 class="section-title">Our Values & Approach</h2>
+                <p class="section-description">The principles that guide every initiative and shape our impact</p>
+            </div>
+            
             <div class="values-grid">
                 <div class="value-item">
                     <div class="value-icon">🤝</div>
                     <h3 class="value-title">Community Collaboration</h3>
                     <p class="value-description">
-                        Every initiative we undertake is rooted in collaboration and respect for the communities we serve, 
-                        ensuring that the voices of women guide our actions.
+                        Every initiative we undertake is rooted in collaboration and respect for the communities we serve, ensuring that the voices of women guide our actions.
                     </p>
                 </div>
                 <div class="value-item">
                     <div class="value-icon">⚖️</div>
                     <h3 class="value-title">Social Justice</h3>
                     <p class="value-description">
-                        We come from diverse backgrounds, each of us united by a commitment to social justice and a deep 
-                        respect for the resilience and strength of women.
+                        We come from diverse backgrounds, each of us united by a commitment to social justice and a deep respect for the resilience and strength of women.
                     </p>
                 </div>
                 <div class="value-item">
                     <div class="value-icon">🌱</div>
                     <h3 class="value-title">Sustainable Change</h3>
                     <p class="value-description">
-                        We focus on breaking down systemic barriers that perpetuate inequality through education, advocacy, 
-                        and direct support services for lasting impact.
+                        We focus on breaking down systemic barriers that perpetuate inequality through education, advocacy, and direct support services for lasting impact.
                     </p>
                 </div>
                 <div class="value-item">
                     <div class="value-icon">💪</div>
-                    <h3 class="value-title">Empowerment</h3>
+                    <h3 class="value-title">Women Empowerment</h3>
                     <p class="value-description">
-                        We cultivate a world where women are empowered to take charge of their destinies, challenge societal norms, 
-                        and build a future filled with hope and opportunity.
+                        We cultivate a world where women are empowered to take charge of their destinies, challenge societal norms, and build a future filled with hope and opportunity.
                     </p>
                 </div>
             </div>
@@ -178,33 +181,161 @@
     <!-- Impact Areas -->
     <section class="impact-areas">
         <div class="container">
-            <h2 class="section-title">Where We Make Impact</h2>
+            <div class="section-header">
+                <h2 class="section-title">Where We Make Impact</h2>
+                <p class="section-description">Three key areas where we create lasting change in women's lives</p>
+            </div>
+            
             <div class="impact-grid">
                 <div class="impact-area">
                     <div class="area-image">
                         <img src="{{ url_for('static', filename='images/impact/education.jpg') }}" alt="Education programs">
+                        <div class="area-overlay">
+                            <div class="area-stats">
+                                <span class="stat">120+ Students</span>
+                                <span class="stat">Supported</span>
+                            </div>
+                        </div>
                     </div>
                     <div class="area-content">
                         <h3>Education & Literacy</h3>
-                        <p>Providing educational opportunities and resources to empower women and girls with knowledge and skills for a better future.</p>
+                        <p>Providing educational opportunities, sponsoring examination fees, and supplying essential materials to empower young women with knowledge and skills for a brighter future. Through our SS3 Scholarship Program, we ensure no girl's education is limited by financial constraints.</p>
+                        <div class="area-achievements">
+                            <span class="achievement">✓ WAEC & NECO Fee Sponsorship</span>
+                            <span class="achievement">✓ Educational Materials Supply</span>
+                            <span class="achievement">✓ Mentorship Programs</span>
+                        </div>
                     </div>
                 </div>
+                
                 <div class="impact-area">
                     <div class="area-image">
                         <img src="{{ url_for('static', filename='images/impact/advocacy.jpg') }}" alt="Advocacy work">
+                        <div class="area-overlay">
+                            <div class="area-stats">
+                                <span class="stat">12+ Sessions</span>
+                                <span class="stat">Conducted</span>
+                            </div>
+                        </div>
                     </div>
                     <div class="area-content">
                         <h3>Advocacy & Rights</h3>
-                        <p>Championing women's rights and amplifying their voices to create policy changes and social awareness.</p>
+                        <p>Championing women's rights through awareness campaigns, sensitization programs, and advocacy initiatives. We focus on critical issues like Sexual Assault Awareness and Prevention, creating safe spaces for dialogue and education about women's rights and safety.</p>
+                        <div class="area-achievements">
+                            <span class="achievement">✓ Sexual Assault Prevention Programs</span>
+                            <span class="achievement">✓ Rights Awareness Campaigns</span>
+                            <span class="achievement">✓ Community Sensitization</span>
+                        </div>
                     </div>
                 </div>
+                
                 <div class="impact-area">
                     <div class="area-image">
                         <img src="{{ url_for('static', filename='images/impact/support.jpg') }}" alt="Direct support services">
+                        <div class="area-overlay">
+                            <div class="area-stats">
+                                <span class="stat">200+ Families</span>
+                                <span class="stat">Assisted</span>
+                            </div>
+                        </div>
                     </div>
                     <div class="area-content">
                         <h3>Direct Support Services</h3>
-                        <p>Offering immediate assistance and resources to women facing challenges, providing safety nets and pathways to independence.</p>
+                        <p>Offering immediate assistance through healthcare support, food security programs, and essential supplies distribution. From settling hospital bills for mothers to providing Christmas food packages, we create safety nets and pathways to independence.</p>
+                        <div class="area-achievements">
+                            <span class="achievement">✓ Healthcare Bill Settlement</span>
+                            <span class="achievement">✓ Food Security Programs</span>
+                            <span class="achievement">✓ Essential Supplies Distribution</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partners Section -->
+    <section class="partners-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Our Strategic Partners</h2>
+                <p class="section-description">Collaborating with organizations that share our vision for women's empowerment</p>
+            </div>
+            
+            <div class="partners-content">
+                <div class="partnership-intro">
+                    <p class="intro-text">
+                        Through strategic partnerships, we amplify our impact and extend our reach. Our collaboration with The Voice Against Gun Violence and LVP Ventures on the SS3 Students Scholarship Program exemplifies how partnerships can create comprehensive solutions for complex challenges.
+                    </p>
+                </div>
+                
+                <div class="partners-grid">
+                    <div class="partner-card">
+                        <div class="partner-header">
+                            <img src="{{ url_for('static', filename='images/partners/lvp-ventures.png') }}" alt="LVP Ventures" class="partner-logo">
+                            <div class="partner-info">
+                                <h3 class="partner-name">LVP Ventures</h3>
+                                <span class="partner-location">United States</span>
+                            </div>
+                        </div>
+                        <div class="partner-content">
+                            <p class="partner-description">
+                                Strategic partner supporting our educational initiatives and scholarship programs. LVP Ventures brings international perspective and resources to help us expand our reach in empowering young women through education and mentorship.
+                            </p>
+                            <div class="partnership-focus">
+                                <h4>Partnership Focus:</h4>
+                                <ul>
+                                    <li>Educational program funding</li>
+                                    <li>Strategic guidance and mentorship</li>
+                                    <li>International collaboration opportunities</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="partner-card">
+                        <div class="partner-header">
+                            <img src="{{ url_for('static', filename='images/partners/voice-against-gun-violence.png') }}" alt="The Voice Against Gun Violence" class="partner-logo">
+                            <div class="partner-info">
+                                <h3 class="partner-name">The Voice Against Gun Violence</h3>
+                                <span class="partner-location">Nigeria</span>
+                            </div>
+                        </div>
+                        <div class="partner-content">
+                            <p class="partner-description">
+                                Collaborative partner in our awareness and advocacy programs, particularly the SS3 Students Scholarship Program focusing on Sexual Assault Awareness and Prevention Month initiatives.
+                            </p>
+                            <div class="partnership-focus">
+                                <h4>Partnership Focus:</h4>
+                                <ul>
+                                    <li>Sexual assault prevention programs</li>
+                                    <li>Community awareness campaigns</li>
+                                    <li>Student sensitization initiatives</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="collaboration-highlight">
+                    <div class="highlight-content">
+                        <h3>Joint Initiative: SS3 Students Scholarship Program</h3>
+                        <p>
+                            Together with our partners, we launched a comprehensive program at Federal Government Girls' College, Bwari, combining education sponsorship with crucial awareness programming during Sexual Assault Awareness and Prevention Month.
+                        </p>
+                        <div class="program-results">
+                            <div class="result-item">
+                                <strong>120+</strong>
+                                <span>Students Supported</span>
+                            </div>
+                            <div class="result-item">
+                                <strong>85+</strong>
+                                <span>Exam Fees Sponsored</span>
+                            </div>
+                            <div class="result-item">
+                                <strong>12+</strong>
+                                <span>Sensitization Sessions</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -218,68 +349,945 @@
                 <h2>A Message from Our Team</h2>
                 <div class="message-text">
                     <p>
-                        "We invite you to join us on this meaningful journey. Your support—whether through time, resources, 
-                        or spreading the word—helps us create a ripple effect of change. Together, we can cultivate a world 
-                        where women are empowered to take charge of their destinies, challenge societal norms, and build a 
-                        future filled with hope and opportunity."
+                        "We invite you to join us on this meaningful journey. Your support—whether through time, resources, or spreading the word—helps us create a ripple effect of change. Together, we can cultivate a world where women are empowered to take charge of their destinies, challenge societal norms, and build a future filled with hope and opportunity."
                     </p>
                     <p>
-                        "Together, we are committed to fostering a community of empowerment, love, and resilience. 
-                        Let's continue to uplift and inspire each other on this journey toward equality and justice."
+                        "Together, we are committed to fostering a community of empowerment, love, and resilience. Let's continue to uplift and inspire each other on this journey toward equality and justice."
                     </p>
                 </div>
                 <div class="team-signature">
                     <p class="signature-text">With heartfelt appreciation,</p>
-                    <p class="signature-name">The Black Shepherd Foundation Team</p>
+                    <p class="signature-name">The Blak Shepherd Foundation Team</p>
+                    <p class="signature-tagline">"Bringing a little light..."</p>
                 </div>
             </div>
         </div>
     </section>
 
-   
-    <!-- Footer -->
-    <footer class="footer">
+    <!-- Call to Action -->
+    <section class="about-cta">
         <div class="container">
-            <div class="footer-content">
-                
-                <!-- Brand Section - Simple -->
-                <div class="footer-brand-section">
-                    <div class="footer-brand">
-                        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Black Shepherd Foundation" class="footer-logo">
-                        <div class="brand-text">
-                            <h3 class="footer-brand-name">Black Shepherd</h3>
-                            <p class="footer-tagline">"Bringing a Little Light"</p>
-                        </div>
-                    </div>
-                    
+            <div class="cta-content">
+                <div class="cta-text">
+                    <h2 class="cta-title">Ready to Join Our Mission?</h2>
+                    <p class="cta-description">
+                        Your support creates ripples of change that transform lives and strengthen communities. 
+                        Whether through donations, volunteering, or partnerships, there are many ways to make a difference.
+                    </p>
                 </div>
-                
-                <!-- Single Line: Phone + Email + Instagram -->
-                <div class="footer-contact-section">
-                    <div class="contact-item">
-                        <i class="fas fa-phone"></i>
-                        <a href="tel:+2349124211336">+234 912 421 1336</a>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-envelope"></i>
-                        <a href="mailto:hello@blackshepherd.org">hello@blackshepherd.org</a>
-                    </div>
-                    <a href="#" class="social-link" aria-label="Instagram">
-                        <i class="fab fa-instagram"></i>
-                        <span>@blackshepherd</span>
+                <div class="cta-actions">
+                    <a href="{{ url_for('campaigns') }}" class="btn btn-primary btn-large">
+                        Support Our Campaigns
+                    </a>
+                    <a href="{{ url_for('contact') }}" class="btn btn-outline btn-large">
+                        Partner With Us
                     </a>
                 </div>
             </div>
-            
-            <!-- Footer Bottom -->
-            <div class="footer-bottom">
-                <p class="footer-copyright">
-                    © 2025 Black Shepherd Foundation. All rights reserved.
-                </p>
-            </div>
         </div>
-    </footer>
+    </section>
+{% endblock %}
 
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-</body>
-</html>
+{% block extra_css %}
+<style>
+/* ==============================================
+   ABOUT PAGE STYLES - MOBILE FIRST
+   ============================================== */
+
+/* Base Mobile Styles (320px+) */
+.about-hero {
+    background: linear-gradient(135deg, #2C3E50 0%, #1F2937 100%);
+    color: white;
+    padding: 6rem 0 3rem;
+    margin-top: 5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.about-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    text-align: center;
+}
+
+.hero-subtitle {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.hero-title {
+    color: white;
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 2rem;
+    line-height: 1.1;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.hero-tagline {
+    background: rgba(255, 255, 255, 0.1);
+    border-left: 4px solid #FF6B35;
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    backdrop-filter: blur(10px);
+    margin-bottom: 2rem;
+}
+
+.tagline-text {
+    color: rgba(255, 255, 255, 0.95);
+    font-style: italic;
+    font-size: 1.125rem;
+    margin: 0;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+.hero-image {
+    position: relative;
+    border-radius: 1rem;
+    overflow: hidden;
+    margin: 0 auto;
+    max-width: 400px;
+}
+
+.hero-img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.3));
+}
+
+/* Mission Section */
+.mission-section {
+    padding: 4rem 0;
+    background: #f9fafb;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.section-title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: #1f2937;
+    margin-bottom: 1rem;
+}
+
+.section-description {
+    font-size: 1.125rem;
+    color: #6b7280;
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.sdg-badges {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.sdg-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: white;
+    padding: 0.75rem 1rem;
+    border-radius: 2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border: 1px solid #e5e7eb;
+}
+
+.sdg-number {
+    background: #FF6B35;
+    color: white;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.875rem;
+}
+
+.sdg-text {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #374151;
+}
+
+.mission-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: center;
+}
+
+.mission-statement {
+    font-size: 1.25rem;
+    line-height: 1.7;
+    color: #1f2937;
+    margin-bottom: 2rem;
+    font-weight: 500;
+}
+
+.mission-execution {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: #4b5563;
+}
+
+.mission-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    background: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #FF6B35;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.stat-label {
+    font-size: 0.875rem;
+    color: #6b7280;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Foundation Story */
+.foundation-story {
+    padding: 4rem 0;
+    background: white;
+}
+
+.story-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: center;
+}
+
+.section-subtitle {
+    color: #FF6B35;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+}
+
+.story-description {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: #4b5563;
+    margin-bottom: 2rem;
+}
+
+.story-quote {
+    background: #eff6ff;
+    border-left: 4px solid #3b82f6;
+    padding: 2rem;
+    border-radius: 0.75rem;
+    margin: 2rem 0;
+}
+
+.story-quote blockquote {
+    margin: 0;
+}
+
+.story-quote p {
+    font-style: italic;
+    font-size: 1.125rem;
+    color: #1e40af;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.story-quote cite {
+    color: #6b7280;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.story-image {
+    border-radius: 1rem;
+    overflow: hidden;
+    margin: 0 auto;
+    max-width: 500px;
+}
+
+.story-img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+}
+
+/* Founder Section */
+.founder-section {
+    padding: 4rem 0;
+    background: #f9fafb;
+}
+
+.founder-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: center;
+    margin-top: 3rem;
+}
+
+.founder-image {
+    position: relative;
+    text-align: center;
+}
+
+.founder-img {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #FF6B35;
+    box-shadow: 0 10px 25px rgba(255, 107, 53, 0.2);
+}
+
+.founder-badge {
+    position: absolute;
+    bottom: 10px;
+    right: 50%;
+    transform: translateX(50%);
+    background: #FF6B35;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.founder-name {
+    font-size: 2.25rem;
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+    font-weight: 800;
+}
+
+.founder-title {
+    color: #FF6B35;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    font-size: 1.125rem;
+}
+
+.founder-message p {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: #374151;
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+/* Values Section */
+.values-section {
+    padding: 4rem 0;
+    background: white;
+}
+
+.values-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.value-item {
+    background: #f9fafb;
+    border-radius: 1rem;
+    padding: 2rem;
+    text-align: center;
+    border: 1px solid #e5e7eb;
+    transition: all 0.3s ease;
+}
+
+.value-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    background: white;
+}
+
+.value-icon {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+    display: block;
+}
+
+.value-title {
+    color: #1f2937;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.value-description {
+    color: #4b5563;
+    line-height: 1.6;
+    font-size: 1rem;
+}
+
+/* Impact Areas */
+.impact-areas {
+    padding: 4rem 0;
+    background: #f9fafb;
+}
+
+.impact-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    margin-top: 3rem;
+}
+
+.impact-area {
+    background: white;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.impact-area:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.area-image {
+    position: relative;
+    height: 250px;
+    overflow: hidden;
+}
+
+.area-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.area-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.7));
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.area-stats {
+    text-align: center;
+    color: white;
+}
+
+.area-stats .stat {
+    display: block;
+    font-weight: 700;
+    font-size: 1.125rem;
+}
+
+.area-content {
+    padding: 2rem;
+}
+
+.area-content h3 {
+    color: #1f2937;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.area-content p {
+    color: #4b5563;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+}
+
+.area-achievements {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.achievement {
+    color: #059669;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+/* Partners Section */
+.partners-section {
+    padding: 4rem 0;
+    background: white;
+}
+
+.partnership-intro {
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+.intro-text {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: #4b5563;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.partners-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    margin-bottom: 4rem;
+}
+
+.partner-card {
+    background: #f9fafb;
+    border-radius: 1rem;
+    padding: 2rem;
+    border: 1px solid #e5e7eb;
+    transition: all 0.3s ease;
+}
+
+.partner-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    background: white;
+}
+
+.partner-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.partner-logo {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    border-radius: 0.5rem;
+    background: white;
+    padding: 0.5rem;
+}
+
+.partner-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 0.25rem;
+}
+
+.partner-location {
+    color: #6b7280;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.partner-description {
+    color: #4b5563;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+.partnership-focus h4 {
+    color: #1f2937;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.partnership-focus ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.partnership-focus li {
+    color: #4b5563;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #e5e7eb;
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.partnership-focus li:before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #059669;
+    font-weight: 700;
+}
+
+.partnership-focus li:last-child {
+    border-bottom: none;
+}
+
+.collaboration-highlight {
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    border-radius: 1rem;
+    padding: 3rem;
+    text-align: center;
+    border: 1px solid #bfdbfe;
+}
+
+.highlight-content h3 {
+    color: #1e40af;
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.highlight-content p {
+    color: #1e40af;
+    font-size: 1.125rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.program-results {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.result-item {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    text-align: center;
+}
+
+.result-item strong {
+    display: block;
+    font-size: 2rem;
+    font-weight: 800;
+    color: #1e40af;
+    margin-bottom: 0.5rem;
+}
+
+.result-item span {
+    color: #4b5563;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Team Message */
+.team-message {
+    background: linear-gradient(135deg, #FF6B35, #E55A2B);
+    color: white;
+    padding: 4rem 0;
+}
+
+.message-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.message-content h2 {
+    color: white;
+    font-size: 2.25rem;
+    font-weight: 800;
+    margin-bottom: 2rem;
+}
+
+.message-text p {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.95);
+    margin-bottom: 2rem;
+    font-style: italic;
+}
+
+.team-signature {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.signature-text {
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+}
+
+.signature-name {
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: white;
+    margin-bottom: 0.5rem;
+}
+
+.signature-tagline {
+    color: rgba(255, 255, 255, 0.8);
+    font-style: italic;
+    font-size: 0.875rem;
+}
+
+/* Call to Action */
+.about-cta {
+    background: linear-gradient(135deg, #FF6B35, #E55A2B);
+    color: white;
+    padding: 4rem 0;
+}
+
+.cta-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    text-align: center;
+}
+
+.cta-title {
+    color: white;
+    font-size: 2.25rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+}
+
+.cta-description {
+    font-size: 1.125rem;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cta-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.btn-large {
+    padding: 1rem 2rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    border-radius: 0.75rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.btn-primary {
+    background: #FF6B35;
+    color: white;
+    border: none;
+}
+
+.btn-primary:hover {
+    background: #E55A2B;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 107, 53, 0.3);
+}
+
+.btn-outline {
+    background: transparent;
+    color: #4b5563;
+    border: 2px solid #d1d5db;
+}
+
+.btn-outline:hover {
+    background: #f9fafb;
+    border-color: #FF6B35;
+    color: #FF6B35;
+    transform: translateY(-2px);
+}
+
+/* Tablet Styles (500px+) */
+@media (min-width: 500px) {
+    .hero-title {
+        font-size: 3rem;
+    }
+    
+    .mission-stats {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .values-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .program-results {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .cta-actions {
+        flex-direction: row;
+    }
+}
+
+/* Large Tablet Styles (768px+) */
+@media (min-width: 768px) {
+    .hero-content {
+        grid-template-columns: 1fr 1fr;
+        text-align: left;
+    }
+    
+    /* Show the separate image element on desktop */
+    .hero-image {
+        display: block;
+    }
+    
+    .hero-title {
+        font-size: 3.5rem;
+    }
+    
+    .mission-content {
+        grid-template-columns: 2fr 1fr;
+    }
+    
+    .story-content {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .founder-content {
+        grid-template-columns: 1fr 2fr;
+    }
+    
+    .values-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .impact-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .partners-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .cta-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+        align-items: center;
+    }
+    
+    .cta-actions {
+        justify-content: center;
+    }
+}
+
+/* Desktop Styles (1024px+) */
+@media (min-width: 1024px) {
+    .about-hero {
+        padding: 8rem 0 4rem;
+    }
+    
+    .hero-title {
+        font-size: 4rem;
+    }
+    
+    .values-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .impact-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .section-title {
+        font-size: 2.5rem;
+    }
+    
+    .founder-img {
+        width: 300px;
+        height: 300px;
+    }
+}
+
+/* Large Desktop Styles (1200px+) */
+@media (min-width: 1200px) {
+    .hero-title {
+        font-size: 4.5rem;
+    }
+    
+    .mission-stats {
+        padding: 3rem;
+    }
+    
+    .collaboration-highlight {
+        padding: 4rem;
+    }
+}
+
+/* Accessibility and Print Styles */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+@media print {
+    .about-hero {
+        background: none;
+        color: #1f2937;
+    }
+    
+    .team-message {
+        background: none;
+        color: #1f2937;
+    }
+    
+    .about-cta {
+        background: none;
+        color: #1f2937;
+    }
+}
+</style>
+{% endblock %}

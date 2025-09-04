@@ -1,244 +1,927 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us - {{ config.SITE_NAME }}</title>
-    <meta name="description" content="Get in touch with Black Shepherd Foundation. Find our contact information, office location, and social media channels.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-</head>
-<body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="nav-brand">
-                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Black Shepherd Foundation" class="logo">
-                <span class="brand-text">Black Shepherd</span>
-            </div>
-            
-            <div class="nav-links">
-                <a href="/" class="nav-link">Home</a>
-                <a href="/about" class="nav-link">About</a>
-                <a href="/campaigns" class="nav-link">Campaigns</a>
-                <a href="/contact" class="nav-link active">Contact</a>
-                <a href="/campaigns" class="btn btn-primary">Donate Now</a>
-            </div>
-            
-            <div class="mobile-menu-toggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </nav>
+{% extends "base.html" %}
 
-    <!-- Mobile Menu -->
-    <div class="mobile-menu">
-        <a href="/" class="mobile-nav-link">Home</a>
-        <a href="/about" class="mobile-nav-link">About</a>
-        <a href="/campaigns" class="mobile-nav-link">Campaigns</a>
-        <a href="/contact" class="mobile-nav-link active">Contact</a>
-        <a href="/campaigns" class="btn btn-primary">Donate Now</a>
-    </div>
+{% block title %}Contact Us - Blak Shepherd Foundation{% endblock %}
 
-    <!-- Page Header -->
-    <section class="contact-header">
+{% block description %}Get in touch with Blak Shepherd Foundation. Find our contact information, office location, and social media channels for partnerships, volunteering, and support.{% endblock %}
+
+{% block content %}
+    <!-- IMPROVED Contact Hero Section -->
+    <section class="contact-hero">
         <div class="container">
-            <div class="header-content">
-                <h1 class="page-title">Get in Touch</h1>
-                <p class="page-subtitle">
-                    Ready to join our mission? Have questions about our work? We're here to connect with you. 
-                    Reach out through any of the channels below and let's create lasting change together.
+            <div class="hero-content">
+                <span class="hero-subtitle">GET IN TOUCH</span>
+                <h1 class="hero-title">Ready to Join Our Mission?</h1>
+                <p class="hero-description">
+                    Connect with us to explore opportunities for partnership, volunteering, or support. 
+                    Together, we can create lasting change in communities across Africa.
                 </p>
             </div>
         </div>
     </section>
 
-    <!-- Contact Content -->
-    <section class="contact-content">
+    <!-- Contact Information Section -->
+    <section class="contact-info-section">
         <div class="container">
             <div class="contact-grid">
-                <!-- Contact Form -->
                 
-
-                <!-- Contact Information -->
-                <div class="contact-info-section">
-                    <!-- Contact Details Card -->
-                    <div class="contact-info-card">
-                        <h3 class="card-title">
-                            <i class="fas fa-map-marker-alt card-icon"></i>
-                            Contact Information
-                        </h3>
+                <!-- Primary Contact Card -->
+                <div class="contact-card">
+                    <div class="card-header">
+                        <h2 class="card-title">Contact Information</h2>
+                        <p class="card-subtitle">Reach out to us through any of these channels</p>
+                    </div>
+                    
+                    <div class="contact-methods">
+                        <div class="contact-method">
+                            <div class="method-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="method-content">
+                                <h3 class="method-title">Call Us</h3>
+                                <a href="tel:+2349124211336" class="method-value">+234 912 421 1336</a>
+                                <p class="method-description">Available Monday - Friday, 9:00 AM - 5:00 PM WAT</p>
+                            </div>
+                        </div>
                         
-                        <div class="contact-items">
-                            <div class="contact-item">
-                                <div class="contact-item-icon">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                </div>
-                                <div class="contact-item-content">
-                                    <h4>Visit Our Office</h4>
-                                    <p>123 Foundation Street<br>Garki, Abuja FCT<br>Nigeria</p>
-                                </div>
+                        <div class="contact-method">
+                            <div class="method-icon">
+                                <i class="fas fa-envelope"></i>
                             </div>
-                            
-                            <div class="contact-item">
-                                <div class="contact-item-icon">
-                                    <i class="fas fa-phone"></i>
-                                </div>
-                                <div class="contact-item-content">
-                                    <h4>Call Us</h4>
-                                    <p><a href="tel:+2341234567890">+234 123 456 7890</a></p>
-                                </div>
+                            <div class="method-content">
+                                <h3 class="method-title">Email Us</h3>
+                                <a href="mailto:blakshepherdwef@gmail.com" class="method-value">blakshepherdwef@gmail.com</a>
+                                <p class="method-description">We'll respond within 24 hours</p>
                             </div>
-                            
-                            <div class="contact-item">
-                                <div class="contact-item-icon">
-                                    <i class="fas fa-envelope"></i>
-                                </div>
-                                <div class="contact-item-content">
-                                    <h4>Email Us</h4>
-                                    <p><a href="mailto:hello@blackshepherdfoundation.org">hello@blackshepherdfoundation.org</a></p>
-                                </div>
+                        </div>
+                        
+                        <div class="contact-method">
+                            <div class="method-icon">
+                                <i class="fab fa-instagram"></i>
                             </div>
-                            
-                            <div class="contact-item">
-                                <div class="contact-item-icon">
-                                    <i class="fas fa-clock"></i>
+                            <div class="method-content">
+                                <h3 class="method-title">Follow Us</h3>
+                                <a href="https://www.instagram.com/blakshepardwef?utm_source=ig_web_button_share_sheet&igsh=MWIyNXpkazd1M2NkeQ==" 
+                                   target="_blank" 
+                                   rel="noopener noreferrer" 
+                                   class="method-value">
+                                    @blakshepardwef
+                                </a>
+                                <p class="method-description">Stay updated with our latest impact stories</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Office Information Card -->
+                <div class="contact-card">
+                    <div class="card-header">
+                        <h2 class="card-title">Office Location</h2>
+                        <p class="card-subtitle">Visit us at our headquarters</p>
+                    </div>
+                    
+                    <div class="office-details">
+                        <div class="office-address">
+                            <div class="address-icon">📍</div>
+                            <div class="address-content">
+                                <h3>Foundation Headquarters</h3>
+                                <address>
+                                    123 Foundation Street<br>
+                                    Garki, Abuja FCT<br>
+                                    Nigeria
+                                </address>
+                            </div>
+                        </div>
+                        
+                        <div class="office-hours">
+                            <h3 class="hours-title">Office Hours</h3>
+                            <div class="hours-grid">
+                                <div class="hours-item">
+                                    <span class="day">Monday - Friday</span>
+                                    <span class="time">9:00 AM - 5:00 PM</span>
                                 </div>
-                                <div class="contact-item-content">
-                                    <h4>Office Hours</h4>
-                                    <p>Monday - Friday: 9:00 AM - 5:00 PM<br>
-                                    Saturday: 10:00 AM - 2:00 PM<br>
-                                    Sunday: Closed</p>
+                                <div class="hours-item">
+                                    <span class="day">Saturday</span>
+                                    <span class="time">10:00 AM - 2:00 PM</span>
+                                </div>
+                                <div class="hours-item">
+                                    <span class="day">Sunday</span>
+                                    <span class="time">Closed</span>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                    <!-- Social Media Card -->
-                    <div class="social-media-card">
-                        <h3 class="card-title">
-                            <i class="fab fa-instagram card-icon"></i>
-                            Follow Our Journey
-                        </h3>
-                        <p class="social-description">
-                            Stay updated with our latest campaigns, impact stories, and community events. 
-                            Follow us on Instagram for behind-the-scenes moments and real-time updates.
+    <!-- Quick Actions Section -->
+    <section class="quick-actions-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">How Can We Work Together?</h2>
+                <p class="section-description">
+                    There are many ways to get involved and make a difference with Blak Shepherd Foundation
+                </p>
+            </div>
+            
+            <div class="actions-grid">
+                <div class="action-card">
+                    <div class="action-icon">💝</div>
+                    <div class="action-content">
+                        <h3 class="action-title">Make a Donation</h3>
+                        <p class="action-description">
+                            Support our active campaigns and help us reach more women and communities 
+                            across Africa with your generous contribution.
                         </p>
-                        <a href="https://instagram.com/blakshepardwef" target="_blank" class="instagram-link">
-                            <i class="fab fa-instagram"></i>
-                            @blakshepardwef
+                        <div class="action-stats">
+                            <span class="stat-number">3</span>
+                            <span class="stat-label">Active Campaigns</span>
+                        </div>
+                        <a href="{{ url_for('campaigns') }}" class="btn btn-primary">
+                            Donate Now
                         </a>
-                        
-                        <div class="social-stats">
-                            <div class="social-stat">
-                                <strong>5.2K</strong>
-                                <span>Followers</span>
-                            </div>
-                            <div class="social-stat">
-                                <strong>150+</strong>
-                                <span>Posts</span>
-                            </div>
-                            <div class="social-stat">
-                                <strong>25+</strong>
-                                <span>Stories Weekly</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Quick Actions Card -->
-                    <div class="quick-actions-card">
-                        <h3 class="card-title">
-                            <i class="fas fa-rocket card-icon"></i>
-                            Take Action Now
-                        </h3>
-                        
-                        <div class="quick-action-items">
-                            <a href="/campaigns" class="quick-action-item">
-                                <div class="action-icon">
-                                    <i class="fas fa-heart"></i>
-                                </div>
-                                <div class="action-content">
-                                    <h4>Make a Donation</h4>
-                                    <p>Support our campaigns and create lasting impact</p>
-                                </div>
-                                <i class="fas fa-arrow-right action-arrow"></i>
-                            </a>
-                            
-                            <a href="#volunteer" class="quick-action-item">
-                                <div class="action-icon">
-                                    <i class="fas fa-hands-helping"></i>
-                                </div>
-                                <div class="action-content">
-                                    <h4>Volunteer with Us</h4>
-                                    <p>Join our community of change-makers</p>
-                                </div>
-                                <i class="fas fa-arrow-right action-arrow"></i>
-                            </a>
-                            
-                            <a href="#partnership" class="quick-action-item">
-                                <div class="action-icon">
-                                    <i class="fas fa-handshake"></i>
-                                </div>
-                                <div class="action-content">
-                                    <h4>Partner with Us</h4>
-                                    <p>Explore collaboration opportunities</p>
-                                </div>
-                                <i class="fas fa-arrow-right action-arrow"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>    
-    <!-- MINIMAL FOOTER HTML - Replace in all template files -->
-     <footer class="footer">
-    <div class="container">
-        <div class="footer-content">
-            
-            <!-- Brand Section - Simple -->
-            <div class="footer-brand-section">
-                <div class="footer-brand">
-                    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Black Shepherd Foundation" class="footer-logo">
-                    <div class="brand-text">
-                        <h3 class="footer-brand-name">Black Shepherd</h3>
-                        <p class="footer-tagline">"Bringing a Little Light"</p>
                     </div>
                 </div>
                 
-            </div>
-            
-            <!-- Single Line: Phone + Email + Instagram -->
-            <div class="footer-contact-section">
-                <div class="contact-item">
-                    <i class="fas fa-phone"></i>
-                    <a href="tel:+2349124211336">+234 912 421 1336</a>
+                <div class="action-card">
+                    <div class="action-icon">🤝</div>
+                    <div class="action-content">
+                        <h3 class="action-title">Volunteer With Us</h3>
+                        <p class="action-description">
+                            Join our team of passionate volunteers and contribute your skills, time, 
+                            and expertise to make a direct impact in communities.
+                        </p>
+                        <div class="action-stats">
+                            <span class="stat-number">25+</span>
+                            <span class="stat-label">Active Volunteers</span>
+                        </div>
+                        <a href="mailto:blakshepherdwef@gmail.com?subject=Volunteer Inquiry" class="btn btn-secondary">
+                            Join Our Team
+                        </a>
+                    </div>
                 </div>
-                <div class="contact-item">
-                    <i class="fas fa-envelope"></i>
-                    <a href="mailto:hello@blackshepherd.org">hello@blackshepherd.org</a>
+                
+                <div class="action-card">
+                    <div class="action-icon">🤖</div>
+                    <div class="action-content">
+                        <h3 class="action-title">Partner With Us</h3>
+                        <p class="action-description">
+                            Collaborate with us on initiatives that align with your organization's 
+                            values and expand our collective impact across Africa.
+                        </p>
+                        <div class="action-stats">
+                            <span class="stat-number">2</span>
+                            <span class="stat-label">Strategic Partners</span>
+                        </div>
+                        <a href="mailto:blakshepherdwef@gmail.com?subject=Partnership Inquiry" class="btn btn-secondary">
+                            Explore Partnership
+                        </a>
+                    </div>
                 </div>
-                <a href="#" class="social-link" aria-label="Instagram">
-                    <i class="fab fa-instagram"></i>
-                    <span>@blackshepherd</span>
-                </a>
+                
+                <div class="action-card">
+                    <div class="action-icon">🏢</div>
+                    <div class="action-content">
+                        <h3 class="action-title">Corporate Support</h3>
+                        <p class="action-description">
+                            Partner with us for corporate social responsibility initiatives, 
+                            employee engagement programs, and sustainable impact projects.
+                        </p>
+                        <div class="action-stats">
+                            <span class="stat-number">370+</span>
+                            <span class="stat-label">Lives Impacted</span>
+                        </div>
+                        <a href="mailto:blakshepherdwef@gmail.com?subject=Corporate Partnership" class="btn btn-secondary">
+                            Corporate Partnership
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
-        
-        <!-- Footer Bottom -->
-        <div class="footer-bottom">
-            <p class="footer-copyright">
-                © 2025 Black Shepherd Foundation. All rights reserved.
-            </p>
+    </section>
+
+    <!-- Impact Highlight -->
+    <section class="impact-highlight-section">
+        <div class="container">
+            <div class="impact-content">
+                <div class="impact-text">
+                    <span class="section-subtitle">Our Impact</span>
+                    <h2 class="section-title">Making a Difference Together</h2>
+                    <p class="impact-description">
+                        Through partnerships, donations, and volunteer efforts, we've achieved significant 
+                        milestones in empowering women and strengthening communities across Nigeria.
+                    </p>
+                    <div class="impact-achievements">
+                        <div class="achievement-item">
+                            <div class="achievement-icon">🏥</div>
+                            <div class="achievement-text">
+                                <strong>50+ families</strong> received healthcare support through our Kubwa Hospital Outreach
+                            </div>
+                        </div>
+                        <div class="achievement-item">
+                            <div class="achievement-icon">🍽️</div>
+                            <div class="achievement-text">
+                                <strong>200+ food packages</strong> distributed during our Christmas Food Drive in Utako
+                            </div>
+                        </div>
+                        <div class="achievement-item">
+                            <div class="achievement-icon">🎓</div>
+                            <div class="achievement-text">
+                                <strong>120+ students</strong> supported through our SS3 Scholarship Program
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="impact-visual">
+                    <div class="impact-stats-grid">
+                        <div class="impact-stat">
+                            <div class="stat-number">₦4M</div>
+                            <div class="stat-label">Total Raised</div>
+                        </div>
+                        <div class="impact-stat">
+                            <div class="stat-number">3</div>
+                            <div class="stat-label">Communities</div>
+                        </div>
+                        <div class="impact-stat">
+                            <div class="stat-number">370+</div>
+                            <div class="stat-label">Lives Changed</div>
+                        </div>
+                        <div class="impact-stat">
+                            <div class="stat-number">2</div>
+                            <div class="stat-label">Partners</div>
+                        </div>
+                    </div>
+                    <div class="impact-quote">
+                        <blockquote>
+                            "Together, we can ignite the change we wish to see in the world"
+                        </blockquote>
+                        <cite>- Blak Shepherd Foundation</cite>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-</footer>
-    <!-- JavaScript -->
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-</body>
-</html>
+    </section>
+
+    <!-- FIXED Call to Action - NOW ORANGE -->
+    <section class="contact-cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="cta-title">Ready to Make an Impact?</h2>
+                <p class="cta-description">
+                    Join hundreds of supporters who are creating positive change across Africa. 
+                    Whether through donations, partnerships, or volunteering - every action counts.
+                </p>
+                <div class="cta-actions">
+                    <a href="{{ url_for('campaigns') }}" class="btn btn-primary btn-large">
+                        Support Our Campaigns
+                    </a>
+                    <a href="mailto:blakshepherdwef@gmail.com" class="btn btn-outline btn-large">
+                        Get In Touch
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+/* ==============================================
+   CONTACT PAGE STYLES - MOBILE FIRST
+   ============================================== */
+
+/* PROFESSIONAL HERO SECTION */
+.contact-hero {
+    background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+    color: white;
+    padding: 8rem 0 4rem;
+    margin-top: 5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.contact-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 20"><defs><radialGradient id="a" cx="50%" cy="0%" r="100%"><stop offset="0%" stop-color="rgba(255,107,53,0.1)"/><stop offset="100%" stop-color="rgba(255,107,53,0)"/></radialGradient></defs><ellipse cx="50" cy="0" rx="50" ry="20" fill="url(%23a)"/></svg>') no-repeat center top;
+    background-size: 100% 100%;
+    opacity: 0.8;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.hero-subtitle {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.hero-title {
+    color: white;
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    line-height: 1.1;
+}
+
+.hero-description {
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.95);
+    line-height: 1.7;
+    margin-bottom: 2rem;
+}
+
+/* Contact Information Section */
+.contact-info-section {
+    padding: 4rem 0;
+    background: #f9fafb;
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+.contact-card {
+    background: white;
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e5e7eb;
+    transition: all 0.3s ease;
+}
+
+.contact-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.card-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.card-title {
+    color: #1f2937;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.card-subtitle {
+    color: #6b7280;
+    font-size: 1rem;
+}
+
+/* Contact Methods */
+.contact-methods {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.contact-method {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: #f9fafb;
+    border-radius: 0.75rem;
+    border: 1px solid #e5e7eb;
+    transition: all 0.3s ease;
+}
+
+.contact-method:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    background: white;
+    border-color: #FF6B35;
+}
+
+.method-icon {
+    font-size: 1.5rem;
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #FF6B35, #E55A2B);
+    color: white;
+    border-radius: 0.75rem;
+    flex-shrink: 0;
+}
+
+.method-content {
+    flex: 1;
+}
+
+.method-title {
+    color: #1f2937;
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.method-value {
+    color: #FF6B35;
+    font-size: 1.125rem;
+    font-weight: 600;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.method-value:hover {
+    color: #E55A2B;
+    text-decoration: underline;
+}
+
+.method-description {
+    color: #6b7280;
+    font-size: 0.875rem;
+    margin: 0;
+}
+
+/* Office Information */
+.office-details {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.office-address {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: #f9fafb;
+    border-radius: 0.75rem;
+}
+
+.address-icon {
+    font-size: 1.5rem;
+    color: #FF6B35;
+    margin-top: 0.25rem;
+}
+
+.address-content h3 {
+    color: #1f2937;
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.address-content address {
+    color: #4b5563;
+    font-style: normal;
+    line-height: 1.6;
+}
+
+.office-hours {
+    padding: 1.5rem;
+    background: #f9fafb;
+    border-radius: 0.75rem;
+}
+
+.hours-title {
+    color: #1f2937;
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.hours-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.hours-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.hours-item:last-child {
+    border-bottom: none;
+}
+
+.day {
+    color: #4b5563;
+    font-weight: 500;
+}
+
+.time {
+    color: #1f2937;
+    font-weight: 600;
+}
+
+/* Quick Actions Section */
+.quick-actions-section {
+    padding: 4rem 0;
+    background: white;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.section-title {
+    color: #1f2937;
+    font-size: 2.25rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+}
+
+.section-description {
+    color: #6b7280;
+    font-size: 1.125rem;
+    line-height: 1.7;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.actions-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+.action-card {
+    background: #f9fafb;
+    border-radius: 1rem;
+    padding: 2rem;
+    text-align: center;
+    border: 1px solid #e5e7eb;
+    transition: all 0.3s ease;
+}
+
+.action-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    background: white;
+}
+
+.action-icon {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+    display: block;
+}
+
+.action-title {
+    color: #1f2937;
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.action-description {
+    color: #4b5563;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.action-stats {
+    background: white;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid #e5e7eb;
+}
+
+.stat-number {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #FF6B35;
+    margin-bottom: 0.25rem;
+}
+
+.stat-label {
+    color: #6b7280;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+/* FIXED CTA SECTION - NOW ORANGE */
+.contact-cta {
+    background: linear-gradient(135deg, #FF6B35 0%, #E55A2B 100%);
+    color: white;
+    padding: 4rem 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.contact-cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 20"><defs><radialGradient id="b" cx="50%" cy="100%" r="100%"><stop offset="0%" stop-color="rgba(255,255,255,0.1)"/><stop offset="100%" stop-color="rgba(255,255,255,0)"/></radialGradient></defs><ellipse cx="50" cy="20" rx="50" ry="20" fill="url(%23b)"/></svg>') no-repeat center bottom;
+    background-size: 100% 100%;
+    opacity: 0.3;
+}
+
+.cta-content {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+
+.cta-title {
+    color: white;
+    font-size: 2.25rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+}
+
+.cta-description {
+    font-size: 1.125rem;
+    color: rgba(255, 255, 255, 0.95);
+    line-height: 1.7;
+    margin-bottom: 2rem;
+}
+
+.cta-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+/* Impact Section */
+.impact-highlight-section {
+    padding: 4rem 0;
+    background: #f9fafb;
+}
+
+.impact-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: center;
+}
+
+.section-subtitle {
+    color: #FF6B35;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+}
+
+.impact-description {
+    color: #4b5563;
+    font-size: 1.125rem;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+}
+
+.impact-achievements {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.achievement-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem;
+    background: white;
+    border-radius: 0.5rem;
+    border: 1px solid #e5e7eb;
+}
+
+.achievement-icon {
+    font-size: 1.5rem;
+    margin-top: 0.25rem;
+}
+
+.achievement-text {
+    color: #374151;
+    line-height: 1.5;
+}
+
+.achievement-text strong {
+    color: #FF6B35;
+    font-weight: 700;
+}
+
+.impact-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.impact-stat {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.impact-stat .stat-number {
+    font-size: 1.875rem;
+    font-weight: 800;
+    color: #FF6B35;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.impact-stat .stat-label {
+    color: #6b7280;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.impact-quote {
+    background: white;
+    padding: 2rem;
+    border-radius: 0.75rem;
+    border-left: 4px solid #FF6B35;
+    text-align: center;
+}
+
+.impact-quote blockquote {
+    margin: 0;
+    font-style: italic;
+    font-size: 1.125rem;
+    color: #1f2937;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.impact-quote cite {
+    color: #6b7280;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+/* Button Styles */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.btn-primary {
+    background: #FF6B35;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #E55A2B;
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background: white;
+    color: #4b5563;
+    border: 2px solid #e5e7eb;
+}
+
+.btn-secondary:hover {
+    border-color: #FF6B35;
+    color: #FF6B35;
+}
+
+.btn-outline {
+    background: transparent;
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+}
+
+.btn-outline:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.btn-large {
+    padding: 1rem 2rem;
+    font-size: 1.125rem;
+}
+
+/* Tablet Styles (500px+) */
+@media (min-width: 500px) {
+    .hero-title {
+        font-size: 3rem;
+    }
+    
+    .actions-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .impact-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .cta-actions {
+        flex-direction: row;
+    }
+}
+
+/* Large Tablet Styles (768px+) */
+@media (min-width: 768px) {
+    .contact-grid {
+        grid-template-columns: 2fr 1fr;
+        gap: 3rem;
+    }
+    
+    .hero-title {
+        font-size: 3.5rem;
+    }
+    
+    .impact-content {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .impact-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Desktop Styles (1024px+) */
+@media (min-width: 1024px) {
+    .contact-hero {
+        padding: 5rem 0 2.5rem;
+    }
+    
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .hero-description {
+        font-size: 1.125rem;
+    }
+    
+    .hero-stats {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+        max-width: 600px;
+    }
+    
+    .hero-stat {
+        padding: 1.5rem 1rem;
+    }
+    
+    .hero-stat .stat-number {
+        font-size: 1.5rem;
+    }
+    
+    .hero-stat .stat-label {
+        font-size: 0.875rem;
+    }
+    
+    .actions-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 3rem;
+    }
+    
+    .section-title {
+        font-size: 2.5rem;
+    }
+    
+    .impact-stats-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .cta-title {
+        font-size: 3rem;
+    }
+}
+</style>
+{% endblock %}

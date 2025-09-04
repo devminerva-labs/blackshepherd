@@ -471,15 +471,15 @@
                     <div class="share-section">
                         <h3 class="share-title">Help Us Spread the Word</h3>
                         <div class="share-buttons">
-                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ url_for('campaign', id=campaign.id, _external=True) }}" 
+                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ url_for('campaign', campaign_id=campaign.id, _external=True) }}" 
                                target="_blank" class="share-btn facebook">
                                 <span>📘</span> Share on Facebook
                             </a>
-                            <a href="https://twitter.com/intent/tweet?text=I just donated to {{ campaign.title }} at Black Shepherd Foundation!&url={{ url_for('campaign', id=campaign.id, _external=True) }}" 
+                            <a href="https://twitter.com/intent/tweet?text=I just donated to {{ campaign.title }} at Black Shepherd Foundation!&url={{ url_for('campaign', campaign_id=campaign.id, _external=True) }}" 
                                target="_blank" class="share-btn twitter">
                                 <span>🐦</span> Share on Twitter
                             </a>
-                            <a href="https://wa.me/?text=I just donated to help {{ campaign.title }}! You can also make a difference: {{ url_for('campaign', id=campaign.id, _external=True) }}" 
+                            <a href="https://wa.me/?text=I just donated to help {{ campaign.title }}! You can also make a difference: {{ url_for('campaign', campaign_id=campaign.id, _external=True) }}" 
                                target="_blank" class="share-btn whatsapp">
                                 <span>💬</span> Share on WhatsApp
                             </a>
@@ -494,27 +494,27 @@
                                 <div class="step-icon">📧</div>
                                 <h4 class="step-title">Email Receipt</h4>
                                 <p class="step-description">You'll receive a confirmation email with your donation receipt within 5 minutes.</p>
-                                <a href="/contact" class="step-link">Contact us →</a>
+                                <a href="{{ url_for('contact') }}" class="step-link">Contact us →</a>
                             </div>
                             <div class="next-step">
                                 <div class="step-icon">📱</div>
                                 <h4 class="step-title">Follow Updates</h4>
                                 <p class="step-description">Stay connected to see how your donation is making an impact in real-time.</p>
-                                <a href="/about" class="step-link">Follow our story →</a>
+                                <a href="{{ url_for('about') }}" class="step-link">Follow our story →</a>
                             </div>
                             <div class="next-step">
                                 <div class="step-icon">🤝</div>
                                 <h4 class="step-title">Get Involved</h4>
                                 <p class="step-description">Join our community of supporters and volunteers making a difference.</p>
-                                <a href="/contact" class="step-link">Join us →</a>
+                                <a href="{{ url_for('contact') }}" class="step-link">Join us →</a>
                             </div>
                         </div>
                     </div>
                     
                     <!-- Action Buttons -->
                     <div class="action-buttons">
-                        <a href="/campaigns" class="btn-primary">Support Another Campaign</a>
-                        <a href="/" class="btn-secondary">Return to Home</a>
+                        <a href="{{ url_for('campaigns') }}" class="btn-primary">Support Another Campaign</a>
+                        <a href="{{ url_for('index') }}" class="btn-secondary">Return to Home</a>
                     </div>
                     
                     <!-- Receipt Note -->

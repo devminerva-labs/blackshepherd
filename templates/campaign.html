@@ -1,141 +1,172 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ campaign.title }} - {{ config.SITE_NAME }}</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-</head>
-<body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="nav-brand">
-                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Black Shepherd Foundation" class="logo">
-                <span class="brand-text">Black Shepherd</span>
-            </div>
-            
-            <div class="nav-links">
-                <a href="/" class="nav-link">Home</a>
-                <a href="/about" class="nav-link">About</a>
-                <a href="/campaigns" class="nav-link active">Campaigns</a>
-                <a href="/contact" class="nav-link">Contact</a>
-                <a href="/campaigns" class="btn btn-primary">Donate Now</a>
-            </div>
-            
-            <div class="mobile-menu-toggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </nav>
+{% extends "base.html" %}
 
-    <!-- Mobile Menu -->
-    <div class="mobile-menu">
-        <a href="/" class="mobile-nav-link">Home</a>
-        <a href="/about" class="mobile-nav-link">About</a>
-        <a href="/campaigns" class="mobile-nav-link">Campaigns</a>
-        <a href="/contact" class="mobile-nav-link">Contact</a>
-        <a href="/campaigns" class="btn btn-primary">Donate Now</a>
-    </div>
+{% block title %}{{ campaign.title }} - Blak Shepherd Foundation{% endblock %}
 
-    <!-- Breadcrumb -->
+{% block description %}{{ campaign.description[:160] }}...{% endblock %}
+
+{% block content %}
+    <!-- Breadcrumb Navigation -->
     <section class="breadcrumb">
         <div class="container">
             <div class="breadcrumb-content">
-                <a href="/" class="breadcrumb-link">Home</a>
+                <a href="{{ url_for('index') }}" class="breadcrumb-link">Home</a>
                 <span class="breadcrumb-separator">></span>
-                <a href="/campaigns" class="breadcrumb-link">Campaigns</a>
+                <a href="{{ url_for('campaigns') }}" class="breadcrumb-link">Campaigns</a>
                 <span class="breadcrumb-separator">></span>
                 <span class="breadcrumb-current">{{ campaign.title }}</span>
             </div>
         </div>
     </section>
 
-    <!-- Campaign Hero -->
+    <!-- Campaign Hero Section -->
     <section class="campaign-hero">
         <div class="container">
             <div class="campaign-hero-content">
-                <div class="campaign-image-section">
-                    <div class="campaign-main-image">
-                        <img src="{{ campaign.image_url }}" alt="{{ campaign.title }}">
-                        <div class="campaign-category-tag">
-                            <span class="category-icon">💧</span>
-                            <span>{{ campaign.currency }} Campaign</span>
+                
+                <!-- Campaign Image & Gallery -->
+                <div class="campaign-media-section">
+                    <div class="main-campaign-image">
+                        <img src="{{ url_for('static', filename=campaign.main_image) }}" 
+                             alt="{{ campaign.title }}" 
+                             class="hero-image">
+                        <div class="campaign-status-badge">
+                            <span class="status-text">{{ progress | round(0) | int }}% Complete</span>
                         </div>
                     </div>
                     
-                    <!-- Campaign Stats Cards -->
-                    <div class="campaign-stats-grid">
-                        <div class="stat-card">
-                            <div class="stat-icon">💰</div>
-                            <div class="stat-content">
-                                <div class="stat-value">{{ campaign.raised_amount | currency(campaign.currency) }}</div>
-                                <div class="stat-label">Raised So Far</div>
+                    <!-- Image Gallery Thumbnails -->
+                    <div class="image-gallery">
+                        <h4 class="gallery-title">Campaign Gallery</h4>
+                        <div class="gallery-thumbnails">
+                            {% for image in campaign.gallery_images %}
+                            <div class="thumbnail-item">
+                                <img src="{{ url_for('static', filename=image) }}" 
+                                     alt="Campaign image {{ loop.index }}" 
+                                     onclick="openImageModal('{{ url_for('static', filename=image) }}')">
                             </div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-icon">🎯</div>
-                            <div class="stat-content">
-                                <div class="stat-value">{{ campaign.goal_amount | currency(campaign.currency) }}</div>
-                                <div class="stat-label">Goal Amount</div>
-                            </div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-icon">📊</div>
-                            <div class="stat-content">
-                                <div class="stat-value">{{ progress | percentage(1) }}</div>
-                                <div class="stat-label">Complete</div>
-                            </div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-icon">❤️</div>
-                            <div class="stat-content">
-                                <div class="stat-value">{{ campaign.transactions | length }}</div>
-                                <div class="stat-label">Supporters</div>
-                            </div>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
                 
-                <div class="campaign-content-section">
+                <!-- Campaign Details -->
+                <div class="campaign-details-section">
+                    
+                    <!-- Campaign Header -->
                     <div class="campaign-header">
+                        <div class="campaign-meta">
+                            <span class="campaign-date">{{ campaign.date.strftime('%B %d, %Y') }}</span>
+                            <span class="campaign-location">📍 {{ campaign.location }}</span>
+                        </div>
+                        
                         <h1 class="campaign-title">{{ campaign.title }}</h1>
                         <p class="campaign-description">{{ campaign.description }}</p>
+                        
+                        <!-- Partners Section (for SS3 campaign) -->
+                        {% if campaign.id == 3 %}
+                        <div class="campaign-partners">
+                            <h4 class="partners-title">In Partnership With:</h4>
+                            <div class="partners-list">
+                                <div class="partner-item">
+                                    <img src="{{ url_for('static', filename='images/partners/lvp-ventures.png') }}" 
+                                         alt="LVP Ventures" class="partner-logo">
+                                    <span class="partner-name">LVP Ventures (USA)</span>
+                                </div>
+                                <div class="partner-item">
+                                    <img src="{{ url_for('static', filename='images/partners/voice-against-gun-violence.png') }}" 
+                                         alt="Voice Against Gun Violence" class="partner-logo">
+                                    <span class="partner-name">The Voice Against Gun Violence</span>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
                     </div>
                     
                     <!-- Progress Section -->
                     <div class="campaign-progress-section">
                         <div class="progress-header">
-                            <span class="progress-raised">{{ campaign.raised_amount | currency(campaign.currency) }}</span>
-                            <span class="progress-goal">of {{ campaign.goal_amount | currency(campaign.currency) }} goal</span>
+                            <div class="raised-info">
+                                <span class="amount-raised">{{ campaign.raised_amount | currency(campaign.currency) }}</span>
+                                <span class="amount-label">raised</span>
+                            </div>
+                            <div class="goal-info">
+                                <span class="amount-goal">{{ campaign.goal_amount | currency(campaign.currency) }}</span>
+                                <span class="goal-label">goal</span>
+                            </div>
                         </div>
                         
                         <div class="progress-bar-container">
                             <div class="progress-bar">
                                 <div class="progress-fill" style="width: {{ progress }}%"></div>
                             </div>
-                            <span class="progress-percentage">{{ progress | percentage(1) }}</span>
-                        </div>
-                        
-                        <div class="progress-remaining">
-                            <span class="remaining-amount">{{ (campaign.goal_amount - campaign.raised_amount) | currency(campaign.currency) }}</span>
-                            <span class="remaining-text">still needed</span>
+                            <div class="progress-stats">
+                                <span class="progress-percentage">{{ progress | round(1) }}% Complete</span>
+                                <span class="remaining-amount">{{ (campaign.goal_amount - campaign.raised_amount) | currency(campaign.currency) }} remaining</span>
+                            </div>
                         </div>
                     </div>
                     
-                    <!-- Quick Donate Buttons -->
-                    <div class="quick-donate-section">
-                        <h3>Quick Donate</h3>
-                        <div class="quick-amounts">
-                            <button class="quick-amount-btn" data-amount="5000">₦5K</button>
-                            <button class="quick-amount-btn" data-amount="10000">₦10K</button>
-                            <button class="quick-amount-btn" data-amount="25000">₦25K</button>
-                            <button class="quick-amount-btn" data-amount="50000">₦50K</button>
+                    <!-- Impact Statistics -->
+                    <div class="impact-stats-section">
+                        <h3 class="impact-title">Campaign Impact</h3>
+                        <div class="impact-grid">
+                            {% if campaign.id == 1 %}
+                            <!-- Kubwa Hospital Outreach Stats -->
+                            <div class="impact-item">
+                                <div class="impact-number">{{ campaign.impact_stats.families_helped }}+</div>
+                                <div class="impact-label">Families Assisted</div>
+                            </div>
+                            <div class="impact-item">
+                                <div class="impact-number">{{ campaign.impact_stats.bills_settled }}+</div>
+                                <div class="impact-label">Hospital Bills Settled</div>
+                            </div>
+                            <div class="impact-item">
+                                <div class="impact-number">{{ campaign.impact_stats.food_bags_distributed }}+</div>
+                                <div class="impact-label">Food Bags Distributed</div>
+                            </div>
+                            <div class="impact-item">
+                                <div class="impact-number">{{ campaign.impact_stats.mothers_supported }}+</div>
+                                <div class="impact-label">Mothers Supported</div>
+                            </div>
+                            
+                            {% elif campaign.id == 2 %}
+                            <!-- Utako Food Drive Stats -->
+                            <div class="impact-item">
+                                <div class="impact-number">{{ campaign.impact_stats.families_served }}+</div>
+                                <div class="impact-label">Families Served</div>
+                            </div>
+                            <div class="impact-item">
+                                <div class="impact-number">{{ campaign.impact_stats.food_packs_distributed }}+</div>
+                                <div class="impact-label">Food Packs Distributed</div>
+                            </div>
+                            <div class="impact-item">
+                                <div class="impact-number">{{ campaign.impact_stats.children_participated }}+</div>
+                                <div class="impact-label">Children Participated</div>
+                            </div>
+                            <div class="impact-item">
+                                <div class="impact-number">{{ campaign.impact_stats.hygiene_packages }}+</div>
+                                <div class="impact-label">Hygiene Packages</div>
+                            </div>
+                            
+                            {% elif campaign.id == 3 %}
+                            <!-- SS3 Scholarship Stats -->
+                            <div class="impact-item">
+                                <div class="impact-number">{{ campaign.impact_stats.students_supported }}+</div>
+                                <div class="impact-label">Students Supported</div>
+                            </div>
+                            <div class="impact-item">
+                                <div class="impact-number">{{ campaign.impact_stats.exam_fees_sponsored }}+</div>
+                                <div class="impact-label">Exam Fees Sponsored</div>
+                            </div>
+                            <div class="impact-item">
+                                <div class="impact-number">{{ campaign.impact_stats.sensitization_sessions }}+</div>
+                                <div class="impact-label">Sensitization Sessions</div>
+                            </div>
+                            <div class="impact-item">
+                                <div class="impact-number">{{ campaign.impact_stats.toiletries_distributed }}+</div>
+                                <div class="impact-label">Toiletries Distributed</div>
+                            </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -143,191 +174,237 @@
         </div>
     </section>
 
-    <!-- Donation Form Section -->
-    <section class="donation-section">
+    <!-- Campaign Story Section -->
+    <section class="campaign-story">
         <div class="container">
-            <div class="donation-content">
-                <div class="donation-form-container">
-                    <div class="form-header">
-                        <h2>Make a Donation</h2>
-                        <p>Choose your donation amount and help us reach our goal</p>
+            <div class="story-content">
+                
+                <!-- Campaign Story -->
+                <div class="story-main">
+                    <h2 class="story-title">About This Campaign</h2>
+                    
+                    {% if campaign.id == 1 %}
+                    <!-- Kubwa Hospital Outreach Story -->
+                    <div class="story-text">
+                        <p>On October 26, 2024, the Blak Shepherd Foundation embarked on a compassionate outreach program at Kubwa Hospital in Abuja, Nigeria. This initiative was not merely an event; it was a heartfelt mission aimed at addressing the pressing needs of pregnant and nursing mothers as well as the broader community.</p>
+                        
+                        <p>In a world where financial burdens can often overshadow the joys of motherhood, the foundation stepped in to provide essential support, fostering hope and dignity in a nurturing environment. Our team settled outstanding hospital bills for over 20 mothers, distributed hundreds of bags containing essential food items, and provided medical supplies to families facing financial hardships.</p>
+                        
+                        <div class="testimonial">
+                            <blockquote>
+                                <p>"I was so worried about my hospital bill, but now I feel relieved. Thank you for your kindness!"</p>
+                                <cite>- A grateful mother at Kubwa Hospital</cite>
+                            </blockquote>
+                        </div>
+                        
+                        <p>The outreach created meaningful connections between our foundation team, healthcare workers, and families, enhancing community solidarity. This program not only alleviated immediate financial burdens and food insecurity but also fostered hope and dignity among vulnerable mothers and families.</p>
                     </div>
                     
-                    <form action="/process-donation" method="post" class="donation-form" id="donation-form">
-                        <input type="hidden" name="campaign_id" value="{{ campaign.id }}">
+                    {% elif campaign.id == 2 %}
+                    <!-- Utako Food Drive Story -->
+                    <div class="story-text">
+                        <p>The Christmas Food Drive organized by the Blak Shepherd Foundation took place at the Utako Community Square on December 25, 2024, aiming to bring joy and sustenance to underprivileged families during the festive season.</p>
                         
-                        <!-- Flash Messages -->
-                        {% with messages = get_flashed_messages(with_categories=true) %}
-                            {% if messages %}
-                                <div class="flash-messages">
-                                    {% for category, message in messages %}
-                                        <div class="flash-message flash-{{ category }}">
-                                            {{ message }}
-                                        </div>
-                                    {% endfor %}
+                        <p>With a focus on ensuring that everyone in the community could celebrate Christmas with dignity, the event provided not only food packs but also hygiene care packages to alleviate any form of lack. The atmosphere was vibrant, filled with laughter and excitement as families gathered for this special celebration.</p>
+                        
+                        <div class="story-highlights">
+                            <h4>Event Highlights:</h4>
+                            <ul>
+                                <li>Opening prayer and community address by Ami Ubeh</li>
+                                <li>Distribution of colorful, branded food packages</li>
+                                <li>Children's spelling competition with educational rewards</li>
+                                <li>Painting supplies and coloring books for young participants</li>
+                                <li>Community clean-up effort to conclude the day</li>
+                            </ul>
+                        </div>
+                        
+                        <p>The involvement of community leaders and the Nigerian Police Force Utako Division was instrumental in ensuring a smooth and safe experience for all participants. Children eagerly participated in educational competitions, their enthusiasm palpable as they showcased their skills while receiving gifts that encouraged learning and creativity.</p>
+                    </div>
+                    
+                    {% elif campaign.id == 3 %}
+                    <!-- SS3 Scholarship Story -->
+                    <div class="story-text">
+                        <p>Blak Shepherd Foundation, in collaboration with The Voice Against Gun Violence and LVP Ventures, launched a comprehensive program for SS3 students at Federal Government Girls' College, Bwari.</p>
+                        
+                        <p>This initiative focuses on Sexual Assault Awareness and Prevention during April - Sexual Assault Awareness Month. As part of our commitment to the well-being and development of the girl child, we recognize this as a crucial time to educate and advocate against sexual violence, particularly among young girls.</p>
+                        
+                        <div class="program-components">
+                            <h4>Program Components:</h4>
+                            <div class="components-grid">
+                                <div class="component-item">
+                                    <div class="component-icon">🎓</div>
+                                    <div class="component-content">
+                                        <h5>Educational Support</h5>
+                                        <p>Sponsoring WAEC and NECO examination fees for eligible students</p>
+                                    </div>
                                 </div>
-                            {% endif %}
-                        {% endwith %}
-                        
-                        <!-- Amount Selection -->
-                        <div class="form-section">
-                            <label class="form-label">Select Donation Amount</label>
-                            <div class="amount-options">
-                                <label class="amount-option">
-                                    <input type="radio" name="amount" value="5000" checked>
-                                    <div class="amount-card">
-                                        <div class="amount-value">₦5,000</div>
-                                        <div class="amount-impact">Provides clean water for 1 family for 6 months</div>
+                                <div class="component-item">
+                                    <div class="component-icon">🛡️</div>
+                                    <div class="component-content">
+                                        <h5>Awareness Programs</h5>
+                                        <p>Sensitization on prevention strategies and reporting mechanisms</p>
                                     </div>
-                                </label>
-                                
-                                <label class="amount-option">
-                                    <input type="radio" name="amount" value="10000">
-                                    <div class="amount-card">
-                                        <div class="amount-value">₦10,000</div>
-                                        <div class="amount-impact">Supports education materials for 5 children</div>
+                                </div>
+                                <div class="component-item">
+                                    <div class="component-icon">🧴</div>
+                                    <div class="component-content">
+                                        <h5>Welfare Support</h5>
+                                        <p>Distribution of essential toiletries and supplies</p>
                                     </div>
-                                </label>
-                                
-                                <label class="amount-option">
-                                    <input type="radio" name="amount" value="25000">
-                                    <div class="amount-card">
-                                        <div class="amount-value">₦25,000</div>
-                                        <div class="amount-impact">Funds healthcare for 10 women for 3 months</div>
+                                </div>
+                                <div class="component-item">
+                                    <div class="component-icon">🤝</div>
+                                    <div class="component-content">
+                                        <h5>Mentorship</h5>
+                                        <p>Ongoing guidance and support systems</p>
                                     </div>
-                                </label>
-                                
-                                <label class="amount-option">
-                                    <input type="radio" name="amount" value="50000">
-                                    <div class="amount-card">
-                                        <div class="amount-value">₦50,000</div>
-                                        <div class="amount-impact">Sponsors a community workshop and training</div>
-                                    </div>
-                                </label>
-                                
-                                <label class="amount-option custom-amount-option">
-                                    <input type="radio" name="amount" value="custom">
-                                    <div class="amount-card custom-amount-card">
-                                        <div class="amount-value">Custom Amount</div>
-                                        <input type="number" name="custom_amount" step="0.01" min="100" placeholder="Enter amount" class="custom-amount-input">
-                                        <div class="amount-impact">Every amount makes a difference</div>
-                                    </div>
-                                </label>
+                                </div>
                             </div>
                         </div>
                         
-                        <!-- Currency Selection -->
-                        <div class="form-section">
-                            <label for="currency" class="form-label">Currency</label>
-                            <select name="currency" id="currency" class="form-select">
-                                <option value="NGN" selected>₦ Nigerian Naira</option>
-                                <option value="USD">$ US Dollar</option>
-                                <option value="GHS">GH₵ Ghanaian Cedi</option>
-                                <option value="ZAR">R South African Rand</option>
-                                <option value="KES">KSh Kenyan Shilling</option>
-                            </select>
+                        <p>Our goal is to make a lasting impact on the lives of these young women through education, mentorship, and targeted welfare initiatives, empowering them to build a brighter future for themselves and their communities.</p>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <!-- Donation Sidebar -->
+                <div class="donation-sidebar">
+                    <div class="donation-form-container">
+                        <div class="form-header">
+                            <h3 class="form-title">Support This Campaign</h3>
+                            <p class="form-subtitle">Your donation creates lasting change in our communities</p>
                         </div>
                         
-                        <!-- Payment Info -->
-                        <div class="payment-info">
-                            <div class="payment-security">
-                                <div class="security-icon">🔒</div>
-                                <div class="security-text">
-                                    <div class="security-title">Secure Payment via Paystack</div>
-                                    <div class="security-details">256-bit SSL encryption • PCI DSS compliant</div>
+                        <form action="{{ url_for('process_donation') }}" method="POST" class="donation-form" id="donation-form">
+                            <input type="hidden" name="campaign_id" value="{{ campaign.id }}">
+                            
+                            <!-- EMAIL FIELD - NEWLY ADDED -->
+                            <div class="form-group">
+                                <label for="email" class="form-label">Email Address</label>
+                                <input type="email" 
+                                       name="email" 
+                                       id="email" 
+                                       class="form-input"
+                                       placeholder="your@email.com" 
+                                       required>
+                                <small class="form-help">We'll send your donation receipt to this email</small>
+                            </div>
+                            
+                            <!-- Amount Selection -->
+                            <div class="form-group">
+                                <label class="form-label">Choose Donation Amount</label>
+                                <div class="amount-options">
+                                    <label class="amount-option">
+                                        <input type="radio" name="amount" value="5000" checked>
+                                        <div class="amount-card">
+                                            <span class="amount-value">₦5,000</span>
+                                            {% if campaign.id == 1 %}
+                                            <span class="amount-impact">Helps settle 1 hospital bill</span>
+                                            {% elif campaign.id == 2 %}
+                                            <span class="amount-impact">Provides 5 food packages</span>
+                                            {% elif campaign.id == 3 %}
+                                            <span class="amount-impact">Supports 1 student's supplies</span>
+                                            {% endif %}
+                                        </div>
+                                    </label>
+                                    
+                                    <label class="amount-option">
+                                        <input type="radio" name="amount" value="10000">
+                                        <div class="amount-card">
+                                            <span class="amount-value">₦10,000</span>
+                                            {% if campaign.id == 1 %}
+                                            <span class="amount-impact">Supports 2 mothers with medical care</span>
+                                            {% elif campaign.id == 2 %}
+                                            <span class="amount-impact">Provides 10 complete family packages</span>
+                                            {% elif campaign.id == 3 %}
+                                            <span class="amount-impact">Sponsors educational materials</span>
+                                            {% endif %}
+                                        </div>
+                                    </label>
+                                    
+                                    <label class="amount-option">
+                                        <input type="radio" name="amount" value="25000">
+                                        <div class="amount-card">
+                                            <span class="amount-value">₦25,000</span>
+                                            {% if campaign.id == 1 %}
+                                            <span class="amount-impact">Settles 5 hospital bills</span>
+                                            {% elif campaign.id == 2 %}
+                                            <span class="amount-impact">Sponsors community event supplies</span>
+                                            {% elif campaign.id == 3 %}
+                                            <span class="amount-impact">Covers exam fees for 3 students</span>
+                                            {% endif %}
+                                        </div>
+                                    </label>
+                                    
+                                    <label class="amount-option custom-option">
+                                        <input type="radio" name="amount" value="custom">
+                                        <div class="amount-card custom-card">
+                                            <span class="amount-value">Custom Amount</span>
+                                            <input type="number" 
+                                                   name="custom_amount" 
+                                                   placeholder="Enter amount" 
+                                                   min="100" 
+                                                   step="100"
+                                                   class="custom-input">
+                                            <span class="amount-impact">Every naira makes a difference</span>
+                                        </div>
+                                    </label>
                                 </div>
                             </div>
                             
-                            <div class="payment-methods">
-                                <div class="payment-method">💳 All major cards</div>
-                                <div class="payment-method">🏦 Bank transfer</div>
-                                <div class="payment-method">📱 Mobile money</div>
-                                <div class="payment-method">🌍 International cards</div>
+                            <!-- Currency Selection -->
+                            <div class="form-group">
+                                <label for="currency" class="form-label">Currency</label>
+                                <select name="currency" id="currency" class="currency-select">
+                                    <option value="NGN" selected>₦ Nigerian Naira</option>
+                                    <option value="USD">$ US Dollar</option>
+                                    <option value="GHS">GH₵ Ghanaian Cedi</option>
+                                </select>
                             </div>
-                        </div>
-                        
-                        <!-- Submit Button -->
-                        <div class="form-actions">
-                            <button type="submit" class="donate-button">
-                                <span class="button-text">Donate Securely</span>
-                                <span class="button-icon">→</span>
+                            
+                            <!-- Payment Security Info -->
+                            <div class="security-info">
+                                <div class="security-item">
+                                    <span class="security-icon">🔒</span>
+                                    <span class="security-text">Secured by Paystack</span>
+                                </div>
+                                <div class="security-item">
+                                    <span class="security-icon">💳</span>
+                                    <span class="security-text">All cards accepted</span>
+                                </div>
+                                <div class="security-item">
+                                    <span class="security-icon">📱</span>
+                                    <span class="security-text">Mobile money supported</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Submit Button -->
+                            <button type="submit" class="donate-btn">
+                                <span class="btn-text">Donate Now</span>
+                                <span class="btn-icon">→</span>
                             </button>
-                        </div>
-                    </form>
-                </div>
-                
-                <!-- Campaign Details Sidebar -->
-                <div class="campaign-details-sidebar">
-                    <div class="details-card">
-                        <h3>Campaign Impact</h3>
-                        <div class="impact-list">
-                            <div class="impact-item">
-                                <div class="impact-icon">🏠</div>
-                                <div class="impact-text">
-                                    <div class="impact-title">Communities Served</div>
-                                    <div class="impact-description">Direct impact on 15 rural communities</div>
-                                </div>
-                            </div>
-                            <div class="impact-item">
-                                <div class="impact-icon">👥</div>
-                                <div class="impact-text">
-                                    <div class="impact-title">People Benefiting</div>
-                                    <div class="impact-description">Over 2,000 individuals will benefit</div>
-                                </div>
-                            </div>
-                            <div class="impact-item">
-                                <div class="impact-icon">⏱️</div>
-                                <div class="impact-text">
-                                    <div class="impact-title">Timeline</div>
-                                    <div class="impact-description">Project completion in 12 months</div>
-                                </div>
-                            </div>
-                            <div class="impact-item">
-                                <div class="impact-icon">📈</div>
-                                <div class="impact-text">
-                                    <div class="impact-title">Long-term Impact</div>
-                                    <div class="impact-description">Sustainable community development</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="details-card">
-                        <h3>Share This Campaign</h3>
-                        <div class="share-buttons">
-                            <a href="#" class="share-button facebook">
-                                <span class="share-icon">📘</span>
-                                <span>Facebook</span>
-                            </a>
-                            <a href="#" class="share-button twitter">
-                                <span class="share-icon">🐦</span>
-                                <span>Twitter</span>
-                            </a>
-                            <a href="#" class="share-button whatsapp">
-                                <span class="share-icon">💬</span>
-                                <span>WhatsApp</span>
-                            </a>
-                            <a href="#" class="share-button email">
-                                <span class="share-icon">✉️</span>
-                                <span>Email</span>
-                            </a>
-                        </div>
-                    </div>
-                    
-                    <div class="details-card">
-                        <h3>Why This Matters</h3>
-                        <p class="why-text">
-                            Access to clean water is fundamental to health, education, and economic development. 
-                            Your donation directly funds water infrastructure that will serve communities for decades.
-                        </p>
-                        <div class="campaign-stats-mini">
-                            <div class="mini-stat">
-                                <span class="mini-stat-number">85%</span>
-                                <span class="mini-stat-label">of funds go directly to projects</span>
-                            </div>
-                            <div class="mini-stat">
-                                <span class="mini-stat-number">24/7</span>
-                                <span class="mini-stat-label">project monitoring</span>
+                        </form>
+                        
+                        <!-- Share Options -->
+                        <div class="share-section">
+                            <h4 class="share-title">Share This Campaign</h4>
+                            <div class="share-buttons">
+                                <button class="share-btn facebook" onclick="shareCampaign('facebook')">
+                                    <span class="btn-icon">📘</span>
+                                    <span class="btn-text">Facebook</span>
+                                </button>
+                                <button class="share-btn twitter" onclick="shareCampaign('twitter')">
+                                    <span class="btn-icon">🐦</span>
+                                    <span class="btn-text">Twitter</span>
+                                </button>
+                                <button class="share-btn whatsapp" onclick="shareCampaign('whatsapp')">
+                                    <span class="btn-icon">💬</span>
+                                    <span class="btn-text">WhatsApp</span>
+                                </button>
+                                <button class="share-btn copy" onclick="copyCampaignLink()">
+                                    <span class="btn-icon">📋</span>
+                                    <span class="btn-text">Copy Link</span>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -341,74 +418,1325 @@
         <div class="container">
             <h2 class="section-title">Other Ways to Help</h2>
             <div class="related-campaigns-grid">
-                <div class="related-campaign-card">
-                    <div class="related-image">
-                        <img src="{{ url_for('static', filename='images/campaigns/education.jpg') }}" alt="Education Campaign">
+                {% for other_campaign in [1, 2, 3] %}
+                    {% if other_campaign != campaign.id %}
+                    <div class="related-campaign-card">
+                        {% if other_campaign == 1 %}
+                        <div class="related-image">
+                            <img src="{{ url_for('static', filename='campaigns/kubwa-hospital-outreach/main.jpg') }}" alt="Kubwa Hospital Outreach">
+                        </div>
+                        <div class="related-content">
+                            <h3>Kubwa Hospital Outreach</h3>
+                            <p>Supporting pregnant and nursing mothers with medical bills and essential supplies.</p>
+                            <a href="{{ url_for('campaign', campaign_id=1) }}" class="related-link">Support Campaign →</a>
+                        </div>
+                        {% elif other_campaign == 2 %}
+                        <div class="related-image">
+                            <img src="{{ url_for('static', filename='campaigns/utako-food-drive/main.jpg') }}" alt="Utako Food Drive">
+                        </div>
+                        <div class="related-content">
+                            <h3>Utako Food Drive</h3>
+                            <p>Bringing joy and sustenance to families during the festive season.</p>
+                            <a href="{{ url_for('campaign', campaign_id=2) }}" class="related-link">Support Campaign →</a>
+                        </div>
+                        {% elif other_campaign == 3 %}
+                        <div class="related-image">
+                            <img src="{{ url_for('static', filename='campaigns/ss3-scholarship-program/main.jpg') }}" alt="SS3 Scholarship Program">
+                        </div>
+                        <div class="related-content">
+                            <h3>SS3 Scholarship Program</h3>
+                            <p>Empowering young women through education and mentorship programs.</p>
+                            <a href="{{ url_for('campaign', campaign_id=3) }}" class="related-link">Support Campaign →</a>
+                        </div>
+                        {% endif %}
                     </div>
-                    <div class="related-content">
-                        <h3>Girls Education Program</h3>
-                        <p>Empowering girls through quality education and resources.</p>
-                        <a href="/campaigns" class="related-link">Learn More →</a>
-                    </div>
-                </div>
-                
-                <div class="related-campaign-card">
-                    <div class="related-image">
-                        <img src="{{ url_for('static', filename='images/campaigns/healthcare.jpg') }}" alt="Healthcare Campaign">
-                    </div>
-                    <div class="related-content">
-                        <h3>Healthcare Access</h3>
-                        <p>Providing essential medical care to underserved communities.</p>
-                        <a href="/campaigns" class="related-link">Learn More →</a>
-                    </div>
-                </div>
+                    {% endif %}
+                {% endfor %}
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="footer">
-    <div class="container">
-        <div class="footer-content">
-            
-            <!-- Brand Section - Simple -->
-            <div class="footer-brand-section">
-                <div class="footer-brand">
-                    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Black Shepherd Foundation" class="footer-logo">
-                    <div class="brand-text">
-                        <h3 class="footer-brand-name">Black Shepherd</h3>
-                        <p class="footer-tagline">"Bringing a Little Light"</p>
-                    </div>
-                </div>
-                
-            </div>
-            
-            <!-- Single Line: Phone + Email + Instagram -->
-            <div class="footer-contact-section">
-                <div class="contact-item">
-                    <i class="fas fa-phone"></i>
-                    <a href="tel:+2349124211336">+234 912 421 1336</a>
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-envelope"></i>
-                    <a href="mailto:hello@blackshepherd.org">hello@blackshepherd.org</a>
-                </div>
-                <a href="#" class="social-link" aria-label="Instagram">
-                    <i class="fab fa-instagram"></i>
-                    <span>@blackshepherd</span>
-                </a>
-            </div>
-        </div>
-        
-        <!-- Footer Bottom -->
-        <div class="footer-bottom">
-            <p class="footer-copyright">
-                © 2025 Black Shepherd Foundation. All rights reserved.
-            </p>
+    <!-- Image Modal -->
+    <div id="imageModal" class="image-modal" onclick="closeImageModal()">
+        <div class="modal-content">
+            <img id="modalImage" src="" alt="Campaign image">
+            <button class="modal-close" onclick="closeImageModal()">&times;</button>
         </div>
     </div>
-</footer>
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/donate.js') }}"></script>
-</body>
-</html>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+/* ==============================================
+   CAMPAIGN DETAIL PAGE STYLES - MOBILE FIRST
+   ============================================== */
+
+/* Base Mobile Styles (320px+) */
+.breadcrumb {
+    background: #f9fafb;
+    padding: 1rem 0;
+    margin-top: 5rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.breadcrumb-content {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+.breadcrumb-link {
+    color: #6b7280;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.breadcrumb-link:hover {
+    color: #FF6B35;
+}
+
+.breadcrumb-separator {
+    color: #9ca3af;
+}
+
+.breadcrumb-current {
+    color: #1f2937;
+    font-weight: 500;
+}
+
+/* Campaign Hero */
+.campaign-hero {
+    padding: 2rem 0;
+    background: white;
+}
+
+.campaign-hero-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+/* Campaign Media */
+.main-campaign-image {
+    position: relative;
+    border-radius: 1rem;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+}
+
+.hero-image {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+.campaign-status-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(255, 107, 53, 0.9);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    backdrop-filter: blur(10px);
+}
+
+/* Image Gallery */
+.gallery-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 1rem;
+}
+
+.gallery-thumbnails {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 0.5rem;
+}
+
+.thumbnail-item {
+    border-radius: 0.5rem;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.thumbnail-item:hover {
+    transform: scale(1.05);
+}
+
+.thumbnail-item img {
+    width: 100%;
+    height: 60px;
+    object-fit: cover;
+}
+
+/* Campaign Details */
+.campaign-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+.campaign-date {
+    font-weight: 500;
+}
+
+.campaign-title {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #1f2937;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+.campaign-description {
+    font-size: 1rem;
+    color: #4b5563;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+/* Partners Section */
+.campaign-partners {
+    background: #f9fafb;
+    padding: 1rem;
+    border-radius: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.partners-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 0.75rem;
+}
+
+.partners-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.partner-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.partner-logo {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    border-radius: 0.25rem;
+    background: white;
+    padding: 0.25rem;
+}
+
+.partner-name {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #1f2937;
+}
+
+/* Progress Section */
+.campaign-progress-section {
+    background: #f9fafb;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    margin-bottom: 2rem;
+}
+
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.raised-info, .goal-info {
+    text-align: center;
+}
+
+.amount-raised, .amount-goal {
+    display: block;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 0.25rem;
+}
+
+.amount-label, .goal-label {
+    font-size: 0.75rem;
+    color: #6b7280;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+}
+
+.progress-bar-container {
+    margin-bottom: 1rem;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 0.75rem;
+    background: #e5e7eb;
+    border-radius: 2rem;
+    overflow: hidden;
+    margin-bottom: 0.75rem;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(135deg, #FF6B35, #E55A2B);
+    border-radius: 2rem;
+    transition: width 1s ease;
+}
+
+.progress-stats {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.875rem;
+}
+
+.progress-percentage {
+    color: #059669;
+    font-weight: 600;
+}
+
+.remaining-amount {
+    color: #6b7280;
+}
+
+/* Impact Stats */
+.impact-stats-section {
+    margin-bottom: 2rem;
+}
+
+.impact-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 1rem;
+}
+
+.impact-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.impact-item {
+    background: white;
+    padding: 1.5rem 1rem;
+    border-radius: 0.75rem;
+    text-align: center;
+    border: 1px solid #e5e7eb;
+}
+
+.impact-number {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #FF6B35;
+    margin-bottom: 0.25rem;
+    display: block;
+}
+
+.impact-label {
+    font-size: 0.75rem;
+    color: #6b7280;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Campaign Story */
+.campaign-story {
+    background: #f9fafb;
+    padding: 3rem 0;
+}
+
+.story-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+.story-title {
+    font-size: 1.875rem;
+    font-weight: 800;
+    color: #1f2937;
+    margin-bottom: 1.5rem;
+}
+
+.story-text {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #374151;
+}
+
+.story-text p {
+    margin-bottom: 1.5rem;
+}
+
+/* Testimonial */
+.testimonial {
+    background: white;
+    padding: 1.5rem;
+    border-left: 4px solid #FF6B35;
+    border-radius: 0.5rem;
+    margin: 2rem 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.testimonial blockquote {
+    margin: 0;
+}
+
+.testimonial blockquote p {
+    font-style: italic;
+    color: #1f2937;
+    margin-bottom: 1rem;
+    font-size: 1.125rem;
+}
+
+.testimonial cite {
+    color: #6b7280;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+/* Story Highlights */
+.story-highlights {
+    background: #eff6ff;
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    margin: 2rem 0;
+}
+
+.story-highlights h4 {
+    color: #1d4ed8;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.story-highlights ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.story-highlights li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 0.75rem;
+    color: #1e40af;
+}
+
+.story-highlights li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #10b981;
+    font-weight: bold;
+}
+
+/* Program Components */
+.program-components {
+    margin: 2rem 0;
+}
+
+.program-components h4 {
+    color: #1f2937;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+}
+
+.components-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+.component-item {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border: 1px solid #e5e7eb;
+}
+
+.component-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+}
+
+.component-content h5 {
+    color: #1f2937;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+.component-content p {
+    color: #6b7280;
+    font-size: 0.875rem;
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* Donation Sidebar */
+.donation-sidebar {
+    position: sticky;
+    top: 6rem;
+}
+
+.donation-form-container {
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    border: 1px solid #e5e7eb;
+}
+
+.form-header {
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.form-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+}
+
+.form-subtitle {
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+/* Form Styling */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 0.75rem;
+}
+
+/* EMAIL INPUT STYLING - NEWLY ADDED */
+.form-input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    color: #374151;
+    background: white;
+    transition: border-color 0.2s ease;
+    margin-bottom: 0.5rem;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #FF6B35;
+    box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+}
+
+.form-input:required:invalid {
+    border-color: #ef4444;
+}
+
+.form-input:required:valid {
+    border-color: #10b981;
+}
+
+.form-help {
+    display: block;
+    margin-top: 0.25rem;
+    margin-bottom: 1rem;
+    font-size: 0.75rem;
+    color: #6b7280;
+    line-height: 1.4;
+}
+
+.amount-options {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+}
+
+.amount-option {
+    cursor: pointer;
+}
+
+.amount-option input[type="radio"] {
+    display: none;
+}
+
+.amount-card {
+    border: 2px solid #e5e7eb;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    text-align: center;
+    transition: all 0.2s ease;
+    background: white;
+}
+
+.amount-option input[type="radio"]:checked + .amount-card {
+    border-color: #FF6B35;
+    background: #fff7ed;
+}
+
+.amount-value {
+    display: block;
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 0.25rem;
+}
+
+.amount-impact {
+    display: block;
+    font-size: 0.75rem;
+    color: #6b7280;
+    line-height: 1.3;
+}
+
+.custom-card {
+    position: relative;
+}
+
+.custom-input {
+    width: 100%;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    padding: 0.5rem;
+    margin: 0.5rem 0;
+    font-size: 0.875rem;
+    text-align: center;
+}
+
+.custom-input:focus {
+    outline: none;
+    border-color: #FF6B35;
+    ring: 2px;
+    ring-color: rgba(255, 107, 53, 0.2);
+}
+
+.currency-select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 0.5rem;
+    background: white;
+    font-size: 0.875rem;
+    color: #374151;
+    cursor: pointer;
+}
+
+.currency-select:focus {
+    outline: none;
+    border-color: #FF6B35;
+}
+
+/* Security Info */
+.security-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: #f9fafb;
+    border-radius: 0.5rem;
+}
+
+.security-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    color: #6b7280;
+}
+
+.security-icon {
+    font-size: 0.875rem;
+}
+
+/* Donate Button */
+.donate-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #FF6B35, #E55A2B);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgba(255, 107, 53, 0.3);
+}
+
+.donate-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(255, 107, 53, 0.4);
+}
+
+.donate-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Share Section */
+.share-section {
+    border-top: 1px solid #e5e7eb;
+    padding-top: 1.5rem;
+}
+
+.share-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.share-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+}
+
+.share-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    background: white;
+    color: #6b7280;
+    font-size: 0.75rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.share-btn:hover {
+    background: #f9fafb;
+    border-color: #d1d5db;
+}
+
+.share-btn.facebook:hover {
+    background: #1877f2;
+    color: white;
+    border-color: #1877f2;
+}
+
+.share-btn.twitter:hover {
+    background: #1da1f2;
+    color: white;
+    border-color: #1da1f2;
+}
+
+.share-btn.whatsapp:hover {
+    background: #25d366;
+    color: white;
+    border-color: #25d366;
+}
+
+/* Related Campaigns */
+.related-campaigns {
+    padding: 4rem 0;
+    background: white;
+}
+
+.section-title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #1f2937;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.related-campaigns-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+.related-campaign-card {
+    background: white;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e5e7eb;
+    transition: all 0.3s ease;
+}
+
+.related-campaign-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.related-image {
+    height: 150px;
+    overflow: hidden;
+}
+
+.related-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.related-content {
+    padding: 1.5rem;
+}
+
+.related-content h3 {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 0.75rem;
+}
+
+.related-content p {
+    color: #6b7280;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+}
+
+.related-link {
+    color: #FF6B35;
+    font-weight: 600;
+    font-size: 0.875rem;
+    text-decoration: none;
+}
+
+.related-link:hover {
+    text-decoration: underline;
+}
+
+/* Image Modal */
+.image-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    position: relative;
+    margin: 5% auto;
+    max-width: 90%;
+    max-height: 80%;
+    text-align: center;
+}
+
+.modal-content img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 0.5rem;
+}
+
+.modal-close {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+}
+
+/* ==============================================
+   TABLET RESPONSIVE (768px+)
+   ============================================== */
+@media (min-width: 768px) {
+    .campaign-hero-content {
+        grid-template-columns: 2fr 1fr;
+        gap: 3rem;
+    }
+    
+    .hero-image {
+        height: 400px;
+    }
+    
+    .campaign-meta {
+        flex-direction: row;
+        gap: 2rem;
+    }
+    
+    .campaign-title {
+        font-size: 2.25rem;
+    }
+    
+    .partners-list {
+        flex-direction: row;
+    }
+    
+    .impact-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .story-content {
+        grid-template-columns: 2fr 1fr;
+        gap: 3rem;
+    }
+    
+    .components-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .amount-options {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .related-campaigns-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ==============================================
+   DESKTOP RESPONSIVE (1024px+)
+   ============================================== */
+@media (min-width: 1024px) {
+    .campaign-hero {
+        padding: 3rem 0;
+    }
+    
+    .campaign-story {
+        padding: 4rem 0;
+    }
+    
+    .related-campaigns {
+        padding: 5rem 0;
+    }
+    
+    .gallery-thumbnails {
+        grid-template-columns: repeat(5, 1fr);
+    }
+    
+    .thumbnail-item img {
+        height: 80px;
+    }
+    
+    .donation-form-container {
+        padding: 2rem;
+    }
+    
+    .security-info {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+
+/* ==============================================
+   ANIMATION & INTERACTIONS
+   ============================================== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.impact-item {
+    animation: fadeInUp 0.6s ease-out;
+    animation-fill-mode: both;
+}
+
+.impact-item:nth-child(1) { animation-delay: 0.1s; }
+.impact-item:nth-child(2) { animation-delay: 0.2s; }
+.impact-item:nth-child(3) { animation-delay: 0.3s; }
+.impact-item:nth-child(4) { animation-delay: 0.4s; }
+
+/* Loading states */
+.donate-btn.loading .btn-text::after {
+    content: "";
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid transparent;
+    border-top: 2px solid currentColor;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-left: 0.5rem;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Accessibility */
+.amount-option:focus-within .amount-card {
+    outline: 2px solid #FF6B35;
+    outline-offset: 2px;
+}
+
+.thumbnail-item:focus {
+    outline: 2px solid #FF6B35;
+    outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .amount-card {
+        border-width: 3px;
+    }
+    
+    .donation-form-container {
+        border-width: 2px;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .impact-item {
+        animation: none;
+    }
+    
+    .donate-btn:hover,
+    .related-campaign-card:hover {
+        transform: none;
+    }
+    
+    .progress-fill {
+        transition: none;
+    }
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Donation form functionality
+    const donationForm = document.getElementById('donation-form');
+    const amountRadios = document.querySelectorAll('input[name="amount"]');
+    const customAmountInput = document.querySelector('input[name="custom_amount"]');
+    const donateBtn = document.querySelector('.donate-btn');
+    const currencySelect = document.getElementById('currency');
+    
+    // Handle amount selection
+    amountRadios.forEach(radio => {
+        radio.addEventListener('change', function() {
+            updateDonateButton();
+            
+            // Focus custom input if custom option selected
+            if (this.value === 'custom' && customAmountInput) {
+                customAmountInput.focus();
+            }
+        });
+    });
+    
+    // Handle custom amount input
+    if (customAmountInput) {
+        customAmountInput.addEventListener('input', function() {
+            if (this.value) {
+                // Select custom radio when user types
+                const customRadio = document.querySelector('input[value="custom"]');
+                if (customRadio) {
+                    customRadio.checked = true;
+                }
+            }
+            updateDonateButton();
+        });
+        
+        customAmountInput.addEventListener('focus', function() {
+            const customRadio = document.querySelector('input[value="custom"]');
+            if (customRadio) {
+                customRadio.checked = true;
+            }
+        });
+    }
+    
+    // Handle currency change
+    if (currencySelect) {
+        currencySelect.addEventListener('change', updateDonateButton);
+    }
+    
+    // Update donate button text with selected amount
+    function updateDonateButton() {
+        const selectedRadio = document.querySelector('input[name="amount"]:checked');
+        const btnText = donateBtn.querySelector('.btn-text');
+        const currency = currencySelect.value;
+        
+        if (selectedRadio && btnText) {
+            let amount = '';
+            let currencySymbol = getCurrencySymbol(currency);
+            
+            if (selectedRadio.value === 'custom') {
+                const customValue = customAmountInput.value;
+                if (customValue && !isNaN(parseFloat(customValue))) {
+                    amount = currencySymbol + formatNumber(parseFloat(customValue));
+                }
+            } else {
+                amount = currencySymbol + formatNumber(parseFloat(selectedRadio.value));
+            }
+            
+            if (amount) {
+                btnText.textContent = `Donate ${amount}`;
+            } else {
+                btnText.textContent = 'Donate Now';
+            }
+        }
+    }
+    
+    // Form validation
+    if (donationForm) {
+        donationForm.addEventListener('submit', function(e) {
+            const selectedRadio = document.querySelector('input[name="amount"]:checked');
+            const emailInput = document.querySelector('input[name="email"]');
+            
+            // Validate email
+            if (!emailInput.value || !emailInput.validity.valid) {
+                e.preventDefault();
+                showError('Please enter a valid email address');
+                emailInput.focus();
+                return;
+            }
+            
+            if (!selectedRadio) {
+                e.preventDefault();
+                showError('Please select a donation amount');
+                return;
+            }
+            
+            if (selectedRadio.value === 'custom') {
+                const customValue = customAmountInput.value;
+                if (!customValue || isNaN(parseFloat(customValue)) || parseFloat(customValue) <= 0) {
+                    e.preventDefault();
+                    showError('Please enter a valid custom amount');
+                    customAmountInput.focus();
+                    return;
+                }
+                
+                // Check minimum amounts by currency
+                const minAmount = getMinimumAmount(currencySelect.value);
+                if (parseFloat(customValue) < minAmount) {
+                    e.preventDefault();
+                    const symbol = getCurrencySymbol(currencySelect.value);
+                    showError(`Minimum donation is ${symbol}${minAmount}`);
+                    customAmountInput.focus();
+                    return;
+                }
+            }
+            
+            // Show loading state
+            donateBtn.disabled = true;
+            donateBtn.classList.add('loading');
+            donateBtn.querySelector('.btn-text').textContent = 'Processing...';
+        });
+    }
+    
+    // Progress bar animation
+    const progressFill = document.querySelector('.progress-fill');
+    if (progressFill) {
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const targetWidth = progressFill.style.width;
+                    progressFill.style.width = '0%';
+                    setTimeout(() => {
+                        progressFill.style.width = targetWidth;
+                    }, 300);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        observer.observe(progressFill);
+    }
+    
+    // Initialize button text
+    updateDonateButton();
+});
+
+// Image modal functionality
+function openImageModal(imageSrc) {
+    const modal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modalImage');
+    
+    modalImage.src = imageSrc;
+    modal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+}
+
+function closeImageModal() {
+    const modal = document.getElementById('imageModal');
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
+
+// Share functionality
+function shareCampaign(platform) {
+    const title = document.querySelector('.campaign-title').textContent;
+    const url = window.location.href;
+    const text = `Support this important cause: ${title}`;
+    
+    let shareUrl;
+    
+    switch(platform) {
+        case 'facebook':
+            shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+            break;
+        case 'twitter':
+            shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+            break;
+        case 'whatsapp':
+            shareUrl = `https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}`;
+            break;
+    }
+    
+    if (shareUrl) {
+        window.open(shareUrl, '_blank', 'width=600,height=400');
+    }
+}
+
+function copyCampaignLink() {
+    const url = window.location.href;
+    
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(url).then(() => {
+            showNotification('Campaign link copied to clipboard!');
+        });
+    } else {
+        // Fallback
+        const textArea = document.createElement('textarea');
+        textArea.value = url;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        showNotification('Campaign link copied to clipboard!');
+    }
+}
+
+// Utility functions
+function getCurrencySymbol(currency) {
+    const symbols = {
+        'NGN': '₦',
+        'USD': ',
+        'GHS': 'GH₵'
+    };
+    return symbols[currency] || currency;
+}
+
+function getMinimumAmount(currency) {
+    const minimums = {
+        'NGN': 100,
+        'USD': 1,
+        'GHS': 5
+    };
+    return minimums[currency] || 100;
+}
+
+function formatNumber(num) {
+    return new Intl.NumberFormat().format(num);
+}
+
+function showError(message) {
+    // Remove existing errors
+    const existingErrors = document.querySelectorAll('.form-error');
+    existingErrors.forEach(error => error.remove());
+    
+    // Create error element
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'form-error';
+    errorDiv.style.cssText = `
+        background: #fee2e2;
+        color: #dc2626;
+        padding: 0.75rem;
+        border-radius: 0.5rem;
+        margin-bottom: 1rem;
+        font-size: 0.875rem;
+        border: 1px solid #fecaca;
+    `;
+    errorDiv.textContent = message;
+    
+    // Insert before form
+    const form = document.getElementById('donation-form');
+    form.insertBefore(errorDiv, form.firstChild);
+    
+    // Auto-remove after 5 seconds
+    setTimeout(() => {
+        if (errorDiv.parentNode) {
+            errorDiv.parentNode.removeChild(errorDiv);
+        }
+    }, 5000);
+}
+
+function showNotification(message) {
+    const notification = document.createElement('div');
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #10b981;
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 10000;
+        font-weight: 500;
+        animation: slideIn 0.3s ease;
+    `;
+    notification.textContent = message;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        if (notification.parentNode) {
+            notification.parentNode.removeChild(notification);
+        }
+    }, 3000);
+}
+
+// Close modal with escape key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeImageModal();
+    }
+});
+</script>
+{% endblock %}
