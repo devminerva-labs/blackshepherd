@@ -288,20 +288,58 @@
 {% block extra_css %}
 <style>
 /* ==============================================
-   CONTACT PAGE STYLES - MOBILE FIRST
+   RESET AND BASE - MOBILE OVERFLOW PREVENTION
    ============================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    max-width: 100%;
+}
 
-/* PROFESSIONAL HERO SECTION */
+html {
+    overflow-x: hidden;
+    width: 100%;
+}
+
+body {
+    overflow-x: hidden;
+    width: 100%;
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    background: white;
+    color: #1f2937;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    overflow-x: hidden;
+}
+
+/* Prevent all images from causing overflow */
+img, video, iframe, object, embed {
+    max-width: 100%;
+    height: auto;
+}
+
+/* ==============================================
+   PROFESSIONAL HERO SECTION - MOBILE FIRST
+   ============================================== */
 .contact-hero {
-    background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+    background: linear-gradient(135deg, #FF6B35 0%, #E55A2B 100%);
     color: white;
-    padding: 8rem 0 4rem;
+    padding: 6rem 0 4rem;
     margin-top: 5rem;
     text-align: center;
     position: relative;
     overflow: hidden;
+    width: 100%;
 }
 
+/* Simple, professional overlay pattern */
 .contact-hero::before {
     content: '';
     position: absolute;
@@ -309,9 +347,8 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 20"><defs><radialGradient id="a" cx="50%" cy="0%" r="100%"><stop offset="0%" stop-color="rgba(255,107,53,0.1)"/><stop offset="100%" stop-color="rgba(255,107,53,0)"/></radialGradient></defs><ellipse cx="50" cy="0" rx="50" ry="20" fill="url(%23a)"/></svg>') no-repeat center top;
-    background-size: 100% 100%;
-    opacity: 0.8;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
+    z-index: 1;
 }
 
 .hero-content {
@@ -319,73 +356,93 @@
     z-index: 2;
     max-width: 800px;
     margin: 0 auto;
+    width: 100%;
+    padding: 0 1rem;
 }
 
 .hero-subtitle {
     color: rgba(255, 255, 255, 0.9);
-    font-size: 1rem;
+    font-size: 0.8rem;
     font-weight: 600;
     margin-bottom: 1rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
 }
 
 .hero-title {
     color: white;
-    font-size: 2.5rem;
+    font-size: 1.75rem;
     font-weight: 800;
     margin-bottom: 1.5rem;
-    line-height: 1.1;
+    line-height: 1.2;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .hero-description {
-    font-size: 1.25rem;
+    font-size: 1rem;
     color: rgba(255, 255, 255, 0.95);
-    line-height: 1.7;
+    line-height: 1.6;
     margin-bottom: 2rem;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    word-wrap: break-word;
+    max-width: 100%;
 }
 
-/* Contact Information Section */
+/* ==============================================
+   CONTACT INFORMATION SECTION
+   ============================================== */
 .contact-info-section {
-    padding: 4rem 0;
+    padding: 3rem 0;
     background: #f9fafb;
+    width: 100%;
+    overflow-x: hidden;
 }
 
 .contact-grid {
     display: grid;
     grid-template-columns: 1fr;
     gap: 2rem;
+    width: 100%;
+    max-width: 100%;
 }
 
 .contact-card {
     background: white;
     border-radius: 1rem;
-    padding: 2rem;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border: 1px solid #e5e7eb;
     transition: all 0.3s ease;
+    width: 100%;
+    max-width: 100%;
 }
 
 .contact-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 .card-header {
     text-align: center;
     margin-bottom: 2rem;
+    width: 100%;
 }
 
 .card-title {
     color: #1f2937;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
+    word-wrap: break-word;
 }
 
 .card-subtitle {
     color: #6b7280;
-    font-size: 1rem;
+    font-size: 0.9rem;
+    word-wrap: break-word;
 }
 
 /* Contact Methods */
@@ -393,57 +450,64 @@
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    width: 100%;
 }
 
 .contact-method {
     display: flex;
     align-items: flex-start;
     gap: 1rem;
-    padding: 1.5rem;
+    padding: 1.25rem;
     background: #f9fafb;
     border-radius: 0.75rem;
     border: 1px solid #e5e7eb;
     transition: all 0.3s ease;
+    width: 100%;
+    max-width: 100%;
 }
 
 .contact-method:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     background: white;
     border-color: #FF6B35;
 }
 
 .method-icon {
-    font-size: 1.5rem;
-    width: 3rem;
-    height: 3rem;
+    font-size: 1.2rem;
+    width: 2.5rem;
+    height: 2.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
     background: linear-gradient(135deg, #FF6B35, #E55A2B);
     color: white;
-    border-radius: 0.75rem;
+    border-radius: 0.5rem;
     flex-shrink: 0;
 }
 
 .method-content {
     flex: 1;
+    min-width: 0;
 }
 
 .method-title {
     color: #1f2937;
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: 600;
     margin-bottom: 0.5rem;
+    word-wrap: break-word;
 }
 
 .method-value {
     color: #FF6B35;
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: 600;
     text-decoration: none;
     display: block;
     margin-bottom: 0.5rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .method-value:hover {
@@ -453,62 +517,72 @@
 
 .method-description {
     color: #6b7280;
-    font-size: 0.875rem;
+    font-size: 0.8rem;
     margin: 0;
+    word-wrap: break-word;
 }
 
 /* Office Information */
 .office-details {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1.5rem;
+    width: 100%;
 }
 
 .office-address {
     display: flex;
     align-items: flex-start;
     gap: 1rem;
-    padding: 1.5rem;
+    padding: 1.25rem;
     background: #f9fafb;
     border-radius: 0.75rem;
+    width: 100%;
 }
 
 .address-icon {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     color: #FF6B35;
     margin-top: 0.25rem;
+    flex-shrink: 0;
 }
 
 .address-content h3 {
     color: #1f2937;
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: 600;
     margin-bottom: 0.5rem;
+    word-wrap: break-word;
 }
 
 .address-content address {
     color: #4b5563;
     font-style: normal;
-    line-height: 1.6;
+    line-height: 1.5;
+    font-size: 0.9rem;
+    word-wrap: break-word;
 }
 
 .office-hours {
-    padding: 1.5rem;
+    padding: 1.25rem;
     background: #f9fafb;
     border-radius: 0.75rem;
+    width: 100%;
 }
 
 .hours-title {
     color: #1f2937;
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: 600;
     margin-bottom: 1rem;
+    word-wrap: break-word;
 }
 
 .hours-grid {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
+    width: 100%;
 }
 
 .hours-item {
@@ -517,6 +591,7 @@
     align-items: center;
     padding: 0.5rem 0;
     border-bottom: 1px solid #e5e7eb;
+    width: 100%;
 }
 
 .hours-item:last-child {
@@ -526,77 +601,97 @@
 .day {
     color: #4b5563;
     font-weight: 500;
+    font-size: 0.85rem;
+    flex: 1;
+    word-wrap: break-word;
 }
 
 .time {
     color: #1f2937;
     font-weight: 600;
+    font-size: 0.85rem;
+    text-align: right;
+    word-wrap: break-word;
 }
 
-/* Quick Actions Section */
+/* ==============================================
+   QUICK ACTIONS SECTION
+   ============================================== */
 .quick-actions-section {
-    padding: 4rem 0;
+    padding: 3rem 0;
     background: white;
+    width: 100%;
+    overflow-x: hidden;
 }
 
 .section-header {
     text-align: center;
     margin-bottom: 3rem;
+    width: 100%;
 }
 
 .section-title {
     color: #1f2937;
-    font-size: 2.25rem;
+    font-size: 1.5rem;
     font-weight: 800;
     margin-bottom: 1rem;
+    word-wrap: break-word;
 }
 
 .section-description {
     color: #6b7280;
-    font-size: 1.125rem;
-    line-height: 1.7;
+    font-size: 1rem;
+    line-height: 1.6;
     max-width: 600px;
     margin: 0 auto;
+    word-wrap: break-word;
 }
 
 .actions-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 100%;
 }
 
 .action-card {
     background: #f9fafb;
     border-radius: 1rem;
-    padding: 2rem;
+    padding: 1.5rem;
     text-align: center;
     border: 1px solid #e5e7eb;
     transition: all 0.3s ease;
+    width: 100%;
+    max-width: 100%;
 }
 
 .action-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     background: white;
 }
 
 .action-icon {
-    font-size: 3rem;
-    margin-bottom: 1.5rem;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
     display: block;
 }
 
 .action-title {
     color: #1f2937;
-    font-size: 1.25rem;
+    font-size: 1.1rem;
     font-weight: 700;
     margin-bottom: 1rem;
+    word-wrap: break-word;
 }
 
 .action-description {
     color: #4b5563;
     line-height: 1.6;
     margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    word-wrap: break-word;
 }
 
 .action-stats {
@@ -605,11 +700,12 @@
     border-radius: 0.5rem;
     margin-bottom: 1.5rem;
     border: 1px solid #e5e7eb;
+    width: 100%;
 }
 
 .stat-number {
     display: block;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-weight: 800;
     color: #FF6B35;
     margin-bottom: 0.25rem;
@@ -617,76 +713,32 @@
 
 .stat-label {
     color: #6b7280;
-    font-size: 0.875rem;
+    font-size: 0.8rem;
     font-weight: 500;
 }
 
-/* FIXED CTA SECTION - NOW ORANGE */
-.contact-cta {
-    background: linear-gradient(135deg, #FF6B35 0%, #E55A2B 100%);
-    color: white;
-    padding: 4rem 0;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-}
-
-.contact-cta::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 20"><defs><radialGradient id="b" cx="50%" cy="100%" r="100%"><stop offset="0%" stop-color="rgba(255,255,255,0.1)"/><stop offset="100%" stop-color="rgba(255,255,255,0)"/></radialGradient></defs><ellipse cx="50" cy="20" rx="50" ry="20" fill="url(%23b)"/></svg>') no-repeat center bottom;
-    background-size: 100% 100%;
-    opacity: 0.3;
-}
-
-.cta-content {
-    max-width: 800px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 2;
-}
-
-.cta-title {
-    color: white;
-    font-size: 2.25rem;
-    font-weight: 800;
-    margin-bottom: 1rem;
-}
-
-.cta-description {
-    font-size: 1.125rem;
-    color: rgba(255, 255, 255, 0.95);
-    line-height: 1.7;
-    margin-bottom: 2rem;
-}
-
-.cta-actions {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-}
-
-/* Impact Section */
+/* ==============================================
+   IMPACT HIGHLIGHT SECTION
+   ============================================== */
 .impact-highlight-section {
-    padding: 4rem 0;
+    padding: 3rem 0;
     background: #f9fafb;
+    width: 100%;
+    overflow-x: hidden;
 }
 
 .impact-content {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 3rem;
+    gap: 2rem;
     align-items: center;
+    width: 100%;
+    max-width: 100%;
 }
 
 .section-subtitle {
     color: #FF6B35;
-    font-size: 0.875rem;
+    font-size: 0.8rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.1em;
@@ -695,15 +747,17 @@
 
 .impact-description {
     color: #4b5563;
-    font-size: 1.125rem;
-    line-height: 1.7;
+    font-size: 1rem;
+    line-height: 1.6;
     margin-bottom: 2rem;
+    word-wrap: break-word;
 }
 
 .impact-achievements {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    width: 100%;
 }
 
 .achievement-item {
@@ -714,16 +768,21 @@
     background: white;
     border-radius: 0.5rem;
     border: 1px solid #e5e7eb;
+    width: 100%;
 }
 
 .achievement-icon {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     margin-top: 0.25rem;
+    flex-shrink: 0;
 }
 
 .achievement-text {
     color: #374151;
     line-height: 1.5;
+    font-size: 0.9rem;
+    word-wrap: break-word;
+    flex: 1;
 }
 
 .achievement-text strong {
@@ -731,23 +790,27 @@
     font-weight: 700;
 }
 
+/* MOBILE FIX: Single column layout for impact stats */
 .impact-stats-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
+    grid-template-columns: 1fr;
+    gap: 1rem;
     margin-bottom: 2rem;
+    width: 100%;
+    max-width: 100%;
 }
 
 .impact-stat {
     background: white;
-    padding: 1.5rem;
+    padding: 1.25rem;
     border-radius: 0.75rem;
     text-align: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
 }
 
 .impact-stat .stat-number {
-    font-size: 1.875rem;
+    font-size: 1.5rem;
     font-weight: 800;
     color: #FF6B35;
     margin-bottom: 0.5rem;
@@ -756,39 +819,102 @@
 
 .impact-stat .stat-label {
     color: #6b7280;
-    font-size: 0.875rem;
+    font-size: 0.8rem;
     font-weight: 500;
 }
 
 .impact-quote {
     background: white;
-    padding: 2rem;
+    padding: 1.5rem;
     border-radius: 0.75rem;
     border-left: 4px solid #FF6B35;
     text-align: center;
+    width: 100%;
 }
 
 .impact-quote blockquote {
     margin: 0;
     font-style: italic;
-    font-size: 1.125rem;
+    font-size: 1rem;
     color: #1f2937;
     margin-bottom: 1rem;
-    line-height: 1.6;
+    line-height: 1.5;
+    word-wrap: break-word;
 }
 
 .impact-quote cite {
     color: #6b7280;
-    font-size: 0.875rem;
+    font-size: 0.8rem;
     font-weight: 500;
 }
 
-/* Button Styles */
+/* ==============================================
+   CTA SECTION
+   ============================================== */
+.contact-cta {
+    background: linear-gradient(135deg, #FF6B35 0%, #E55A2B 100%);
+    color: white;
+    padding: 3rem 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+}
+
+.contact-cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots2" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23dots2)"/></svg>');
+    z-index: 1;
+}
+
+.cta-content {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    padding: 0 1rem;
+}
+
+.cta-title {
+    color: white;
+    font-size: 1.75rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    word-wrap: break-word;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.cta-description {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.95);
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    word-wrap: break-word;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+.cta-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+/* ==============================================
+   BUTTON STYLES
+   ============================================== */
 .btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 0.75rem 1.5rem;
+    padding: 0.7rem 1.4rem;
     border: none;
     border-radius: 0.5rem;
     font-weight: 600;
@@ -796,15 +922,21 @@
     cursor: pointer;
     transition: all 0.2s ease;
     white-space: nowrap;
+    font-size: 0.9rem;
+    min-width: 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .btn-primary {
     background: #FF6B35;
     color: white;
+    border: 2px solid #FF6B35;
 }
 
 .btn-primary:hover {
     background: #E55A2B;
+    border-color: #E55A2B;
     transform: translateY(-1px);
 }
 
@@ -817,6 +949,7 @@
 .btn-secondary:hover {
     border-color: #FF6B35;
     color: #FF6B35;
+    transform: translateY(-1px);
 }
 
 .btn-outline {
@@ -827,57 +960,72 @@
 
 .btn-outline:hover {
     background: rgba(255, 255, 255, 0.1);
-    transform: translateY(-2px);
+    border-color: white;
+    transform: translateY(-1px);
 }
 
 .btn-large {
-    padding: 1rem 2rem;
-    font-size: 1.125rem;
+    padding: 0.85rem 1.7rem;
+    font-size: 1rem;
 }
 
-/* Tablet Styles (500px+) */
-@media (min-width: 500px) {
+/* ==============================================
+   RESPONSIVE DESIGN - MOBILE FIRST APPROACH
+   ============================================== */
+
+/* Small Mobile (480px+) */
+@media (min-width: 480px) {
     .hero-title {
-        font-size: 3rem;
+        font-size: 2rem;
+    }
+    
+    .section-title {
+        font-size: 1.7rem;
+    }
+    
+    .cta-title {
+        font-size: 2rem;
+    }
+    
+    .impact-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+}
+
+/* Large Mobile (640px+) */
+@media (min-width: 640px) {
+    .hero-title {
+        font-size: 2.25rem;
+    }
+    
+    .section-title {
+        font-size: 1.9rem;
     }
     
     .actions-grid {
         grid-template-columns: repeat(2, 1fr);
     }
     
-    .impact-stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
     .cta-actions {
         flex-direction: row;
-    }
-}
-
-/* Large Tablet Styles (768px+) */
-@media (min-width: 768px) {
-    .contact-grid {
-        grid-template-columns: 2fr 1fr;
-        gap: 3rem;
+        justify-content: center;
     }
     
-    .hero-title {
-        font-size: 3.5rem;
-    }
-    
-    .impact-content {
-        grid-template-columns: 1fr 1fr;
+    .btn {
+        width: auto;
+        min-width: 140px;
     }
     
     .impact-stats-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(4, 1fr);
     }
 }
 
-/* Desktop Styles (1024px+) */
-@media (min-width: 1024px) {
+/* Tablet (768px+) */
+@media (min-width: 768px) {
     .contact-hero {
-        padding: 5rem 0 2.5rem;
+        padding: 7rem 0 5rem;
     }
     
     .hero-title {
@@ -885,25 +1033,48 @@
     }
     
     .hero-description {
-        font-size: 1.125rem;
+        font-size: 1.1rem;
     }
     
-    .hero-stats {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 1.5rem;
-        max-width: 600px;
+    .section-title {
+        font-size: 2.1rem;
     }
     
-    .hero-stat {
-        padding: 1.5rem 1rem;
+    .contact-grid {
+        grid-template-columns: 2fr 1fr;
+        gap: 3rem;
     }
     
-    .hero-stat .stat-number {
-        font-size: 1.5rem;
+    .impact-content {
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
     }
     
-    .hero-stat .stat-label {
-        font-size: 0.875rem;
+    .cta-title {
+        font-size: 2.25rem;
+    }
+    
+    .container {
+        padding: 0 1.5rem;
+    }
+}
+
+/* Desktop (1024px+) */
+@media (min-width: 1024px) {
+    .contact-hero {
+        padding: 5rem 0 4rem;
+    }
+    
+    .hero-title {
+        font-size: 3rem;
+    }
+    
+    .hero-description {
+        font-size: 1.25rem;
+    }
+    
+    .section-title {
+        font-size: 2.5rem;
     }
     
     .actions-grid {
@@ -911,17 +1082,35 @@
         gap: 3rem;
     }
     
-    .section-title {
-        font-size: 2.5rem;
+    .cta-title {
+        font-size: 2.75rem;
     }
     
-    .impact-stats-grid {
-        grid-template-columns: repeat(4, 1fr);
+    .container {
+        padding: 0 2rem;
+    }
+}
+
+/* Large Desktop (1200px+) */
+@media (min-width: 1200px) {
+    .hero-title {
+        font-size: 3.5rem;
     }
     
     .cta-title {
         font-size: 3rem;
     }
+}
+
+/* Prevent any remaining overflow issues */
+.contact-hero,
+.contact-info-section,
+.quick-actions-section,
+.impact-highlight-section,
+.contact-cta {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
 }
 </style>
 {% endblock %}
