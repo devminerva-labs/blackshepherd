@@ -35,12 +35,14 @@
     {% block extra_css %}{% endblock %}
 </head>
 <body>
-    <!-- Navigation -->
+    <!-- Navigation with Dark Charcoal Background -->
     <nav class="navbar">
         <div class="container">
             <div class="nav-brand">
                 <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Blak Shepherd Foundation" class="logo">
-                <span class="brand-text">BLAK SHEPHERD WEF</span>
+                <span class="brand-text">
+                    <span class="brand-blak">Blak</span><span class="brand-shepard">shepard</span><span class="brand-wef">Wef</span>
+                </span>
             </div>
             
             <div class="nav-links">
@@ -154,6 +156,239 @@
     {% endif %}
 
     <style>
+        /* ==============================================
+           DARK CHARCOAL NAVBAR STYLES
+           ============================================== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #1f2937;
+            border-bottom: 1px solid #374151;
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            background: #111827;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .navbar .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* Logo/Brand Styles with Multi-colored Text */
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .brand-text {
+            font-size: 1.4rem;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            transition: all 0.3s ease;
+        }
+
+        .brand-blak {
+            color: #FF6B35;
+            font-weight: 900;
+        }
+
+        .brand-shepard {
+            color: #8B5CF6;
+            font-weight: 900;
+        }
+
+        .brand-wef {
+            color: #FF6B35;
+            font-weight: 900;
+        }
+
+        .nav-brand:hover .brand-text {
+            transform: scale(1.05);
+        }
+
+        .nav-brand:hover .brand-blak,
+        .nav-brand:hover .brand-wef {
+            color: #E55A2B;
+        }
+
+        .nav-brand:hover .brand-shepard {
+            color: #7C3AED;
+        }
+
+        /* Navigation Links - White text for dark background */
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: #d1d5db;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.875rem;
+            padding: 0.5rem 0;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #FF6B35;
+        }
+
+        .nav-link.active {
+            color: #FF6B35;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #FF6B35, #E55A2B);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        /* Button Styles */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.625rem 1.25rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #FF6B35, #E55A2B);
+            color: white;
+            box-shadow: 0 4px 6px -1px rgba(255, 107, 53, 0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 15px -3px rgba(255, 107, 53, 0.3);
+        }
+
+        /* Mobile Menu Toggle - White for dark background */
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+            padding: 8px;
+        }
+
+        .mobile-menu-toggle span {
+            width: 24px;
+            height: 2px;
+            background: #d1d5db;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .mobile-menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        /* Mobile Menu - Dark background */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 70px;
+            left: 0;
+            right: 0;
+            background: #1f2937;
+            border-bottom: 1px solid #374151;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            padding: 1rem;
+        }
+
+        .mobile-menu.active {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .mobile-nav-link {
+            display: block;
+            color: #d1d5db;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 1rem 0;
+            border-bottom: 1px solid #374151;
+            transition: color 0.3s ease;
+        }
+
+        .mobile-nav-link:hover,
+        .mobile-nav-link.active {
+            color: #FF6B35;
+        }
+
+        .mobile-nav-link:last-child {
+            border-bottom: none;
+        }
+
+        .mobile-menu .btn {
+            width: 100%;
+            margin-top: 1rem;
+        }
+
         /* Flash Messages Styling */
         .flash-messages-container {
             position: fixed;
@@ -260,6 +495,36 @@
             to {
                 opacity: 0;
                 transform: translateX(100%);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-toggle {
+                display: flex;
+            }
+
+            .brand-text {
+                font-size: 1.2rem;
+            }
+
+            .logo {
+                width: 35px;
+                height: 35px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .brand-text {
+                font-size: 1.1rem;
+            }
+
+            .navbar {
+                padding: 0.75rem 0;
             }
         }
     </style>
