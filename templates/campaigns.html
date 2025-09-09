@@ -5,8 +5,15 @@
 {% block description %}Discover active campaigns making a real difference across Nigeria. Support our initiatives in healthcare, education, and community development.{% endblock %}
 
 {% block content %}
-    <!-- Page Header -->
+    <!-- Page Header with Rotating Campaign Images -->
     <section class="campaigns-header">
+        <div class="hero-backgrounds">
+            <div class="hero-bg active" style="background-image: url('{{ url_for('static', filename='campaigns/kubwa-hospital-outreach/main.jpg') }}')"></div>
+            <div class="hero-bg" style="background-image: url('{{ url_for('static', filename='campaigns/utako-food-drive/main.jpg') }}')"></div>
+            <div class="hero-bg" style="background-image: url('{{ url_for('static', filename='campaigns/ss3-scholarship-program/main.jpg') }}')"></div>
+        </div>
+        <div class="hero-overlay"></div>
+        
         <div class="container">
             <div class="header-content">
                 <h1 class="page-title">Our Campaigns</h1>
@@ -31,6 +38,13 @@
                     </div>
                 </div>
             </div>
+        </div>
+        
+        <!-- Background Image Indicators -->
+        <div class="hero-indicators">
+            <div class="indicator active"></div>
+            <div class="indicator"></div>
+            <div class="indicator"></div>
         </div>
     </section>
 
@@ -232,28 +246,63 @@
 
 /* Base Mobile Styles (320px+) */
 .campaigns-header {
-    background: linear-gradient(135deg, #FF6B35 0%, #E55A2B 100%);
+    position: relative;
     color: white;
     padding: 6rem 0 3rem;
     text-align: center;
-    position: relative;
     overflow: hidden;
+    margin-top: 5rem;
 }
 
-.campaigns-header::before {
-    content: '';
+/* Background Image Rotation System */
+.hero-backgrounds {
     position: absolute;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="1" fill="white" opacity="0.1"/><circle cx="80" cy="40" r="1" fill="white" opacity="0.1"/><circle cx="40" cy="60" r="1" fill="white" opacity="0.1"/><circle cx="90" cy="90" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+    width: 100%;
+    height: 100%;
     z-index: 1;
+}
+
+.hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+}
+
+.hero-bg.active {
+    opacity: 1;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+/* Smart Gradient Overlay */
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+        ellipse at center, 
+        rgba(255, 107, 53, 0.75) 0%,
+        rgba(229, 90, 43, 0.65) 30%,
+        rgba(255, 107, 53, 0.45) 60%,
+        rgba(31, 41, 55, 0.35) 85%,
+        rgba(31, 41, 55, 0.25) 100%
+    );
+    z-index: 2;
 }
 
 .header-content {
     position: relative;
-    z-index: 2;
+    z-index: 3;
     max-width: 800px;
     margin: 0 auto;
     padding: 0 1rem;
@@ -264,7 +313,7 @@
     font-weight: 800;
     margin-bottom: 1rem;
     color: white;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
 .page-description {
@@ -272,7 +321,7 @@
     line-height: 1.6;
     margin-bottom: 2rem;
     color: rgba(255, 255, 255, 0.95);
-    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
 }
 
 .campaigns-stats {
@@ -301,7 +350,7 @@
     color: white;
     margin-bottom: 0.25rem;
     display: block;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    text-shadow: 0 2px 4px rgba(0,0,0,0.4);
 }
 
 .stat-label {
@@ -310,6 +359,44 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
+}
+
+/* Background Image Indicators */
+.hero-indicators {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.5rem;
+    z-index: 4;
+}
+
+.indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.indicator.active {
+    background: white;
+    transform: scale(1.2);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Animation for background change */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(1.05);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 /* Campaigns Section */
@@ -803,6 +890,10 @@
    LARGE TABLET RESPONSIVE (768px+)
    ============================================== */
 @media (min-width: 768px) {
+    .campaigns-header {
+        padding: 8rem 0 4rem;
+    }
+    
     .page-title {
         font-size: 3rem;
     }
@@ -851,10 +942,6 @@
    DESKTOP RESPONSIVE (1024px+)
    ============================================== */
 @media (min-width: 1024px) {
-    .campaigns-header {
-        padding: 8rem 0 4rem;
-    }
-    
     .campaigns-stats {
         gap: 2rem;
     }
@@ -941,8 +1028,97 @@
 
 {% block extra_js %}
 <script>
-// Campaign functionality without sorting
+// Background Image Rotation Script for Campaigns
 document.addEventListener('DOMContentLoaded', function() {
+    const backgrounds = document.querySelectorAll('.hero-bg');
+    const indicators = document.querySelectorAll('.indicator');
+    let currentIndex = 0;
+    let autoRotateInterval;
+
+    // Campaign images array
+    const backgroundImages = [
+        '{{ url_for("static", filename="images/campaign-hero-1.jpg") }}',
+        '{{ url_for("static", filename="images/campaign-hero-2.jpg") }}', 
+        '{{ url_for("static", filename="images/campaign-hero-3.jpg") }}'
+    ];
+
+    // Function to change background
+    function changeBackground(index) {
+        // Remove active class from all backgrounds
+        backgrounds.forEach(bg => bg.classList.remove('active'));
+        
+        // Remove active class from all indicators if they exist
+        if (indicators.length > 0) {
+            indicators.forEach(indicator => indicator.classList.remove('active'));
+        }
+        
+        // Add active class to current background
+        if (backgrounds[index]) {
+            backgrounds[index].classList.add('active');
+        }
+        
+        // Add active class to current indicator if it exists
+        if (indicators[index]) {
+            indicators[index].classList.add('active');
+        }
+        
+        currentIndex = index;
+    }
+
+    // Auto-rotate backgrounds every 10 seconds
+    function startAutoRotate() {
+        autoRotateInterval = setInterval(() => {
+            const nextIndex = (currentIndex + 1) % backgrounds.length;
+            changeBackground(nextIndex);
+        }, 10000); // 10 seconds
+    }
+
+    // Stop auto-rotation
+    function stopAutoRotate() {
+        if (autoRotateInterval) {
+            clearInterval(autoRotateInterval);
+        }
+    }
+
+    // Initialize auto-rotation
+    startAutoRotate();
+
+    // Add click handlers to indicators if they exist
+    indicators.forEach((indicator, index) => {
+        indicator.addEventListener('click', () => {
+            stopAutoRotate();
+            changeBackground(index);
+            // Restart auto-rotation after user interaction
+            setTimeout(startAutoRotate, 2000);
+        });
+    });
+
+    // Pause auto-rotation when user hovers over hero section
+    const heroSection = document.querySelector('.campaigns-header');
+    if (heroSection) {
+        heroSection.addEventListener('mouseenter', stopAutoRotate);
+        heroSection.addEventListener('mouseleave', startAutoRotate);
+    }
+
+    // Fallback: If images fail to load, use gradient backgrounds
+    const fallbackBackgrounds = [
+        'linear-gradient(135deg, #FF6B35 0%, #E55A2B 100%)',
+        'linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%)',
+        'linear-gradient(135deg, #10B981 0%, #059669 100%)'
+    ];
+
+    backgrounds.forEach((bg, index) => {
+        const img = new Image();
+        img.onload = function() {
+            bg.style.backgroundImage = `url('${backgroundImages[index]}')`;
+        };
+        img.onerror = function() {
+            // Use fallback gradient if image fails to load
+            bg.style.background = fallbackBackgrounds[index % fallbackBackgrounds.length];
+        };
+        img.src = backgroundImages[index];
+    });
+
     // Progress bar animations on scroll
     const progressObserver = new IntersectionObserver(function(entries) {
         entries.forEach(entry => {
