@@ -110,12 +110,47 @@ CAMPAIGNS = {
         },
         'date': datetime(2024, 4, 15),
         'location': 'Federal Government Girls\' College, Bwari'
+    },
+    4: {
+        'id': 4,
+        'title': 'Girl Child Outreach - Akwa Ibom',
+        'description': 'A girl should never miss school because of her period. Yet thousands of girls still do. This April, Blak Shepard WEF is providing sanitary pads, scholarships, mentorship, and therapy support to girls in Akwa Ibom.',
+        'long_description': '''
+        A girl should never miss school because of her period. Yet thousands of girls still do.
+
+        This April, Blak Shepard WEF is changing that through our Girl Child Outreach in Akwa Ibom. We are reaching out to girls who are held back from education due to lack of access to menstrual hygiene products and support systems.
+
+        Our outreach will provide:
+        - Sanitary pads (Pad Bank)
+        - Scholarships to keep girls in school
+        - Mentorship from empowered women
+        - Therapy support for emotional wellbeing
+
+        We believe every girl deserves dignity, education, and opportunity. You can help change a life today — sponsor a girl, partner with us, or support the outreach.
+
+        Together we can bring a little light.
+        ''',
+        'goal_amount': 3000000,  # ₦3,000,000
+        'raised_amount': 0,
+        'currency': 'NGN',
+        'main_image': 'images/girlchild.jpeg',
+        'gallery_images': [
+            'images/girlchild.jpeg',
+        ],
+        'impact_stats': {
+            'girls_supported': 0,
+            'pads_distributed': 0,
+            'scholarships_awarded': 0,
+            'mentorship_sessions': 0
+        },
+        'date': datetime(2025, 4, 1),
+        'location': 'Akwa Ibom, Nigeria'
     }
 }
 
 # Foundation statistics
 FOUNDATION_STATS = {
-    'total_campaigns': 3,
+    'total_campaigns': 4,
     'total_raised': 4000000,  # ₦4,000,000
     'lives_impacted': 320,    # Sum of all people helped across campaigns
     'communities_served': 3,

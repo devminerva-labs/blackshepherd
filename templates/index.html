@@ -166,6 +166,43 @@
         </div>
     </section>
 
+    <!-- Girl Child Outreach Spotlight -->
+    <section class="girl-child-outreach">
+        <div class="container">
+            <div class="outreach-content">
+                <div class="outreach-image-col">
+                    <div class="outreach-flyer-wrap">
+                        <img src="{{ url_for('static', filename='images/girlchild.jpeg') }}"
+                             alt="The Girl Child Outreach - Blak Shepard WEF"
+                             class="outreach-flyer">
+                        <div class="outreach-badge">April 2025</div>
+                    </div>
+                </div>
+                <div class="outreach-text-col">
+                    <span class="outreach-eyebrow">Upcoming Initiative</span>
+                    <h2 class="outreach-heading">A girl should never miss school because of her period.</h2>
+                    <p class="outreach-lead">Yet thousands of girls still do. This April, Blak Shepard WEF is changing that.</p>
+                    <p class="outreach-sub">Through our <strong>Girl Child Outreach in Akwa Ibom</strong> we are providing:</p>
+                    <ul class="outreach-list">
+                        <li><span class="list-icon">🩸</span> Sanitary pads</li>
+                        <li><span class="list-icon">🎓</span> Scholarships</li>
+                        <li><span class="list-icon">🤝</span> Mentorship</li>
+                        <li><span class="list-icon">💬</span> Therapy support</li>
+                    </ul>
+                    <p class="outreach-belief">
+                        We believe every girl deserves dignity, education, and opportunity.<br>
+                        <strong>You can help change a life today.</strong>
+                    </p>
+                    <div class="outreach-actions">
+                        <a href="{{ url_for('campaigns') }}" class="btn btn-primary outreach-btn">Sponsor a Girl</a>
+                        <a href="{{ url_for('contact') }}" class="btn btn-outline-dark outreach-btn">Partner With Us</a>
+                    </div>
+                    <p class="outreach-tagline">Together we can bring a little light.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Partner Organizations -->
     <section class="partners">
         <div class="container">
@@ -315,6 +352,205 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+/* Girl Child Outreach Section */
+.girl-child-outreach {
+    background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #1e1b4b 100%);
+    padding: 5rem 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.girl-child-outreach::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(255,107,53,0.15) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.outreach-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.outreach-flyer-wrap {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.outreach-flyer {
+    width: 100%;
+    max-width: 420px;
+    border-radius: 1.25rem;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,107,53,0.2);
+    display: block;
+    margin: 0 auto;
+}
+
+.outreach-badge {
+    position: absolute;
+    top: 1.25rem;
+    left: 1.25rem;
+    background: linear-gradient(135deg, #FF6B35, #E55A2B);
+    color: white;
+    font-weight: 700;
+    font-size: 0.875rem;
+    padding: 0.4rem 1rem;
+    border-radius: 2rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    box-shadow: 0 4px 12px rgba(255,107,53,0.4);
+}
+
+.outreach-text-col {
+    color: white;
+}
+
+.outreach-eyebrow {
+    display: inline-block;
+    background: rgba(255,107,53,0.2);
+    color: #FF6B35;
+    border: 1px solid rgba(255,107,53,0.4);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.35rem 1rem;
+    border-radius: 2rem;
+    margin-bottom: 1.25rem;
+}
+
+.outreach-heading {
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1.25;
+    margin-bottom: 1rem;
+    color: white;
+}
+
+.outreach-lead {
+    font-size: 1.125rem;
+    color: rgba(255,255,255,0.85);
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.outreach-sub {
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+}
+
+.outreach-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+}
+
+.outreach-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: rgba(255,255,255,0.9);
+    font-weight: 600;
+    font-size: 0.95rem;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 0.5rem 0.875rem;
+    border-radius: 0.5rem;
+}
+
+.list-icon {
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+.outreach-belief {
+    color: rgba(255,255,255,0.8);
+    line-height: 1.7;
+    margin-bottom: 1.75rem;
+    font-size: 0.95rem;
+}
+
+.outreach-belief strong {
+    color: white;
+}
+
+.outreach-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+}
+
+.outreach-btn {
+    padding: 0.875rem 1.75rem;
+    font-weight: 700;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+}
+
+.btn-outline-dark {
+    background: transparent;
+    color: white;
+    border: 2px solid rgba(255,255,255,0.5);
+}
+
+.btn-outline-dark:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: white;
+}
+
+.outreach-tagline {
+    color: rgba(255,107,53,0.8);
+    font-style: italic;
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+@media (max-width: 900px) {
+    .outreach-content {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+        text-align: center;
+    }
+
+    .outreach-flyer {
+        max-width: 320px;
+    }
+
+    .outreach-list {
+        grid-template-columns: 1fr 1fr;
+        text-align: left;
+    }
+
+    .outreach-actions {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .outreach-heading {
+        font-size: 1.5rem;
+    }
+
+    .outreach-list {
+        grid-template-columns: 1fr;
+    }
 }
 
 .partners {
