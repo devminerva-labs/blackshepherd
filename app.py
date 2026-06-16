@@ -1,18 +1,26 @@
 import os
 from flask import Flask, render_template, request, redirect, url_for, flash, abort
+from flask_wtf.csrf import CSRFProtect
+from werkzeug.middleware.proxy_fix import ProxyFix
 from datetime import datetime
 from config import Config
 
 # Import payment functions from your existing payments.py
 from payments import (
-    initialize_paystack_payment, 
-    verify_paystack_payment, 
-    test_paystack_connection,
+    initialize_paystack_payment,
+    verify_paystack_payment,
     format_amount
 )
 
 app = Flask(__name__)
 app.config.from_object(Config)
+
+# Honor X-Forwarded-* headers from Fly's TLS proxy so url_for(_external=True)
+# builds https callback URLs and the donor returns over a secure origin.
+app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1)
+
+# CSRF protection for every state-changing form (the donation form).
+csrf = CSRFProtect(app)
 
 # Static campaign data (no database needed)
 CAMPAIGNS = {
@@ -402,19 +410,6 @@ def donate_error():
     """Payment error page"""
     return render_template('donate_error.html')
 
-# TEST PAYSTACK CONNECTION (using your existing function)
-@app.route('/test-paystack')
-def test_paystack():
-    """Test Paystack connection"""
-    result = test_paystack_connection()
-    
-    if result['success']:
-        flash(f"Paystack connected successfully! {result['message']}", 'success')
-    else:
-        flash(f"Paystack connection failed: {result['message']}", 'error')
-    
-    return redirect(url_for('index'))
-
 # ERROR HANDLERS
 @app.errorhandler(404)
 def not_found_error(error):
@@ -450,7 +445,8 @@ def get_foundation_stats():
 if __name__ == '__main__':
     # Development server
     port = int(os.environ.get('PORT', 5000))
-    debug_mode = os.environ.get('FLASK_ENV') != 'production'
+    # Debugger is opt-in only; never auto-enabled by FLASK_ENV in a deployed env.
+    debug_mode = os.environ.get('FLASK_DEBUG') == '1'
     
     print("🌟 Blak Shepherd Foundation Server Starting...")
     print(f"📊 {FOUNDATION_STATS['total_campaigns']} campaigns loaded")

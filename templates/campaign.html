@@ -276,6 +276,7 @@
                         </div>
                         
                         <form action="{{ url_for('process_donation') }}" method="POST" class="donation-form" id="donation-form">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                             <input type="hidden" name="campaign_id" value="{{ campaign.id }}">
                             
                             <!-- EMAIL FIELD - NEWLY ADDED -->
