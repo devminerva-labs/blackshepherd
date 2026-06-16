@@ -12,12 +12,11 @@ primary_region = "jnb"  # Johannesburg, the closest Fly region to Nigeria
 [http_service]
   internal_port = 8080
   force_https = true
-  # Scale to zero when idle and auto-wake on the next request. This keeps cost
-  # near zero and avoids Railway-style "Application not found" outages, since
-  # Fly boots the machine on an incoming HTTP request instead of 404ing.
+  # Keep one machine always warm so a public donor never waits on a cold start.
+  # auto_start still covers traffic spikes; the last machine is never stopped.
   auto_stop_machines = "stop"
   auto_start_machines = true
-  min_machines_running = 0
+  min_machines_running = 1
   processes = ["app"]
 
 [[vm]]
