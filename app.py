@@ -1,18 +1,26 @@
 import os
 from flask import Flask, render_template, request, redirect, url_for, flash, abort
+from flask_wtf.csrf import CSRFProtect
+from werkzeug.middleware.proxy_fix import ProxyFix
 from datetime import datetime
 from config import Config
 
 # Import payment functions from your existing payments.py
 from payments import (
-    initialize_paystack_payment, 
-    verify_paystack_payment, 
-    test_paystack_connection,
+    initialize_paystack_payment,
+    verify_paystack_payment,
     format_amount
 )
 
 app = Flask(__name__)
 app.config.from_object(Config)
+
+# Honor X-Forwarded-* headers from Fly's TLS proxy so url_for(_external=True)
+# builds https callback URLs and the donor returns over a secure origin.
+app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1)
+
+# CSRF protection for every state-changing form (the donation form).
+csrf = CSRFProtect(app)
 
 # Static campaign data (no database needed)
 CAMPAIGNS = {
@@ -145,15 +153,51 @@ CAMPAIGNS = {
         },
         'date': datetime(2025, 4, 1),
         'location': 'Akwa Ibom, Nigeria'
+    },
+    5: {
+        'id': 5,
+        'title': 'This Little Light of Mine',
+        'description': 'Sexual assault prevention and awareness outreach empowering young girls to speak up, stay safe, and shine. Help us bring confidence-building education, safeguarding tools, and menstrual health support to more schools across Akwa Ibom.',
+        'long_description': '''
+        In commemoration of Sexual Assault Awareness and Prevention Month, Blak Shepard WEF organised the "This Little Light of Mine" outreach on 22 April 2026 at Comprehensive Secondary School Edemaya, Akwa Ibom State.
+
+        The programme brought together approximately sixty (60) female students for educational sessions, interactive discussions, motivational talks, and confidence-building activities. Participants were sensitised on the forms of sexual assault and harassment, the importance of reporting abuse, personal safety, self-confidence, and responsible decision-making.
+
+        A major highlight was the distribution of "This Little Light of Mine" educational relief bags containing specially designed coloring books, notebooks, writing materials, colouring supplies, sanitary pads, and snacks. The coloring book — developed with ArtReach Africa — uses storytelling and affirmations such as "My Voice Matters," "My Body Belongs to Me," "I Can Say No," and "I Can Ask for Help."
+
+        Your support helps us expand the initiative to more schools, provide more relief bags and menstrual health support, and sustain mentorship for adolescent girls. Together we can help every girl's light shine.
+        ''',
+        'goal_amount': 3000000,  # ₦3,000,000
+        'raised_amount': 0,
+        'currency': 'NGN',
+        'main_image': 'campaigns/this-little-light-of-mine/main.jpg',
+        'gallery_images': [
+            'campaigns/this-little-light-of-mine/gallery-1.jpg',
+            'campaigns/this-little-light-of-mine/gallery-2.jpg',
+            'campaigns/this-little-light-of-mine/gallery-3.jpg',
+            'campaigns/this-little-light-of-mine/gallery-4.jpg',
+            'campaigns/this-little-light-of-mine/gallery-5.jpg',
+            'campaigns/this-little-light-of-mine/gallery-6.jpg',
+            'campaigns/this-little-light-of-mine/gallery-7.jpg',
+            'campaigns/this-little-light-of-mine/gallery-8.jpg'
+        ],
+        'impact_stats': {
+            'girls_reached': 60,
+            'relief_bags_distributed': 60,
+            'coloring_books_distributed': 60,
+            'sanitary_pad_packs': 60
+        },
+        'date': datetime(2026, 4, 22),
+        'location': 'Comprehensive Secondary School, Edemaya, Akwa Ibom State'
     }
 }
 
 # Foundation statistics
 FOUNDATION_STATS = {
-    'total_campaigns': 4,
+    'total_campaigns': 5,
     'total_raised': 4000000,  # ₦4,000,000
-    'lives_impacted': 320,    # Sum of all people helped across campaigns
-    'communities_served': 3,
+    'lives_impacted': 380,    # Sum of all people helped across campaigns
+    'communities_served': 4,
     'active_volunteers': 25
 }
 
@@ -402,19 +446,6 @@ def donate_error():
     """Payment error page"""
     return render_template('donate_error.html')
 
-# TEST PAYSTACK CONNECTION (using your existing function)
-@app.route('/test-paystack')
-def test_paystack():
-    """Test Paystack connection"""
-    result = test_paystack_connection()
-    
-    if result['success']:
-        flash(f"Paystack connected successfully! {result['message']}", 'success')
-    else:
-        flash(f"Paystack connection failed: {result['message']}", 'error')
-    
-    return redirect(url_for('index'))
-
 # ERROR HANDLERS
 @app.errorhandler(404)
 def not_found_error(error):
@@ -450,7 +481,8 @@ def get_foundation_stats():
 if __name__ == '__main__':
     # Development server
     port = int(os.environ.get('PORT', 5000))
-    debug_mode = os.environ.get('FLASK_ENV') != 'production'
+    # Debugger is opt-in only; never auto-enabled by FLASK_ENV in a deployed env.
+    debug_mode = os.environ.get('FLASK_DEBUG') == '1'
     
     print("🌟 Blak Shepherd Foundation Server Starting...")
     print(f"📊 {FOUNDATION_STATS['total_campaigns']} campaigns loaded")
