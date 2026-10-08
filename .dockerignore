@@ -1,0 +1,14 @@
+.git
+.gitignore
+.env
+.env.*
+__pycache__/
+*.pyc
+instance/
+*.db
+.DS_Store
+.vscode/
+# Dead/dev-only code (DB layer is unused by the running app)
+seed_campaigns.py
+models.py
+forms.py

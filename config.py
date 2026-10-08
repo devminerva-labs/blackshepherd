@@ -1,11 +1,28 @@
 import os
+import secrets
 from dotenv import load_dotenv
 
 load_dotenv()
 
+
+def _resolve_secret_key() -> str:
+    """Return the Flask secret key without ever using a source-controlled fallback.
+
+    Production must supply SECRET_KEY explicitly; otherwise we fail fast rather
+    than sign sessions with a publicly known value. Outside production we mint an
+    ephemeral random key so local runs work with zero setup.
+    """
+    configured_key = os.environ.get('SECRET_KEY')
+    if configured_key:
+        return configured_key
+    if os.environ.get('FLASK_ENV') == 'production':
+        raise RuntimeError('SECRET_KEY environment variable must be set in production')
+    return secrets.token_hex(32)
+
+
 class Config:
     """Application configuration"""
-    SECRET_KEY = os.environ.get('SECRET_KEY') or 'dev-secret-key-change-in-production'
+    SECRET_KEY = _resolve_secret_key()
     
     # Database - Handle PostgreSQL for Render
     database_url = os.environ.get('DATABASE_URL')
