@@ -138,6 +138,28 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Bank Transfer Card -->
+            <div class="bank-transfer-card">
+                <div class="card-header">
+                    <h2 class="card-title">Prefer a Direct Bank Transfer?</h2>
+                    <p class="card-subtitle">You can send donations straight to our foundation account</p>
+                </div>
+                <div class="bank-details">
+                    <div class="bank-detail-item">
+                        <span class="bank-detail-label">Bank</span>
+                        <span class="bank-detail-value">Wema Bank</span>
+                    </div>
+                    <div class="bank-detail-item">
+                        <span class="bank-detail-label">Account Name</span>
+                        <span class="bank-detail-value">Blakshepardwef</span>
+                    </div>
+                    <div class="bank-detail-item">
+                        <span class="bank-detail-label">Account Number</span>
+                        <span class="bank-detail-value">0128427662</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -594,6 +616,48 @@ img, video, iframe, object, embed {
 .contact-card:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.bank-transfer-card {
+    background: white;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e5e7eb;
+    width: 100%;
+    max-width: 100%;
+    margin-top: 2rem;
+}
+
+.bank-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 420px;
+    margin: 0 auto;
+}
+
+.bank-detail-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.85rem 1rem;
+    background: #f9fafb;
+    border-radius: 0.75rem;
+    border: 1px solid #e5e7eb;
+}
+
+.bank-detail-label {
+    color: #6b7280;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.bank-detail-value {
+    color: #1f2937;
+    font-size: 0.95rem;
+    font-weight: 700;
 }
 
 .card-header {
