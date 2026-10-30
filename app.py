@@ -296,7 +296,11 @@ def contact():
         'email': 'blakshepherdwef@gmail.com',
         'instagram': {
             'handle': '@blakshepardwef',
-            'url': 'https://www.instagram.com/blakshepardwef?utm_source=ig_web_button_share_sheet&igsh=MWIyNXpkazd1M2NkeQ=='
+            'url': 'https://www.instagram.com/blakshepardwef?xtok=MXUxaGQ4Zm5qbmN1NA%3D%3D&utm_source=qr'
+        },
+        'tiktok': {
+            'handle': '@blakshepardwef',
+            'url': 'https://www.tiktok.com/@blakshepardwef?_r=1&_t=ZS-9Azx2uj1yI0'
         },
         'address': {
             'street': '123 Foundation Street',
