@@ -203,6 +203,53 @@
         </div>
     </section>
 
+    <!-- FGGC Bwari 2nd Anniversary Outreach -->
+    <section class="fggc-outreach">
+        <div class="container">
+            <div class="outreach-content">
+                <div class="outreach-image-col">
+                    <div class="outreach-flyer-wrap">
+                        <img src="{{ url_for('static', filename='images/fggc-bwari-flyer.png') }}"
+                             alt="Bringing a Little Light to FGGC Bwari - Blak Shepard WEF 2nd Anniversary Outreach"
+                             class="outreach-flyer">
+                        <div class="outreach-badge">13 November 2026</div>
+                    </div>
+                </div>
+                <div class="outreach-text-col">
+                    <span class="outreach-eyebrow">2nd Anniversary Outreach</span>
+                    <h2 class="outreach-heading">Bringing a Little Light to FGGC Bwari</h2>
+                    <p class="outreach-lead">
+                        On 13 November 2026, Blak Shepard WEF marks its second anniversary with a girl-child
+                        empowerment outreach at Federal Government Girls' College, Bwari &mdash; a school
+                        community of over 500 students.
+                    </p>
+                    <p class="outreach-sub">Our activities will include:</p>
+                    <ul class="outreach-list">
+                        <li><span class="list-icon">📱</span> Social media awareness for teens</li>
+                        <li><span class="list-icon">🛡️</span> Sexual assault awareness &amp; trauma support</li>
+                        <li><span class="list-icon">🩸</span> School-wide sanitary pad bank</li>
+                        <li><span class="list-icon">📖</span> This Little Light of Mine colouring book</li>
+                        <li><span class="list-icon">🤝</span> Interactive engagement &amp; materials</li>
+                    </ul>
+                    <p class="outreach-belief">
+                        We welcome financial donations, sanitary pads, hygiene products, educational
+                        materials, printing sponsorship, refreshments, logistics support, professional
+                        expertise, and volunteer contributions.<br>
+                        <strong>We're not just organising an event; we're building a support system that lasts.</strong>
+                    </p>
+                    <div class="outreach-actions">
+                        <a href="{{ url_for('contact') }}" class="btn btn-primary outreach-btn">Donate &amp; Partner</a>
+                        <a href="{{ url_for('static', filename='images/fggc-bwari-flyer.pdf') }}" class="btn btn-outline-dark outreach-btn" target="_blank" rel="noopener">Download Flyer</a>
+                    </div>
+                    <p class="outreach-contact">
+                        blakshepardwef@gmail.com &nbsp;&middot;&nbsp; www.blakshepardwef.org &nbsp;&middot;&nbsp; @Blakshepardwef
+                    </p>
+                    <p class="outreach-tagline">My Light, My Voice.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Partner Organizations -->
     <section class="partners">
         <div class="container">
@@ -372,6 +419,32 @@
     background: radial-gradient(circle, rgba(255,107,53,0.15) 0%, transparent 70%);
     border-radius: 50%;
     pointer-events: none;
+}
+
+/* FGGC Bwari Outreach Section */
+.fggc-outreach {
+    background: linear-gradient(135deg, #3b0a1f 0%, #6b1530 50%, #3b0a1f 100%);
+    padding: 5rem 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.fggc-outreach::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -20%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(255,107,53,0.15) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.outreach-contact {
+    color: rgba(255,255,255,0.7);
+    font-size: 0.85rem;
+    margin-bottom: 0.75rem;
 }
 
 .outreach-content {

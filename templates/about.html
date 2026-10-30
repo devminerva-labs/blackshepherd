@@ -103,6 +103,59 @@
         </div>
     </section>
 
+    <!-- Two Year Anniversary -->
+    <section class="anniversary-section">
+        <div class="container">
+            <div class="anniversary-header">
+                <span class="anniversary-eyebrow">2nd Anniversary &middot; 26 October 2026</span>
+                <h2 class="section-title">Two Years of Impact. Bringing a Little Light.</h2>
+            </div>
+
+            <div class="anniversary-content">
+                <div class="anniversary-text">
+                    <p class="anniversary-lead">
+                        Two years ago, we began with a simple belief: every girl, every woman, and every vulnerable person deserves to be seen, heard, supported, and empowered.
+                    </p>
+                    <p class="anniversary-description">
+                        Today, we celebrate two years of showing up, creating awareness, touching lives, championing the girl child, supporting women, and building spaces where voices matter.
+                    </p>
+                    <p class="anniversary-description">
+                        From our school outreaches and sexual assault prevention campaigns to our health and educational initiatives, every step has been a reminder that meaningful change begins with small, intentional acts of kindness and courage.
+                    </p>
+                    <p class="anniversary-description">
+                        Our journey is far from over. There are more lives to reach, more stories to change, and more light to bring into our communities.
+                    </p>
+                </div>
+
+                <div class="anniversary-gallery">
+                    <img src="{{ url_for('static', filename='images/anniversary/photo-1.jpg') }}" alt="Blak Shepard WEF anniversary moment 1" class="anniversary-photo photo-tall">
+                    <img src="{{ url_for('static', filename='images/anniversary/photo-2.jpg') }}" alt="Blak Shepard WEF anniversary moment 2" class="anniversary-photo">
+                    <img src="{{ url_for('static', filename='images/anniversary/photo-3.jpg') }}" alt="Blak Shepard WEF anniversary moment 3" class="anniversary-photo">
+                    <img src="{{ url_for('static', filename='images/anniversary/photo-4.jpg') }}" alt="Blak Shepard WEF anniversary moment 4" class="anniversary-photo">
+                    <img src="{{ url_for('static', filename='images/anniversary/photo-5.jpg') }}" alt="Blak Shepard WEF anniversary moment 5" class="anniversary-photo">
+                </div>
+            </div>
+
+            <div class="anniversary-chapter">
+                <h3 class="chapter-title">Be Part of the Next Chapter</h3>
+                <p class="chapter-description">
+                    As we celebrate this milestone, we invite individuals, corporate organisations, NGOs, philanthropists, and development partners to join hands with us. Partner with us. Support our programmes. Sponsor an outreach. Donate resources. Volunteer your time or expertise. Help us amplify the voices of women and girls and create safer, stronger, and more empowered communities.
+                </p>
+                <p class="chapter-description">
+                    Your support can turn hope into opportunity and make a lasting difference in someone's life. Together, we can reach further, do more, and bring a little more light to the lives that need it most.
+                </p>
+                <p class="chapter-thanks">
+                    To our partners, volunteers, supporters, beneficiaries, and everyone who has believed in this vision &mdash; thank you for being part of our story. Two years down, a lifetime of impact ahead. The next chapter needs you.
+                </p>
+                <div class="anniversary-actions">
+                    <a href="{{ url_for('contact') }}" class="btn btn-primary btn-large">Partner With Us</a>
+                    <a href="{{ url_for('campaigns') }}" class="btn btn-outline btn-large">Support Our Campaigns</a>
+                </div>
+                <p class="anniversary-tagline">My Light, My Voice.</p>
+            </div>
+        </div>
+    </section>
+
     <!-- Founder Section -->
     <section class="founder-section">
         <div class="container">
@@ -732,6 +785,130 @@ img, video, iframe, object, embed {
     width: 100%;
     height: 250px;
     object-fit: cover;
+}
+
+/* ==============================================
+   ANNIVERSARY SECTION
+   ============================================== */
+.anniversary-section {
+    padding: 3rem 0;
+    background: white;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.anniversary-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.anniversary-eyebrow {
+    display: inline-block;
+    background: rgba(255, 107, 53, 0.1);
+    color: #FF6B35;
+    border: 1px solid rgba(255, 107, 53, 0.3);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.35rem 1rem;
+    border-radius: 2rem;
+    margin-bottom: 1rem;
+}
+
+.anniversary-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 2.5rem;
+}
+
+.anniversary-lead {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.7;
+    color: #1f2937;
+    margin-bottom: 1.25rem;
+}
+
+.anniversary-description {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: #4b5563;
+    margin-bottom: 1.25rem;
+    word-wrap: break-word;
+}
+
+.anniversary-gallery {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    width: 100%;
+}
+
+.anniversary-photo {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 0.75rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.anniversary-photo.photo-tall {
+    grid-column: span 2;
+    height: 200px;
+}
+
+.anniversary-chapter {
+    background: #fff7f2;
+    border: 1px solid rgba(255, 107, 53, 0.2);
+    border-radius: 1rem;
+    padding: 2rem 1.5rem;
+    text-align: center;
+}
+
+.chapter-title {
+    font-size: 1.5rem;
+    color: #1f2937;
+    margin-bottom: 1rem;
+}
+
+.chapter-description {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: #4b5563;
+    margin-bottom: 1.25rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.chapter-thanks {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: #1f2937;
+    font-style: italic;
+    margin-bottom: 1.5rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.anniversary-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: center;
+    margin-bottom: 1.25rem;
+}
+
+.anniversary-tagline {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #FF6B35;
+    letter-spacing: 0.05em;
 }
 
 /* ==============================================
@@ -1425,7 +1602,18 @@ img, video, iframe, object, embed {
         grid-template-columns: 1fr 1fr;
         gap: 3rem;
     }
-    
+
+    .anniversary-content {
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        align-items: center;
+    }
+
+    .anniversary-actions {
+        flex-direction: row;
+        justify-content: center;
+    }
+
     .founder-content {
         grid-template-columns: 1fr 2fr;
         gap: 3rem;
