@@ -183,6 +183,14 @@
                             "We know that the road ahead is challenging, but we are inspired daily by the women we meet—those who overcome adversity with grace and tenacity. Their stories fuel our passion and remind us of the impact we can make together."
                         </p>
                     </div>
+                    <div class="founder-video-block">
+                        <h4 class="founder-video-heading">Watch: A Message from Our Founder</h4>
+                        <div class="founder-video-wrap">
+                            <video class="founder-video" controls preload="metadata" poster="{{ url_for('static', filename='images/team/ami-ubeh.jpg') }}">
+                                <source src="{{ url_for('static', filename='videos/founder-message.mp4') }}" type="video/mp4">
+                            </video>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -980,6 +988,33 @@ img, video, iframe, object, embed {
     color: #374151;
     margin-bottom: 1.5rem;
     word-wrap: break-word;
+}
+
+.founder-video-block {
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.founder-video-heading {
+    font-size: 1rem;
+    color: #1f2937;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.founder-video-wrap {
+    display: flex;
+    justify-content: center;
+}
+
+.founder-video {
+    width: 100%;
+    max-width: 320px;
+    max-height: 560px;
+    border-radius: 1rem;
+    border: 4px solid #FF6B35;
+    box-shadow: 0 8px 20px rgba(255, 107, 53, 0.2);
+    background: #000;
 }
 
 /* ==============================================
